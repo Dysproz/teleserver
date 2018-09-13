@@ -21,8 +21,33 @@
       - Flask
       - wtforms
     
-  
- 
+  - name: Pull files
+    git:
+      repo: 'https://github.com/Dysproz/FlaskTVRemote.git'
+      dest: /usr/local/teleserver
+
+  - name: Create startup script
+    block:
+    -name: Create script
+      file:
+        path: /etc/init.d/teleserver_startup
+        state: touch
+      
+    - name: Add content to script
+      lineinfile:
+        path: /etc/init.d/teleserver_startup
+        state: present
+        line: "{{ item }}"
+      with_items:
+        - #!/bin/sh
+        - python /usr/local/teleserver/run.py
+
+    - name: Make it executable
+      command: chmod ugo+x /etc/init.d/teleserver_startup
+
+    - name: Configure init system
+      command: update-rc.d teleserver_startup defaults
 
   
+
         

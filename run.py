@@ -61,6 +61,10 @@ def poweroff():
     call(["poweroff"])
     return "poweroff...\n"
 
+# Method for rebooting computer
+@app.route('/reboot')
+    call(["reboot"])
+    return "reboot...\n"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
