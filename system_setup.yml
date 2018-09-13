@@ -4,7 +4,6 @@
   become: yes
   tasks:
   - name: Install python, pip, git and supervisor
-    become: yes
     apt:
       pkg: "{{ item }}"
       state: latest
@@ -23,7 +22,6 @@
       - flask
       - wtforms
   - name: Install chrome
-    become: yes
     block:
     - name: "apt | ensure Google linux signing key present"
       apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
@@ -37,18 +35,15 @@
         update_cache: yes
     
     - name: Update apt cache
-      become: yes
       apt: update_cache=true
       
 
     - name: Install chrome
-      become: yes
       apt:
         pkg: google-chrome-stable
         state: installed
         
     - name: Set chrome as default browser
-      become: yes
       command: xdg-settings set default-web-browser google-chrome.desktop
 
   - name: Pull files
@@ -57,7 +52,7 @@
       dest: /usr/local/teleserver
   
   - name: Find username
-    command: whoami
+    command: who
     register: username
     
   - name: Check for rc.local file
@@ -79,9 +74,10 @@
         line: "{{ item }}"
       with_items:
         - '#!/bin/sh'
-        - "su {{ username }} -c 'python /usr/local/teleserver/run.py'"
+        - "su {{ (username.stdout_lines[0].split())[0] }} -c 'python /usr/local/teleserver/run.py'"
         - exit 0
-  when: rc_local_stat == False
+    when: rc_local_stat.stat.exists == False
+    
 
   - name: If file exists
     block:
@@ -97,10 +93,11 @@
         state: present
         line: "{{ item }}"
       with_items:
-        - "su {{ username }} -c 'python /usr/local/teleserver/run.py'"
+        - "su {{ (username.stdout_lines[0].split())[0] }} -c 'python /usr/local/teleserver/run.py'"
         - 'exit 0'
 
-  when: rc_local_stat == True
+    when: rc_local_stat.stat.exists == True
+    
 
   - name: Reboot
     command: reboot
