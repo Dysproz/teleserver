@@ -13,6 +13,7 @@
       - python3
       - python-pip
       - git
+      - supervisor
 
   - name: Install flask and wtforms
     pip:
@@ -26,29 +27,18 @@
       repo: 'https://github.com/Dysproz/FlaskTVRemote.git'
       dest: /usr/local/teleserver
 
-  - name: Create startup script
+  - name: Configure teleserver to autostart
     block:
-    - name: Create script
-      file:
-        path: /etc/init.d/teleserver_startup
-        state: touch
-      
-    - name: Add content to script
-      lineinfile:
-        path: /etc/init.d/teleserver_startup
-        state: present
-        line: "{{ item }}"
-      with_items:
-        - '#!/bin/sh'
-        - 'python /usr/local/teleserver/run.py'
+    - name: Copy configuration file to supervisor
+      copy:
+        src: /usr/local/teleserver/teleserver.conf
+        dest: /etc/supervisor/conf.d/teleserver.conf
         
-        
+    - name: Reread supervisor
+      command: supervisorctl reread
 
-    - name: Make it executable
-      command: chmod ugo+x /etc/init.d/teleserver_startup
-
-    - name: Configure init system
-      command: update-rc.d teleserver_startup defaults
+    - name: Update supervisor
+      command: supervisorctl update
 
   - name: Reboot
     command: reboot
