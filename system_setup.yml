@@ -73,8 +73,8 @@
         state: present
         line: "{{ item }}"
       with_items:
-        - '#!/bin/sh'
-        - "su {{ (username.stdout_lines[0].split())[0] }} -c 'python /usr/local/teleserver/run.py'"
+        - '#!/bin/sh -e'
+        - "su {{ (username.stdout_lines[0].split())[0] }} -c 'nohup python /usr/local/teleserver/run.py &'"
         - exit 0
     when: rc_local_stat.stat.exists == False
     
@@ -93,11 +93,15 @@
         state: present
         line: "{{ item }}"
       with_items:
-        - "su {{ (username.stdout_lines[0].split())[0] }} -c 'python /usr/local/teleserver/run.py'"
+        - "su {{ (username.stdout_lines[0].split())[0] }} -c 'nohup python /usr/local/teleserver/run.py &'"
         - 'exit 0'
 
     when: rc_local_stat.stat.exists == True
     
+  - name: Change permisison to rc.local
+    file:
+      path: /etc/rc.local
+      mode: 0755
 
   - name: Reboot
     command: reboot
