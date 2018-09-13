@@ -6,12 +6,12 @@
   - name: Install python and pip
     apt:
       pkg: "{{ item }}"
-      status: latest
+      state: latest
       update_cache: true
     with_items:
       - python
       - python3
-      - pip
+      - python-pip
       - git
 
   - name: Install flask and wtforms
@@ -28,7 +28,7 @@
 
   - name: Create startup script
     block:
-    -name: Create script
+    - name: Create script
       file:
         path: /etc/init.d/teleserver_startup
         state: touch
@@ -39,8 +39,10 @@
         state: present
         line: "{{ item }}"
       with_items:
-        - #!/bin/sh
-        - python /usr/local/teleserver/run.py
+        - '#!/bin/sh'
+        - 'python /usr/local/teleserver/run.py'
+        
+        
 
     - name: Make it executable
       command: chmod ugo+x /etc/init.d/teleserver_startup
@@ -48,6 +50,8 @@
     - name: Configure init system
       command: update-rc.d teleserver_startup defaults
 
+  - name: Reboot
+    command: reboot
   
 
         

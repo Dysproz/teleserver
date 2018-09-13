@@ -63,6 +63,7 @@ def poweroff():
 
 # Method for rebooting computer
 @app.route('/reboot')
+def reboot():
     call(["reboot"])
     return "reboot...\n"
 
