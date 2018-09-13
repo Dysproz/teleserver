@@ -4,6 +4,7 @@
   become: yes
   tasks:
   - name: Install python, pip, git and supervisor
+    become: yes
     apt:
       pkg: "{{ item }}"
       state: latest
@@ -13,7 +14,7 @@
       - python3
       - python-pip
       - git
-      - supervisor
+      
 
   - name: Install flask and wtforms
     pip:
@@ -22,19 +23,13 @@
       - flask
       - wtforms
   - name: Install chrome
+    become: yes
     block:
-    - name: Check for chrome
-      command: test -f /etc/apt/sources.list.d/google-chrome.list
-      register: google_apt_exists
-      ignore_errors: True
-
-   
     - name: "apt | ensure Google linux signing key present"
       apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
-      when: google_apt_exists.rc == 1
-
-    
+          
     - name: "apt | ensure Google chrome repo present"
+      become: yes
       apt_repository:
         repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
         filename: "google-chrome"
@@ -42,31 +37,70 @@
         update_cache: yes
     
     - name: Update apt cache
+      become: yes
       apt: update_cache=true
-      when: google_apt_exists.rc == 1
+      
 
     - name: Install chrome
+      become: yes
       apt:
         pkg: google-chrome-stable
         state: installed
         
+    - name: Set chrome as default browser
+      become: yes
+      command: xdg-settings set default-web-browser google-chrome.desktop
+
   - name: Pull files
     git:
       repo: 'https://github.com/Dysproz/FlaskTVRemote.git'
       dest: /usr/local/teleserver
+  
+  - name: Find username
+    command: whoami
+    register: username
+    
+  - name: Check for rc.local file
+    stat:
+      path: /etc/rc.local
+    register: rc_local_stat
 
-  - name: Configure teleserver to autostart
+  - name: If file doesn't exist
     block:
-    - name: Copy configuration file to supervisor
-      copy:
-        src: /usr/local/teleserver/teleserver.conf
-        dest: /etc/supervisor/conf.d/teleserver.conf
-        
-    - name: Reread supervisor
-      command: supervisorctl reread
+    - name: Create file
+      file:
+        path: /etc/rc.local
+        state: touch
 
-    - name: Update supervisor
-      command: supervisorctl update
+    - name: Add lines
+      lineinfile:
+        path: /etc/rc.local
+        state: present
+        line: "{{ item }}"
+      with_items:
+        - '#!/bin/sh'
+        - "su {{ username }} -c 'python /usr/local/teleserver/run.py'"
+        - exit 0
+  when: rc_local_stat == False
+
+  - name: If file exists
+    block:
+    - name: remove exit 0 line
+      lineinfile:
+        path: /etc/rc.local
+        state: absent
+        line: exit 0
+
+    - name: Add lines
+      lineinfile:
+        path: /etc/rc.local
+        state: present
+        line: "{{ item }}"
+      with_items:
+        - "su {{ username }} -c 'python /usr/local/teleserver/run.py'"
+        - 'exit 0'
+
+  when: rc_local_stat == True
 
   - name: Reboot
     command: reboot
