@@ -57,7 +57,7 @@
     
   - name: Add startup command to bashrc
     lineinfile:
-      path: "/usr/home/{{ (username.stdout_lines[0].split())[0] }}/.bashrc"
+      path: "/home/{{ (username.stdout_lines[0].split())[0] }}/.profile"
       state: present
       line: nohup python /usr/local/teleserver/run.py &
 
