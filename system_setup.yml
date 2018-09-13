@@ -55,53 +55,11 @@
     command: who
     register: username
     
-  - name: Check for rc.local file
-    stat:
-      path: /etc/rc.local
-    register: rc_local_stat
-
-  - name: If file doesn't exist
-    block:
-    - name: Create file
-      file:
-        path: /etc/rc.local
-        state: touch
-
-    - name: Add lines
-      lineinfile:
-        path: /etc/rc.local
-        state: present
-        line: "{{ item }}"
-      with_items:
-        - '#!/bin/sh -e'
-        - "su {{ (username.stdout_lines[0].split())[0] }} -c 'nohup python /usr/local/teleserver/run.py &'"
-        - exit 0
-    when: rc_local_stat.stat.exists == False
-    
-
-  - name: If file exists
-    block:
-    - name: remove exit 0 line
-      lineinfile:
-        path: /etc/rc.local
-        state: absent
-        line: exit 0
-
-    - name: Add lines
-      lineinfile:
-        path: /etc/rc.local
-        state: present
-        line: "{{ item }}"
-      with_items:
-        - "su {{ (username.stdout_lines[0].split())[0] }} -c 'nohup python /usr/local/teleserver/run.py &'"
-        - 'exit 0'
-
-    when: rc_local_stat.stat.exists == True
-    
-  - name: Change permisison to rc.local
-    file:
-      path: /etc/rc.local
-      mode: 0755
+  - name: Add startup command to bashrc
+    lineinfile:
+      path: "/usr/home/{{ (username.stdout_lines[0].split())[0] }}/.bashrc"
+      state: present
+      line: nohup python /usr/local/teleserver/run.py &
 
   - name: Reboot
     command: reboot
