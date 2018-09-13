@@ -28,12 +28,21 @@
       register: google_apt_exists
       ignore_errors: True
 
-    - name: Add google Chrome key
-      shell: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+   
+    - name: "apt | ensure Google linux signing key present"
+      apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
       when: google_apt_exists.rc == 1
 
+    
+    - name: "apt | ensure Google chrome repo present"
+      apt_repository:
+        repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+        filename: "google-chrome"
+        state: present
+        update_cache: yes
+    
     - name: Update apt cache
-      apt: update_cache=yes
+      apt: update_cache=true
       when: google_apt_exists.rc == 1
 
     - name: Install chrome
