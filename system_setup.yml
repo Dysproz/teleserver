@@ -1,0 +1,28 @@
+---
+
+- hosts: localhost
+  become: yes
+  tasks:
+  - name: Install python and pip
+    apt:
+      pkg: "{{ item }}"
+      status: latest
+      update_cache: true
+    with_items:
+      - python
+      - python3
+      - pip
+      - git
+
+  - name: Install flask and wtforms
+    pip:
+      name: "{{ item }}"
+    with_items:
+      - Flask
+      - wtforms
+    
+  
+ 
+
+  
+        
