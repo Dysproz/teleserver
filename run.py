@@ -3,6 +3,9 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 import webbrowser
 from subprocess import call
 
+# url to your favourite website (e.g. Google Meet)
+OPENMEET_var = "http://www.google.com"
+
 # Form class for GUI purposes
 class urlForm(Form):
     url = TextField('URL', validators=[validators.required()])
@@ -24,7 +27,7 @@ def urlChecker(url):
 # Open predefined google meet webpage
 @app.route('/openmeet')
 def openmeet():
-    webbrowser.open("http://www.google.com", new=0)
+    webbrowser.open(OPENMEET_var, new=0)
     return 'Meet opened\n'
 
 # Open any page provided as url argument (/open?url="<your-url>")
