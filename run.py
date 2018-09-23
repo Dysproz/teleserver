@@ -51,6 +51,26 @@ def gui():
         url = request.form['url']
         if url == 'close':
             call(["pkill", "chrome"])
+        elif url.startswitch('#'):
+            if url == '#reboot':
+                call(['reboot'])
+            elif url == '#poweroff':
+                call([poweroff])
+            elif url == '#close':
+                call(['pkill', 'chrome'])
+            elif url.startswith('#volume'):
+                try:
+                    value = int(url[8:])
+                    if 0 <= value <= 100:
+                        call(['amixer', '-D', 'pulse', 'sset', 'Master', '%i%'%value, 'unmute'])
+                except:
+                    pass
+            elif url == '#mute':
+                 call(['amixer', '-D', 'pulse', 'sset', 'Master', '0%', 'unmute'])
+            elif url == '#screenshot':
+                call(['gnome-screenshot'])
+
+
         else:
             if form.validate():
                 webbrowser.open(urlChecker(url), new=0)

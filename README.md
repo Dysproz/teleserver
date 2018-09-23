@@ -36,7 +36,15 @@ The easy way is to enter
 into your web browser's url bar.
 
 This website contains one field where you can paste url to your desired website and click Submit to open that page.
-If you want to close web browser (e.g. because your boss is about to come in), simply enter 'close' into the field.
+If you want to close web browser (e.g. because your boss is about to come in), simply enter 'close' or '#close' into the field.
+
+Other commands available via field:
+```
+#reboot
+#poweroff
+#mute
+#volume=X # where X is a percentage value of volume
+```
 
 Another way is to use curl (or just paste url to web browser):
 ```
