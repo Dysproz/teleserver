@@ -51,18 +51,18 @@ def gui():
         url = request.form['url']
         if url == 'close':
             call(["pkill", "chrome"])
-        elif url.startswitch('#'):
+        elif url.startswith('#'):
             if url == '#reboot':
-                call(['reboot'])
+                call(['systemctl', 'reboot', '-i'])
             elif url == '#poweroff':
-                call([poweroff])
+                call(['systemctl', 'poweroff', '-i'])
             elif url == '#close':
                 call(['pkill', 'chrome'])
             elif url.startswith('#volume'):
                 try:
                     value = int(url[8:])
                     if 0 <= value <= 100:
-                        call(['amixer', '-D', 'pulse', 'sset', 'Master', '%i%'%value, 'unmute'])
+                        call(['amixer', '-D', 'pulse', 'sset', 'Master', str(value)+'%', 'unmute'])
                 except:
                     pass
             elif url == '#mute':
@@ -81,13 +81,13 @@ def gui():
 # Method for powering off computer
 @app.route('/poweroff')
 def poweroff():
-    call(["poweroff"])
+    call(['systemctl', 'poweroff', '-i'])
     return "poweroff...\n"
 
 # Method for rebooting computer
 @app.route('/reboot')
 def reboot():
-    call(["reboot"])
+    call(['systemctl', 'reboot', '-i'])
     return "reboot...\n"
 
 if __name__ == '__main__':

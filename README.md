@@ -44,6 +44,7 @@ Other commands available via field:
 #poweroff
 #mute
 #volume=X # where X is a percentage value of volume
+#screenshot
 ```
 
 Another way is to use curl (or just paste url to web browser):

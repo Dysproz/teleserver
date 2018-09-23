@@ -3,7 +3,7 @@
 - hosts: localhost
   become: yes
   tasks:
-  - name: Install python, pip, git and supervisor
+  - name: Install python, pip and git
     apt:
       pkg: "{{ item }}"
       state: latest
