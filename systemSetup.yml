@@ -48,7 +48,7 @@
 
   - name: Pull files
     git:
-      repo: 'https://github.com/Dysproz/FlaskTVRemote.git'
+      repo: 'https://github.com/Dysproz/teleserver.git'
       dest: /usr/local/teleserver
   
   - name: Find username
