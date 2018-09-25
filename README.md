@@ -83,3 +83,7 @@ will open link specified by you.
 By default it's linked to Google.
 (Please be aware that after changing OPENMEET_var it's essential to restart server or simply reboot)
 
+## Updates
+
+In order to update this application, run again system_setup.yml playbook.
+Asnible will automatically skip installation of required packages and will download latest version of app to /usr/local/teleserver.
