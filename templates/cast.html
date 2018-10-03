@@ -1,23 +1,121 @@
+<!-- teleserver - cast.html-->
+<!-- by Szymon Piotr Krasuski-->
+<!-- 2018-->
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 <html>
     <head>
        
-        <title>Cast</title>
-    
+        <title>teleserver</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        .slidecontainer {
+            width: 25%;
+        }
+        
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+        
+        .slider:hover {
+            opacity: 1;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #66BDDC;
+            cursor: pointer;
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #66BDDC;
+            cursor: pointer;
+        }
+        </style>
     </head>
-    <body bgcolor="#60A9F8">
-       <center>
-        <form action="" method="post">
-            {{ form.csrf }}
 
+    
+
+    <body style="background-color:#EBF6FA">
+        
+        </br><center>
+                <p style="font-family:helvetica;color:#3B5DBC;font-size:50">teleserver</p>
+        <h5>URL</h5>
+
+        <form action="" method="post">
+            <!-- Text input field for URL-->
+            {{ form.csrf }}
             <div class="input text">
                 {{ form.url.label }} {{ form.url }}
             </div>
             <br />
-            <div class="input submit">
-                <input type="submit" value="Submit"  />
+            <!-- Submit button under URL text field-->
+            <div class="panel-body">
+                <input type="submit" class="btn btn-info" name="action" value="Submit">
             </div>
+            </br></br></br>
+
+            <div class="container">
+            
+            <!-- Screenshot button-->
+            <input type="submit" class="btn btn-info" name="action" value="Screenshot">
           
+            &emsp;
+            <!-- Reboot button-->
+            <input type="submit" class="btn btn-info" name="action" value="Reboot">
+         
+            &emsp;    
+            <!-- Power off button-->
+            <input type="submit" class="btn btn-info" name="action" value="Poweroff">
+            
+       
+            </div>
+            </br></br>
+
+            <!-- Volume control panel-->
+            <h5>Volume Control</h5>
+            <div class="slidecontainer">
+            
+            <!-- Volume slider -->       
+            <input type="range" min="0" max="100" value="50" name="volume_slider" class="slider" id="volume">
+            <!-- Debug value of slider-->
+            <p><span id="level"></span>%</p>
+            <!-- Button to set volume-->
+            <div class="panel-body">
+            <input type="submit" class="btn btn-info" name="action" value="Set Volume">
+            </div>
+            <!-- Button to mute volume-->
+            <input type="submit" class="btn btn-info" name="action" value="Mute">
+            </div>
+        
+        
+            <script>
+                var slider = document.getElementById("volume");
+                var output = document.getElementById("level");
+                output.innerHTML = slider.value;
+                
+                slider.oninput = function() {
+                  output.innerHTML = this.value;
+                }
+            </script>
         </form>
-    </center>
+
+        </center>
     </body>
     </html>

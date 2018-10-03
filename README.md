@@ -35,7 +35,9 @@ The easy way is to enter
 ```
 into your web browser's url bar.
 
-This website contains one field where you can paste url to your desired website and click Submit to open that page.
+This website contains a text field where you can paste desired url to open or one of text commands defined below.
+GUI allows to take a screenshot, power off or reboot computer and set volume value.
+
 If you want to close web browser (e.g. because your boss is about to come in), simply enter 'close' or '#close' into the field.
 
 Other commands available via field:
@@ -46,6 +48,7 @@ Other commands available via field:
 #volume=X # where X is a percentage value of volume
 #screenshot
 ```
+![GUI](https://github.com/Dysproz/teleserver/blob/master/images/gui.png)
 
 Another way is to use curl (or just paste url to web browser):
 ```
