@@ -72,6 +72,18 @@ There's also reboot and poweroff:
 <IP address>:8080/poweroff
 ```
 that works exactly as inserting these commands into terminal.
+So:
+
+```
+<IP address>:8080/screenshot
+```
+will take a screenshot.
+
+
+```
+<IP address>:8080/mute
+```
+will mute computer.
 
 There's one more command.
 If you have your favourite website (for example Google Meet),
