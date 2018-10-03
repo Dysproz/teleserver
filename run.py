@@ -167,9 +167,11 @@ def gui():
 
         elif request.form['action'] == "Reboot":
             system_reboot()
+            return "Rebooting...\n"
 
         elif request.form['action'] == "Power Off":
             system_poweroff()
+            return "Powering off...\n"
 
         elif request.form['action'] == "Mute":
             system_mute()
