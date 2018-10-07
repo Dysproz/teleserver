@@ -176,6 +176,9 @@ def gui():
         elif request.form['action'] == "Mute":
             system_mute()
 
+        elif request.form['action'] == "Close":
+            system_close()
+
        
         
     return render_template('cast.html', form=form)

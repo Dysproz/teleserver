@@ -8,12 +8,12 @@ which allows you to execute commands over web.
 ## Install
 In order to install server you'll need ansible.
 
-If you have it already installed on your machine or you know how to install it, just download system_setup.yml and run it with:
+If you have it already installed on your machine or you know how to install it, just download systemSetup.yml and run it with:
 ```
-sudo ansible-playbook system_setup.yml
+sudo ansible-playbook systemSetup.yml
 ```
 However, if you don't know what's going on, download install.sh ans run it as sudo.
-It'll install ansible, download system_setup.yml and run it.
+It'll install ansible, download systemSetup.yml and run it.
 
 After reboot, all you need to find IP address of your machine (for example with ifconfig).
 
@@ -40,8 +40,10 @@ GUI allows to take a screenshot, power off or reboot computer and set volume val
 
 If you want to close web browser (e.g. because your boss is about to come in), simply enter 'close' or '#close' into the field.
 
-Other commands available via field:
+All commands available via field:
 ```
+close
+#close
 #reboot
 #poweroff
 #mute
