@@ -47,6 +47,13 @@
             background: #66BDDC;
             cursor: pointer;
         }
+
+          .bottomright {
+        position: absolute;
+        bottom: 8px;
+        right: 16px;
+        font-size: 18px;
+        }
         </style>
     </head>
 
@@ -68,9 +75,10 @@
             <!-- Submit button under URL text field-->
             <div class="panel-body">
                 <input type="submit" class="btn btn-info" name="action" value="Submit">
-            </div>
+            
             <!-- Close button-->
             <input type="submit" class="btn btn-info" name="action" value="Close">
+            </div>
             </br></br></br>
 
             <div class="container">
@@ -105,7 +113,8 @@
             <!-- Button to mute volume-->
             <input type="submit" class="btn btn-info" name="action" value="Mute">
             </div>
-        
+             <!-- Button to update teleserver-->
+            <input type="submit" class="btn btn-info bottomright" name="action" value="Update">
         
             <script>
                 var slider = document.getElementById("volume");

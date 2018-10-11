@@ -94,6 +94,10 @@ def system_mute():
 def system_volume(volume):
     call(['amixer', '-D', 'pulse', 'sset', 'Master', str(volume)+'%', 'unmute'])
 
+# Update teleserver
+def system_update():
+    call(['ansible-playbook', '/usr/local/teleserver/systemUpdate.yml'])
+
 ###############################
 ########### Routes ############
 ###############################
@@ -178,6 +182,9 @@ def gui():
 
         elif request.form['action'] == "Close":
             system_close()
+
+        elif request.form['action'] == "Update":
+            system_update()
 
        
         
