@@ -21,7 +21,7 @@
       path: "/home/{{ (username.stdout_lines[0].split())[0] }}/.profile_new"
 
   - name: Kill teleserver process
-    shell: pkil -f teleserver
+    shell: pkill -f teleserver
 
   - name: Turn on auto screen lock
     shell: gsettings set org.gnome.desktop.screensaver lock-enabled true
