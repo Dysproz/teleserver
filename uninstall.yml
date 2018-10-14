@@ -20,15 +20,18 @@
       state: absent
       path: "/home/{{ (username.stdout_lines[0].split())[0] }}/.profile_new"
 
-  - name: Remove teleserver files
-    file:
-      state: absent
-      path: /usr/local/teleserver
-
   - name: Kill teleserver process
     shell: pkil -f teleserver
 
   - name: Turn on auto screen lock
     shell: gsettings set org.gnome.desktop.screensaver lock-enabled true
+
+  - name: Remove teleserver files
+    file:
+      state: absent
+      path: /usr/local/teleserver
+    ignore_errors: yes
+
+
 
   
