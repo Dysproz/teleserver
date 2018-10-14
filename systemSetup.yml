@@ -46,6 +46,11 @@
     - name: Set chrome as default browser
       command: xdg-settings set default-web-browser google-chrome.desktop
 
+  - name: Delete any old directory from teleserver
+    file:
+      path: /usr/local/teleserver
+      state: absent
+      
   - name: Pull files
     git:
       repo: 'https://github.com/Dysproz/teleserver.git'
