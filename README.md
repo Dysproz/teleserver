@@ -102,5 +102,12 @@ By default it's linked to Google.
 
 ## Updates
 
-In order to update this application, run again system_setup.yml playbook.
-Asnible will automatically skip installation of required packages and will download latest version of app to /usr/local/teleserver.
+In order to update to newest teleserver version click 'Update' button in GUI.
+It'll download newest files from github and reboot machine - wait a few minutes to access again gui webpage.
+
+## Uninstall
+
+In order to uninstall teleserver, run ansible script /usr/local/teleserver/uninstall.yml.
+```
+sudo ansible-playbook /usr/local/teleserver/uninstall.yml
+```
