@@ -185,6 +185,7 @@ def gui():
 
         elif request.form['action'] == "Update":
             system_update()
+            return "updating...\n"
 
        
         
