@@ -96,7 +96,7 @@ def system_volume(volume):
 
 # Update teleserver
 def system_update():
-    call(['ansible-playbook', '/usr/local/teleserver/systemUpdate.yml'])
+    call(['/usr/local/teleserver/update.sh'])
 
 ###############################
 ########### Routes ############
