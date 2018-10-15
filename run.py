@@ -146,6 +146,10 @@ def mute():
     system_mute()
     return "muted\n"
 
+@app.route('/update')
+def update():
+    system_update()
+    return "updating...\n"
 
 # GUI webpage - graphical implementation of teleserver
 @app.route('/gui', methods=['GET','POST'])
@@ -183,9 +187,7 @@ def gui():
         elif request.form['action'] == "Close":
             system_close()
 
-        elif request.form['action'] == "Update":
-            system_update()
-            return "updating...\n"
+   
 
        
         
