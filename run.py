@@ -149,6 +149,10 @@ def mute():
     system_mute()
     return "muted\n"
 
+@app.route('/update')
+def update():
+    system_update()
+    return "updating...\n"
 
 @app.route('/gui', methods=['GET', 'POST'])
 def gui():
@@ -183,11 +187,7 @@ def gui():
             system_mute()
 
         elif request.form['action'] == "Close":
-            system_close()
-
-        elif request.form['action'] == "Update":
-            system_update()
-            return "updating...\n"
+            system_close()        
     return render_template('cast.html', form=form)
 
 

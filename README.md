@@ -102,7 +102,10 @@ By default it's linked to Google.
 
 ## Updates
 
-In order to update to newest teleserver version click 'Update' button in GUI.
+In order to update to newest teleserver version open /update route.
+```
+<IP address>:8080/update
+```
 It'll download newest files from github and reboot machine - wait a few minutes to access again gui webpage.
 
 ## Uninstall
