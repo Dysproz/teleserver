@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, request
+from flask import render_template, flash, request
 from wtforms import Form, TextField
 import tools.system_calls as system
 
@@ -27,7 +27,7 @@ def gui_text_field_control(url):
                 if 0 <= value <= 100:
                     system.volume(value)
                     return 0
-            except:
+            except TypeError:
                 pass
         elif url == '#mute':
             system.mute()
@@ -36,6 +36,7 @@ def gui_text_field_control(url):
             system.screenshot()
             return 0
     return 1
+
 
 def gui_web():
     form = urlForm(request.form)
@@ -51,7 +52,7 @@ def gui_web():
                     flash('No URL')
 
         elif request.form['action'] == "Set Volume":
-            vol = request.form['volume_slider']
+            vol = int(request.form['volume_slider'])
             system.volume(vol)
 
         elif request.form['action'] == "Screenshot":

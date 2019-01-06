@@ -1,5 +1,7 @@
 from subprocess import call
 import webbrowser
+import alsaaudio
+
 
 def urlChecker(url):
     if not url.startswith('http'):
@@ -31,18 +33,20 @@ def screenshot():
 
 
 def mute():
-    call(['amixer', '-D', 'pulse', 'sset', 'Master', '0%', 'unmute'])
+    vol = alsaaudio.Mixer()
+    vol.setvolume(0)
 
 
 def volume(volume):
-    call(['amixer',
-          '-D',
-          'pulse',
-          'set',
-          'Master',
-          str(volume)+'%',
-          'unmute'])
+    vol = alsaaudio.Mixer()
+    vol.setvolume(volume)
 
 
 def update():
     call(['/usr/local/teleserver/update.sh'])
+
+
+def get_volume():
+    vol = alsaaudio.Mixer()
+    value = vol.getvolume()
+    return value[0]
