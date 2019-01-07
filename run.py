@@ -2,9 +2,10 @@ import tools.system_calls as system
 import flask
 import dash
 import tools.classic_gui_functions as classic_gui
-from tools.dash_gui import gui_layout, tab_render
+from tools.dash_gui import gui_layout, tab_render, files_tab_render
 from dash.dependencies import Input, Output, State
 import tools.app_callbacks as callback
+import os
 
 
 OPENMEET_var = "http://www.google.com"
@@ -74,6 +75,11 @@ def download(path):
                                      path,
                                      as_attachment=True)
 
+
+@server.route("/delete/<path:path>")
+def delete(path):
+    os.remove(os.path.join(callback.UPLOAD_DIRECTORY, path))
+    return flask.redirect(flask.url_for('/'))
 
 @server.route('/classic_gui', methods=['GET', 'POST'])
 def gui():
@@ -147,19 +153,22 @@ def app_mute(n_clicks):
     return u'muted'
 
 
-@app.callback(
-    Output("file-list", "children"),
-    [Input("upload-data", "filename"), Input("upload-data", "contents")],
-)
-def update_file_upload_output(uploaded_filenames, uploaded_file_contents):
-    return callback.update_files_output(uploaded_filenames,
-                                        uploaded_file_contents)
-
-
 @app.callback(Output('tabs-content', 'children'),
               [Input('tabs', 'value')])
 def render_content(tab):
     return tab_render(tab)
+
+
+@app.callback(Output('files-tabs-content', 'children'),
+              [Input('files-tabs', 'value'),
+              Input("upload-data", "filename"),
+              Input("upload-data", "contents")])
+def files_render_content(tab,
+                         uploaded_filenames,
+                         uploaded_file_contents):
+    return files_tab_render(tab,
+                            uploaded_filenames,
+                            uploaded_file_contents)
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 import dash_html_components as html
 import dash_core_components as dcc
 import tools.system_calls as system
-
+import tools.app_callbacks as callback
 
 PADDING = '10px'
 BUTTON_COLOR = '#d3d3d3'
@@ -36,64 +36,11 @@ def gui_layout():
                                'backgroundColor': BUTTON_COLOR})
         ]),
 
-        # Screenshot, reboot, poweroff section
-        html.Div([
-            html.Button(id='screenshot-button',
-                        n_clicks=0,
-                        children='Screenshot',
-                        style={'display': 'inline-block',
-                               'text-align': 'center',
-                               'margin': PADDING,
-                               'backgroundColor': BUTTON_COLOR}),
-
-            html.Button(id='reboot-button',
-                        n_clicks=0,
-                        children='Reboot',
-                        style={'display': 'inline-block',
-                               'text-align': 'center',
-                               'margin': PADDING,
-                               'backgroundColor': BUTTON_COLOR}),
-
-            html.Button(id='poweroff-button',
-                        n_clicks=0,
-                        children='Power Off',
-                        style={'display': 'inline-block',
-                               'text-align': 'center',
-                               'margin': PADDING,
-                               'backgroundColor': BUTTON_COLOR})
-        ]),
-
-        # Volume section
-        html.Div([
-            html.Div([dcc.Slider(
-                id='volume-slider',
-                min=0,
-                max=100,
-                step=1,
-                value=system.get_volume()
-            )], style={'width': '50%',
-                       'display': 'inline-block',
-                       'padding': PADDING}),
-
-            html.Div(id='volume-indicator', style={'padding': PADDING}),
-
-            html.Button(id='set-volume-button',
-                        n_clicks=0,
-                        children='Set Volume',
-                        style={'margin': PADDING,
-                               'backgroundColor': BUTTON_COLOR}),
-
-            html.Button(id='mute-button',
-                        n_clicks=0,
-                        children='Mute',
-                        style={'margin': PADDING,
-                               'backgroundColor': BUTTON_COLOR})
-        ]),
-
         # Tabs
         html.Div([
-            dcc.Tabs(id="tabs", value='upload-tab', children=[
-                dcc.Tab(label='Upload', value='upload-tab'),
+            dcc.Tabs(id="tabs", value='system-options-tab', children=[
+                dcc.Tab(label='System Options', value='system-options-tab'),
+                dcc.Tab(label='Upload', value='upload-tab')
                 ]),
             html.Div(id='tabs-content')
         ]),
@@ -124,7 +71,7 @@ def gui_layout():
               'left': '0',
               'width': '100%',
               'height': '100%',
-              'backgroundColor': '#66BDDC'})
+              'backgroundColor': '#FFFFFF'})
 
     return layout
 
@@ -149,7 +96,13 @@ def create_upload_content():
             multiple=True,
         ),
         html.H2("File List"),
-        html.Ul(id="file-list"),
+        html.Div([
+            dcc.Tabs(id="files-tabs", value='download-tab', children=[
+                dcc.Tab(label='Download', value='download-tab'),
+                dcc.Tab(label='Delete', value='delete-tab')
+                ]),
+            html.Div(id='files-tabs-content')
+        ])
     ], style={'font-family': 'helvetica',
               'color': ' #525252',
               'font-size': '20',
@@ -160,6 +113,74 @@ def create_upload_content():
     return output
 
 
+def create_system_options():
+    return html.Div([
+                # Volume section
+                html.Div([
+                    html.Div([dcc.Slider(
+                        id='volume-slider',
+                        min=0,
+                        max=100,
+                        step=1,
+                        value=system.get_volume()
+                    )], style={'width': '50%',
+                            'display': 'inline-block',
+                            'padding': PADDING}),
+
+                    html.Div(id='volume-indicator', style={'padding': PADDING}),
+
+                    html.Button(id='set-volume-button',
+                                n_clicks=0,
+                                children='Set Volume',
+                                style={'margin': PADDING,
+                                    'backgroundColor': BUTTON_COLOR}),
+
+                    html.Button(id='mute-button',
+                                n_clicks=0,
+                                children='Mute',
+                                style={'margin': PADDING,
+                                    'backgroundColor': BUTTON_COLOR})
+                ]),
+                # Screenshot, reboot, poweroff section
+                html.Div([
+                    html.Button(id='screenshot-button',
+                                n_clicks=0,
+                                children='Screenshot',
+                                style={'text-align': 'center',
+                                    'margin': PADDING,
+                                    'backgroundColor': BUTTON_COLOR}),
+                ]),
+                html.Div([
+                    html.Button(id='reboot-button',
+                                n_clicks=0,
+                                children='Reboot',
+                                style={'text-align': 'center',
+                                    'margin': PADDING,
+                                    'backgroundColor': BUTTON_COLOR}),
+
+                    html.Button(id='poweroff-button',
+                                n_clicks=0,
+                                children='Power Off',
+                                style={'text-align': 'center',
+                                    'margin': PADDING,
+                                    'backgroundColor': BUTTON_COLOR})
+                ])
+            ])
+
+
 def tab_render(tab):
     if tab == 'upload-tab':
         return create_upload_content()
+    elif tab == 'system-options-tab':
+        return create_system_options()
+
+
+def files_tab_render(tab,
+                     uploaded_filenames,
+                     uploaded_file_contents):
+    if tab == 'download-tab':
+        return callback.create_download_files_content(uploaded_filenames,
+                                                      uploaded_file_contents)
+    elif tab == 'delete-tab':
+        return callback.create_delete_files_content(uploaded_filenames,
+                                                    uploaded_file_contents)
