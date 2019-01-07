@@ -13,7 +13,10 @@
       - python3
       - python-pip
       - git
-      
+      - libasound-dev
+      - portaudio19-dev
+      - libportaudio2
+      - libportaudiocpp0
 
   - name: Install flask and wtforms
     pip:
@@ -25,7 +28,7 @@
     block:
     - name: "apt | ensure Google linux signing key present"
       apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
-          
+
     - name: "apt | ensure Google chrome repo present"
       become: yes
       apt_repository:
@@ -33,16 +36,16 @@
         filename: "google-chrome"
         state: present
         update_cache: yes
-    
+
     - name: Update apt cache
       apt: update_cache=true
-      
+
 
     - name: Install chrome
       apt:
         pkg: google-chrome-stable
         state: installed
-        
+
     - name: Set chrome as default browser
       command: xdg-settings set default-web-browser google-chrome.desktop
 
@@ -50,12 +53,12 @@
     file:
       path: /usr/local/teleserver
       state: absent
-      
+
   - name: Pull files
     git:
       repo: 'https://github.com/Dysproz/teleserver.git'
       dest: /usr/local/teleserver
-  
+
   - name: Set permission for directory
     file:
       state: directory
@@ -66,7 +69,7 @@
   - name: Find username
     command: who
     register: username
-    
+
   - name: Add startup command to bashrc
     lineinfile:
       path: "/home/{{ (username.stdout_lines[0].split())[0] }}/.profile"
@@ -75,9 +78,6 @@
 
   - name: Turn off auto screen lock
     shell: gsettings set org.gnome.desktop.screensaver lock-enabled false
-    
+
   - name: Reboot
     command: reboot
-  
-
-        

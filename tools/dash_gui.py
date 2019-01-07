@@ -2,6 +2,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import tools.system_calls as system
 
+
 PADDING = '10px'
 BUTTON_COLOR = '#d3d3d3'
 
@@ -89,6 +90,14 @@ def gui_layout():
                                'backgroundColor': BUTTON_COLOR})
         ]),
 
+        # Tabs
+        html.Div([
+            dcc.Tabs(id="tabs", value='upload-tab', children=[
+                dcc.Tab(label='Upload', value='upload-tab'),
+                ]),
+            html.Div(id='tabs-content')
+        ]),
+
         # Dummy outputs section
         html.Div([
             html.Div(id='open-output-message')
@@ -118,3 +127,39 @@ def gui_layout():
               'backgroundColor': '#66BDDC'})
 
     return layout
+
+
+def create_upload_content():
+    output = html.Div([
+        html.H1("File Browser"),
+        html.H2("Upload"),
+        dcc.Upload(
+            id="upload-data",
+            children=html.Div(
+                ["Drag and drop or click to select a file to upload."]
+            ), style={"width": "100%",
+                      "height": "60px",
+                      "lineHeight": "60px",
+                      "borderWidth": "1px",
+                      "borderStyle": "dashed",
+                      "borderRadius": "5px",
+                      "textAlign": "center",
+                      "margin": "10px",
+                      },
+            multiple=True,
+        ),
+        html.H2("File List"),
+        html.Ul(id="file-list"),
+    ], style={'font-family': 'helvetica',
+              'color': ' #525252',
+              'font-size': '20',
+              'text-align': 'center',
+              'vertical-align': 'text-top',
+              'max-width': '50%',
+              'display': 'inline-block'})
+    return output
+
+
+def tab_render(tab):
+    if tab == 'upload-tab':
+        return create_upload_content()

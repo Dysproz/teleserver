@@ -2,13 +2,15 @@ import tools.system_calls as system
 import flask
 import dash
 import tools.classic_gui_functions as classic_gui
-from tools.dash_gui import gui_layout
+from tools.dash_gui import gui_layout, tab_render
 from dash.dependencies import Input, Output, State
+import tools.app_callbacks as callback
 
 
 OPENMEET_var = "http://www.google.com"
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
+callback.create_upload_directory()
 server = flask.Flask(__name__)
 app = dash.Dash(__name__,
                 server=server,
@@ -64,6 +66,13 @@ def mute():
 def update():
     system.update()
     return "updating...\n"
+
+
+@server.route("/download/<path:path>")
+def download(path):
+    return flask.send_from_directory(callback.UPLOAD_DIRECTORY,
+                                     path,
+                                     as_attachment=True)
 
 
 @server.route('/classic_gui', methods=['GET', 'POST'])
@@ -136,6 +145,21 @@ def app_mute(n_clicks):
     if n_clicks != 0:
         system.mute()
     return u'muted'
+
+
+@app.callback(
+    Output("file-list", "children"),
+    [Input("upload-data", "filename"), Input("upload-data", "contents")],
+)
+def update_file_upload_output(uploaded_filenames, uploaded_file_contents):
+    return callback.update_files_output(uploaded_filenames,
+                                        uploaded_file_contents)
+
+
+@app.callback(Output('tabs-content', 'children'),
+              [Input('tabs', 'value')])
+def render_content(tab):
+    return tab_render(tab)
 
 
 if __name__ == '__main__':
