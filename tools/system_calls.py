@@ -5,10 +5,7 @@ import alsaaudio
 
 def urlChecker(url):
     if not url.startswith('http'):
-        if url.startswith('www'):
-            url = "http://" + url
-        else:
-            url = "http://www." + url
+        url = "https://" + url
     return url
 
 
