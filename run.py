@@ -6,6 +6,11 @@ from tools.dash_gui import gui_layout, tab_render, files_tab_render
 from dash.dependencies import Input, Output, State
 import tools.app_callbacks as callback
 import os
+import dash_auth
+from tools.secret_manager import SecretManager
+
+sec = SecretManager()
+VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
 
 
 OPENMEET_var = "http://www.google.com"
@@ -18,6 +23,8 @@ app = dash.Dash(__name__,
                 external_stylesheets=external_stylesheets)
 app.layout = gui_layout()
 app.config['suppress_callback_exceptions'] = True
+auth = dash_auth.BasicAuth(app,
+                           VALID_USERNAME_PASSWORD_PAIRS)
 
 
 @server.route('/openmeet')
@@ -80,6 +87,7 @@ def download(path):
 def delete(path):
     os.remove(os.path.join(callback.UPLOAD_DIRECTORY, path))
     return flask.redirect(flask.url_for('/'))
+
 
 @server.route('/classic_gui', methods=['GET', 'POST'])
 def gui():
