@@ -3,7 +3,7 @@ import os
 from urllib.parse import quote as urlquote
 import dash_html_components as html
 
-UPLOAD_DIRECTORY = "~/Documents/app_uploaded_files"
+UPLOAD_DIRECTORY = "/usr/local/teleserver/app_uploaded_files"
 
 
 def create_upload_directory():
