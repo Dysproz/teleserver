@@ -78,5 +78,10 @@
   - name: Turn off auto screen lock
     shell: gsettings set org.gnome.desktop.screensaver lock-enabled false
 
+  - name: Set login credentials
+    shell: python3 set_login_credentials.py
+    args:
+      chdir: /usr/local/teleserver
+
   - name: Reboot
     command: reboot
