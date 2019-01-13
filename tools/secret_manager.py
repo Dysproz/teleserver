@@ -1,5 +1,6 @@
 from cryptography.fernet import Fernet
 import configparser
+import os
 
 
 class SecretManager():
@@ -8,12 +9,15 @@ class SecretManager():
         self.secret_file = secret_file
 
     def get_credentials(self):
-        config = configparser.ConfigParser()
-        config.read(self.secret_file)
-        key = config['KEY']['key']
-        user_crypt = config['PASS']['user']
-        pass_crypt = config['PASS']['pass']
-        return [self.decrypt(key, user_crypt), self.decrypt(key, pass_crypt)]
+        if os.path.isfile(self.secret_file):
+            config = configparser.ConfigParser()
+            config.read(self.secret_file)
+            key = config['KEY']['key']
+            user_crypt = config['PASS']['user']
+            pass_crypt = config['PASS']['pass']
+            return [self.decrypt(key, user_crypt), self.decrypt(key, pass_crypt)]
+        else:
+            return ['', '']
 
     @staticmethod
     def decrypt(key, var):
