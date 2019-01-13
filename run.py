@@ -23,8 +23,9 @@ app = dash.Dash(__name__,
                 external_stylesheets=external_stylesheets)
 app.layout = gui_layout()
 app.config['suppress_callback_exceptions'] = True
-auth = dash_auth.BasicAuth(app,
-                           VALID_USERNAME_PASSWORD_PAIRS)
+if VALID_USERNAME_PASSWORD_PAIRS != ['', '']:
+    auth = dash_auth.BasicAuth(app,
+                               VALID_USERNAME_PASSWORD_PAIRS)
 
 
 @server.route('/openmeet')
