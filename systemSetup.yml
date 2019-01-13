@@ -63,7 +63,6 @@
   - name: Install flask and wtforms
     pip:
       requirements: "/usr/local/teleserver/requirements.txt"
-      executable: pip3
 
   - name: Find username
     command: who
