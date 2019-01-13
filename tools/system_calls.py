@@ -8,7 +8,7 @@ def close():
 
 
 def web_open(url):
-    webbrowser.open(url, new=0)
+    webbrowser.open('https://'+url, new=0)
 
 
 def poweroff():
