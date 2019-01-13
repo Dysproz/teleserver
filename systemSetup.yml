@@ -73,7 +73,7 @@
     lineinfile:
       path: "/home/{{ (username.stdout_lines[0].split())[0] }}/.profile"
       state: present
-      line: nohup python /usr/local/teleserver/run.py &
+      line: nohup python3 /usr/local/teleserver/run.py &
 
   - name: Turn off auto screen lock
     shell: gsettings set org.gnome.desktop.screensaver lock-enabled false
