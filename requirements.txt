@@ -7,4 +7,3 @@ flask
 wtforms
 cryptography
 configparser
-getpass
