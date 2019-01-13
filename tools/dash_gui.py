@@ -40,7 +40,7 @@ def gui_layout():
         html.Div([
             dcc.Tabs(id="tabs", value='system-options-tab', children=[
                 dcc.Tab(label='System Options', value='system-options-tab'),
-                dcc.Tab(label='Upload', value='upload-tab')
+                dcc.Tab(label='Files', value='upload-tab')
                 ]),
             html.Div(id='tabs-content')
         ]),
