@@ -11,7 +11,7 @@
     with_items:
       - python
       - python3
-      - python-pip
+      - python3-pip
       - git
       - libasound-dev
       - portaudio19-dev
@@ -63,6 +63,7 @@
   - name: Install required modules
     pip:
       requirements: "/usr/local/teleserver/requirements.txt"
+      executable: pip3
 
   - name: Find username
     command: who
