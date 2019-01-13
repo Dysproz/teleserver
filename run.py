@@ -1,7 +1,6 @@
 import tools.system_calls as system
 import flask
 import dash
-import tools.classic_gui_functions as classic_gui
 from tools.dash_gui import gui_layout, tab_render, files_tab_render
 from dash.dependencies import Input, Output, State
 import tools.app_callbacks as callback
@@ -71,12 +70,6 @@ def mute():
     return "muted\n"
 
 
-@server.route('/update')
-def update():
-    system.update()
-    return "updating...\n"
-
-
 @server.route("/download/<path:path>")
 def download(path):
     return flask.send_from_directory(callback.UPLOAD_DIRECTORY,
@@ -88,11 +81,6 @@ def download(path):
 def delete(path):
     os.remove(os.path.join(callback.UPLOAD_DIRECTORY, path))
     return flask.redirect(flask.url_for('/'))
-
-
-@server.route('/classic_gui', methods=['GET', 'POST'])
-def gui():
-    return classic_gui.gui_web()
 
 
 @app.callback(Output('open-output-message', 'children'),

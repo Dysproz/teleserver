@@ -84,5 +84,8 @@
       state: directory
       mode: 0777
 
+  - name: Set default screenshot directory
+    shell: gsettings set org.gnome.gnome-screenshot auto-save-directory "file:///usr/local/teleserver/app_uploaded_files/"
+
   - name: Reboot
     command: reboot

@@ -33,10 +33,6 @@ def volume(volume):
     vol.setvolume(volume)
 
 
-def update():
-    call(['/usr/local/teleserver/update.sh'])
-
-
 def get_volume():
     vol = alsaaudio.Mixer()
     value = vol.getvolume()
