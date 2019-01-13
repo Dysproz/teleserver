@@ -3,18 +3,12 @@ import webbrowser
 import alsaaudio
 
 
-def urlChecker(url):
-    if not url.startswith('http'):
-        url = "https://" + url
-    return url
-
-
 def close():
     call(["pkill", "chrome"])
 
 
 def web_open(url):
-    webbrowser.open(urlChecker(url), new=0)
+    webbrowser.open(url, new=0)
 
 
 def poweroff():

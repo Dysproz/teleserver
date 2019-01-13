@@ -4,7 +4,7 @@ import configparser
 
 class SecretManager():
 
-    def __init__(self, secret_file='secret.ini'):
+    def __init__(self, secret_file='/usr/local/teleserver/secret.ini'):
         self.secret_file = secret_file
 
     def get_credentials(self):
@@ -31,7 +31,7 @@ class SecretManager():
         f = Fernet(key)
         return f.encrypt(bytes(var, 'utf-8')).decode('utf-8')
 
-    def set_credentials(self, user, password, file_loc='secret.ini'):
+    def set_credentials(self, user, password, file_loc='/usr/local/teleserver/secret.ini'):
         user_crypt, pass_crypt, key = self.encrypt_credentials(user, password)
         config = configparser.ConfigParser()
         config['PASS'] = {'user': user_crypt,
