@@ -60,7 +60,7 @@
       mode: 0777
       recurse: yes
 
-  - name: Install flask and wtforms
+  - name: Install required modules
     pip:
       requirements: "/usr/local/teleserver/requirements.txt"
 
