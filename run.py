@@ -21,6 +21,7 @@ app = dash.Dash(__name__,
                 server=server,
                 external_stylesheets=external_stylesheets)
 app.layout = gui_layout()
+app.title = 'teleserver'
 app.config['suppress_callback_exceptions'] = True
 if VALID_USERNAME_PASSWORD_PAIRS != ['', '']:
     auth = dash_auth.BasicAuth(app,
