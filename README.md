@@ -1,9 +1,8 @@
 # Teleserver
 ### Control your ubuntu machine over Flask http server
-
+![logo](https://github.com/Dysproz/teleserver/blob/master/images/logo.png)
 ## Intro
-This is an ansible based tool to build http server on your ubuntu machine
-which allows you to execute commands over web.
+This is a client to open you ubuntu machine to local network and allow to control it over the web.
 
 # Install
 In order to install server you'll need ansible.
@@ -15,7 +14,7 @@ sudo ansible-playbook systemSetup.yml
 However, if you don't know what's going on, download *install.sh* ans run it as sudo.
 It'll install ansible, download *systemSetup.yml* and run it.
 
-After reboot, all you need to find IP address of your machine (for example with ifconfig).
+After reboot, all you need to find IP address of your machine (for example with ip a).
 
 The server is configured to start at the beginning of user sesison.
 
@@ -29,7 +28,7 @@ python3 /usr/local/teleserver/set_login_credentials.py
 
 You'll be asked for login and password which later should be used for login on GUI.
 
-[If you didn't set login credentials and you are prompted for login już apply without entering any credentials.]
+[*If you didn't set login credentials and you are prompted for login już apply without entering any credentials.*]
 
 # How to use it?
 
@@ -108,7 +107,7 @@ In the bottom part of website you'll find some tabs that cover different types o
 In this tab are some buttons to control basic system options.
 
 Slider allows to choose desired level of volume on teleserver.
-Under the slider you'll find selected colume level with slider and current volume level set on teleserver.
+Under the slider you'll find selected volume level with slider and current volume level set on teleserver.
 With button *Set Volume* selected volume level will be applied on teleserver.
 *Mute* button simply mutes the volume.
 
@@ -128,3 +127,7 @@ In order to uninstall teleserver, run ansible script /usr/local/teleserver/unins
 ```
 sudo ansible-playbook /usr/local/teleserver/uninstall.yml
 ```
+
+# Supported releases
+* bionic (18.04)
+* cosmic (18.10)
