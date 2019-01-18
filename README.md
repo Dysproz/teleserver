@@ -1,6 +1,7 @@
 # Teleserver
 ### Control your ubuntu machine over Flask http server
-![logo](https://github.com/Dysproz/teleserver/blob/master/images/logo.png)
+
+<img src="https://github.com/Dysproz/teleserver/blob/master/images/logo.png" height="200" width="200">
 ## Intro
 This is a client to open you ubuntu machine to local network and allow to control it over the web.
 
