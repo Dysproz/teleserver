@@ -75,10 +75,10 @@ def gui_layout():
               'backgroundColor': '#FFFFFF'}),
     html.A([
             html.Img(
-                src='https://github.com/Dysproz/teleserver/blob/master/images/info.png',
+                src='https://raw.githubusercontent.com/Dysproz/teleserver/master/images/info.png',
                 style={
-                    'height' : '4%',
-                    'width' : '4%',
+                    'height' : '1.2%',
+                    'width' : '1.2%',
                     'float' : 'right',
                     'position' : 'relative',
                     'padding-top' : 0,
