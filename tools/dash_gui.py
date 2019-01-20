@@ -40,7 +40,8 @@ def gui_layout():
         html.Div([
             dcc.Tabs(id="tabs", value='system-options-tab', children=[
                 dcc.Tab(label='System Options', value='system-options-tab'),
-                dcc.Tab(label='Files', value='upload-tab')
+                dcc.Tab(label='Files', value='upload-tab'),
+                dcc.Tab(label='Screen', value='screen-tab')
                 ]),
             html.Div(id='tabs-content')
         ]),
@@ -169,11 +170,24 @@ def create_system_options():
             ])
 
 
+def create_screen_content():
+    return html.Div([
+        html.Div(id='live-screen'),
+        dcc.Interval(
+            id='screen-interval-component',
+            interval=1000,
+            n_intervals=0
+        )
+    ])
+
+
 def tab_render(tab):
     if tab == 'upload-tab':
         return create_upload_content()
     elif tab == 'system-options-tab':
         return create_system_options()
+    elif tab == 'screen-tab':
+        return create_screen_content()
 
 
 def files_tab_render(tab,

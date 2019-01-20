@@ -2,6 +2,8 @@ import base64
 import os
 from urllib.parse import quote as urlquote
 import dash_html_components as html
+import tools.system_calls as system
+
 
 UPLOAD_DIRECTORY = "/usr/local/teleserver/app_uploaded_files"
 
@@ -56,3 +58,9 @@ def create_delete_files_content(uploaded_filenames, uploaded_file_contents):
         return [html.Li("No files yet!")]
     else:
         return [html.Li(file_delete_link(filename)) for filename in files]
+
+
+def get_screen_grab():
+    return html.Img(src='data:image/jpeg;base64,{}'
+                        .format(system.get_screen()),
+                    style={'width': '75%', 'height': '75%'})
