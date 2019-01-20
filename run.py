@@ -169,5 +169,11 @@ def files_render_content(tab,
                             uploaded_file_contents)
 
 
+@app.callback(Output('live-screen', 'children'),
+              [Input('screen-interval-component', 'n_intervals')])
+def grab_screen(n):
+    return callback.get_screen_grab()
+
+
 if __name__ == '__main__':
     server.run(host='0.0.0.0', port=8080)

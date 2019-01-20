@@ -8,7 +8,7 @@ BUTTON_COLOR = '#d3d3d3'
 
 
 def gui_layout():
-    layout = html.Div([
+    layout = html.Div([html.Div([
         html.H1(children='teleserver', style={'font-family': 'helvetica',
                                               'color': '#3B5DBC',
                                               'font-size': '50',
@@ -40,7 +40,8 @@ def gui_layout():
         html.Div([
             dcc.Tabs(id="tabs", value='system-options-tab', children=[
                 dcc.Tab(label='System Options', value='system-options-tab'),
-                dcc.Tab(label='Files', value='upload-tab')
+                dcc.Tab(label='Files', value='upload-tab'),
+                dcc.Tab(label='Screen', value='screen-tab')
                 ]),
             html.Div(id='tabs-content')
         ]),
@@ -63,7 +64,7 @@ def gui_layout():
         ], style={'display': 'none'}),
         html.Div([
             html.Div(id='mute-output-message')
-        ], style={'display': 'none'})
+        ], style={'display': 'none'}),
     ], style={'text-align': 'center',
               'font-family': 'helvetica',
               'position': 'absolute',
@@ -71,8 +72,21 @@ def gui_layout():
               'left': '0',
               'width': '100%',
               'height': '100%',
-              'backgroundColor': '#FFFFFF'})
+              'backgroundColor': '#FFFFFF'}),
+    html.A([
+            html.Img(
+                src='https://github.com/Dysproz/teleserver/blob/master/images/info.png',
+                style={
+                    'height' : '4%',
+                    'width' : '4%',
+                    'float' : 'right',
+                    'position' : 'relative',
+                    'padding-top' : 0,
+                    'padding-right' : 0
+                })
+    ], href='https://github.com/Dysproz/teleserver')
 
+    ])
     return layout
 
 
@@ -169,11 +183,24 @@ def create_system_options():
             ])
 
 
+def create_screen_content():
+    return html.Div([
+        html.Div(id='live-screen'),
+        dcc.Interval(
+            id='screen-interval-component',
+            interval=1000,
+            n_intervals=0
+        )
+    ])
+
+
 def tab_render(tab):
     if tab == 'upload-tab':
         return create_upload_content()
     elif tab == 'system-options-tab':
         return create_system_options()
+    elif tab == 'screen-tab':
+        return create_screen_content()
 
 
 def files_tab_render(tab,
