@@ -111,9 +111,7 @@ def create_upload_content():
         ),
         html.H2("File List"),
         dcc.Dropdown(
-    options=[
-        callback.get_files_list()
-    ],
+    options=callback.get_files_list(),
     value='files_checkbox'
     ),
     html.Div([
