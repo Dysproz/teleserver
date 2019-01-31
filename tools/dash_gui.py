@@ -111,7 +111,9 @@ def create_upload_content():
         ),
         html.H2("File List"),
         dcc.Checklist(
-    options=callback.get_files_list()
+            id='files-checklist',
+            options=callback.get_files_list(),
+            values=[]
     ),
     html.Div([
         html.Button(id='download-files-button',
