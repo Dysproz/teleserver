@@ -60,6 +60,10 @@ def create_delete_files_content(uploaded_filenames, uploaded_file_contents):
         return [html.Li(file_delete_link(filename)) for filename in files]
 
 
+def get_files_list():
+    files = uploaded_files()
+    return [{'label': filename, 'value': filename} for filename in files]
+
 def get_screen_grab():
     return html.Img(src='data:image/jpeg;base64,{}'
                         .format(system.get_screen()),
