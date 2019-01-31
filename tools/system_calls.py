@@ -6,6 +6,41 @@ from io import BytesIO
 import base64
 
 
+URL_SCHEMES = ('file://',
+               'ftp://',
+               'gopher://',
+               'hdl://',
+               'http://',
+               'https://',
+               'imap://',
+               'mailto://',
+               'mms://',
+               'news://',
+               'nntp://',
+               'prospero://',
+               'rsync://',
+               'rtsp://',
+               'rtspu://',
+               'sftp://',
+               'shttp://',
+               'sip://',
+               'sips://',
+               'snews://',
+               'svn://',
+               'svn+ssh://',
+               'telnet://',
+               'wais://',
+               'ws://',
+               'wss://')
+
+
+def url_parser(url):
+    if url.startswith(URL_SCHEMES):
+        return url
+    else:
+        return 'https://' + url
+
+
 def close():
     call(["pkill", "chrome"])
 
