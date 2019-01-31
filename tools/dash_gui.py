@@ -110,13 +110,29 @@ def create_upload_content():
             multiple=True,
         ),
         html.H2("File List"),
-        html.Div([
-            dcc.Tabs(id="files-tabs", value='download-tab', children=[
-                dcc.Tab(label='Download', value='download-tab'),
-                dcc.Tab(label='Delete', value='delete-tab')
-                ]),
-            html.Div(id='files-tabs-content')
-        ])
+        dcc.Dropdown(
+    options=[
+        callback.get_files_list()
+    ],
+    value='files_checkbox'
+    ),
+    html.Div([
+        html.Button(id='download-files-button',
+                    n_clicks=0,
+                    children='Download',
+                    style={'margin': PADDING,
+                           'backgroundColor': BUTTON_COLOR}),
+        html.Button(id='delete-files-button',
+                    n_clicks=0,
+                    children='Delete',
+                    style={'margin': PADDING,
+                           'backgroundColor': BUTTON_COLOR}),
+        html.Button(id='open-files-button',
+                    n_clicks=0,
+                    children='Open',
+                    style={'margin': PADDING,
+                           'backgroundColor': BUTTON_COLOR})
+    ])
     ], style={'font-family': 'helvetica',
               'color': ' #525252',
               'font-size': '20',
