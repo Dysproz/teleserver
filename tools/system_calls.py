@@ -46,7 +46,7 @@ def close():
 
 
 def web_open(url):
-    webbrowser.open('https://'+url, new=0)
+    webbrowser.open(url_parser(url), new=0)
 
 
 def poweroff():

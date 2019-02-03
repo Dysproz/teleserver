@@ -39,6 +39,25 @@ def get_files_list():
     return [{'label': filename, 'value': filename} for filename in files]
 
 
+def download_files(files, server, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
+    for filename in files:
+        server.send_from_directory(UPLOAD_DIRECTORY,
+                                   filename,
+                                   as_attachment=True)
+
+
+def delete_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
+    for filename in files:
+        os.remove('{dir}/{filename}'.format(dir=UPLOAD_DIRECTORY,
+                                            filename=filename))
+
+
+def open_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
+    for filename in files:
+        system.web_open('file://{dir}/{filename}'.format(dir=UPLOAD_DIRECTORY,
+                                                         filename=filename))
+
+
 def get_screen_grab():
     return html.Img(src='data:image/jpeg;base64,{}'
                         .format(system.get_screen()),

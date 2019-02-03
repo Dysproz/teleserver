@@ -48,23 +48,8 @@ def gui_layout():
 
         # Dummy outputs section
         html.Div([
-            html.Div(id='open-output-message')
-        ], style={'display': 'none'}),
-        html.Div([
-            html.Div(id='close-output-message')
-        ], style={'display': 'none'}),
-        html.Div([
-            html.Div(id='screenshot-output-message')
-        ], style={'display': 'none'}),
-        html.Div([
-            html.Div(id='reboot-output-message')
-        ], style={'display': 'none'}),
-        html.Div([
-            html.Div(id='poweroff-output-message')
-        ], style={'display': 'none'}),
-        html.Div([
-            html.Div(id='mute-output-message')
-        ], style={'display': 'none'}),
+            html.Div(id='mock-output-message')
+        ], style={'display': 'none'})
     ], style={'text-align': 'center',
               'font-family': 'helvetica',
               'position': 'absolute',
