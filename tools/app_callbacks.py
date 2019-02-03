@@ -1,11 +1,9 @@
 import base64
 import os
-from urllib.parse import quote as urlquote
 import dash_html_components as html
 import tools.system_calls as system
 import flask
 import zipfile
-
 
 UPLOAD_DIRECTORY = "/usr/local/teleserver/app_uploaded_files"
 
@@ -43,32 +41,37 @@ def get_files_list():
 
 def download_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
     if len(files) < 2:
-            return flask.send_file('{dir}/{filename}'.format(dir=UPLOAD_DIRECTORY,
-                                                             filename=files[0]))
-    zipf = zipfile.ZipFile('teleserver_download.zip', 'w', zipfile.ZIP_DEFLATED)
+        return flask.send_file('{dir}/{filename}'.format(
+            dir=UPLOAD_DIRECTORY, filename=files[0]))
+    zipf = zipfile.ZipFile('teleserver_download.zip', 'w',
+                           zipfile.ZIP_DEFLATED)
     for filename in files:
-        zipf.write('{dir}/{filename}'.format(dir=UPLOAD_DIRECTORY,
-                                             filename=filename))
+        zipf.write('{dir}/{filename}'.format(
+            dir=UPLOAD_DIRECTORY, filename=filename))
     zipf.close()
-    return flask.send_file('teleserver_download.zip',
-                            mimetype='zip',
-                            attachment_filename='teleserver_download.zip',
-                            as_attachment=True)
+    return flask.send_file(
+        'teleserver_download.zip',
+        mimetype='zip',
+        attachment_filename='teleserver_download.zip',
+        as_attachment=True)
 
 
 def delete_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
     for filename in files:
-        os.remove('{dir}/{filename}'.format(dir=UPLOAD_DIRECTORY,
-                                            filename=filename))
+        os.remove('{dir}/{filename}'.format(
+            dir=UPLOAD_DIRECTORY, filename=filename))
 
 
 def open_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
     for filename in files:
-        system.web_open('file://{dir}/{filename}'.format(dir=UPLOAD_DIRECTORY,
-                                                         filename=filename))
+        system.web_open('file://{dir}/{filename}'.format(
+            dir=UPLOAD_DIRECTORY, filename=filename))
 
 
 def get_screen_grab():
-    return html.Img(src='data:image/jpeg;base64,{}'
-                        .format(system.get_screen()),
-                    style={'width': '75%', 'height': '75%'})
+    return html.Img(
+        src='data:image/jpeg;base64,{}'.format(system.get_screen()),
+        style={
+            'width': '75%',
+            'height': '75%'
+        })

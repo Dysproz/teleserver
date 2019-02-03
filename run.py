@@ -1,31 +1,27 @@
 import tools.system_calls as system
 import flask
 import dash
-from tools.dash_gui import gui_layout, tab_render, files_tab_render
+from tools.dash_gui import gui_layout, tab_render
 from dash.dependencies import Input, Output, State
 import tools.app_callbacks as callback
-import os
 import dash_auth
 from tools.secret_manager import SecretManager
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
 
-
 OPENMEET_var = "http://www.google.com"
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 callback.create_upload_directory()
 server = flask.Flask(__name__)
-app = dash.Dash(__name__,
-                server=server,
-                external_stylesheets=external_stylesheets)
+app = dash.Dash(
+    __name__, server=server, external_stylesheets=external_stylesheets)
 app.layout = gui_layout()
 app.title = 'teleserver'
 app.config['suppress_callback_exceptions'] = True
 if VALID_USERNAME_PASSWORD_PAIRS != ['', '']:
-    auth = dash_auth.BasicAuth(app,
-                               VALID_USERNAME_PASSWORD_PAIRS)
+    auth = dash_auth.BasicAuth(app, VALID_USERNAME_PASSWORD_PAIRS)
 
 
 @server.route('/openmeet')
@@ -71,33 +67,36 @@ def mute():
     return "muted\n"
 
 
-@app.callback(Output('open-output-message', 'children'),
-              [Input('url-button', 'n_clicks')],
-              [State('url', 'value')])
+@app.callback(
+    Output('open-output-message', 'children'),
+    [Input('url-button', 'n_clicks')], [State('url', 'value')])
 def app_open(n_clicks, value):
     if n_clicks != 0:
         system.web_open(value)
     return u'opened'
 
 
-@app.callback(Output('close-output-message', 'children'),
-              [Input('url-close-button', 'n_clicks')])
+@app.callback(
+    Output('close-output-message', 'children'),
+    [Input('url-close-button', 'n_clicks')])
 def app_close(n_clicks):
     if n_clicks != 0:
         system.close()
     return u'closed'
 
 
-@app.callback(Output('screenshot-output-message', 'children'),
-              [Input('screenshot-button', 'n_clicks')])
+@app.callback(
+    Output('screenshot-output-message', 'children'),
+    [Input('screenshot-button', 'n_clicks')])
 def app_screenshot(n_clicks):
     if n_clicks != 0:
         system.screenshot()
     return u'screenshot taken'
 
 
-@app.callback(Output('reboot-output-message', 'children'),
-              [Input('reboot-button', 'n_clicks')])
+@app.callback(
+    Output('reboot-output-message', 'children'),
+    [Input('reboot-button', 'n_clicks')])
 def app_reboot(n_clicks):
     if n_clicks != 0:
         system.reboot()
@@ -105,8 +104,9 @@ def app_reboot(n_clicks):
     return u'reboot'
 
 
-@app.callback(Output('poweroff-output-message', 'children'),
-              [Input('poweroff-button', 'n_clicks')])
+@app.callback(
+    Output('poweroff-output-message', 'children'),
+    [Input('poweroff-button', 'n_clicks')])
 def app_poweroff(n_clicks):
     if n_clicks != 0:
         system.poweroff()
@@ -114,74 +114,75 @@ def app_poweroff(n_clicks):
     return u'poweroff'
 
 
-@app.callback(Output('volume-slider', 'value'),
-              [Input('set-volume-button', 'n_clicks')],
-              [State('volume-slider', 'value')])
+@app.callback(
+    Output('volume-slider', 'value'), [Input('set-volume-button', 'n_clicks')],
+    [State('volume-slider', 'value')])
 def app_volume(n_clicks, value):
     if n_clicks != 0:
         system.volume(value)
     return value
 
 
-@app.callback(Output('volume-indicator', 'children'),
-              [Input('volume-slider', 'value')])
+@app.callback(
+    Output('volume-indicator', 'children'), [Input('volume-slider', 'value')])
 def app_volume_indicate(value):
     return u'Selected Value: {val} | System Volume: {sys}'\
             .format(val=value, sys=system.get_volume())
 
 
-@app.callback(Output('mute-output-message', 'children'),
-              [Input('mute-button', 'n_clicks')])
+@app.callback(
+    Output('mute-output-message', 'children'),
+    [Input('mute-button', 'n_clicks')])
 def app_mute(n_clicks):
     if n_clicks != 0:
         system.mute()
     return u'muted'
 
 
-@app.callback(Output('tabs-content', 'children'),
-              [Input('tabs', 'value')])
+@app.callback(Output('tabs-content', 'children'), [Input('tabs', 'value')])
 def render_content(tab):
     return tab_render(tab)
 
 
-@app.callback(Output('output-data-upload', 'children'),
-              [Input('upload-data', 'contents')],
-              [State('upload-data', 'filename')])
-def upload_content(uploaded_file_contents,
-                   uploaded_filenames):
-    return callback.upload(uploaded_filenames,
-                           uploaded_file_contents)
+@app.callback(
+    Output('output-data-upload', 'children'),
+    [Input('upload-data', 'contents')], [State('upload-data', 'filename')])
+def upload_content(uploaded_file_contents, uploaded_filenames):
+    return callback.upload(uploaded_filenames, uploaded_file_contents)
 
 
-@app.callback(Output('download-files-output-message', 'children'),
-              [Input('download-files-button', 'n_clicks')],
-              [State('files-checklist', 'values')])
+@app.callback(
+    Output('download-files-output-message',
+           'children'), [Input('download-files-button', 'n_clicks')],
+    [State('files-checklist', 'values')])
 def download_selected_files(n_clicks, files):
     if n_clicks != 0:
-        callback.download_files(files, server)
-    return u'downloading'
+        return callback.download_files(files, server)
 
 
-@app.callback(Output('delete-files-output-message', 'children'),
-              [Input('delete-files-button', 'n_clicks')],
-              [State('files-checklist', 'values')])
+@app.callback(
+    Output('delete-files-output-message',
+           'children'), [Input('delete-files-button', 'n_clicks')],
+    [State('files-checklist', 'values')])
 def delete_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.delete_files(files)
     return u'deleted'
 
 
-@app.callback(Output('open-files-output-message', 'children'),
-              [Input('open-files-button', 'n_clicks')],
-              [State('files-checklist', 'values')])
+@app.callback(
+    Output('open-files-output-message',
+           'children'), [Input('open-files-button', 'n_clicks')],
+    [State('files-checklist', 'values')])
 def open_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.open_files(files)
     return u'opened'
 
 
-@app.callback(Output('live-screen', 'children'),
-              [Input('screen-interval-component', 'n_intervals')])
+@app.callback(
+    Output('live-screen', 'children'),
+    [Input('screen-interval-component', 'n_intervals')])
 def grab_screen(n):
     return callback.get_screen_grab()
 
