@@ -6,6 +6,7 @@ from dash.dependencies import Input, Output, State
 import tools.app_callbacks as callback
 import dash_auth
 from tools.secret_manager import SecretManager
+import os
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
@@ -157,7 +158,17 @@ def upload_content(uploaded_file_contents, uploaded_filenames):
     [State('files-checklist', 'values')])
 def download_selected_files(n_clicks, files):
     if n_clicks != 0:
-        return callback.download_files(files, server)
+        callback.download_files(files)
+    return u'prepared'
+
+
+@server.route('/download')
+def download_flask():
+    if os.path.exists('{}/teleserver_download.zip'.format(os.getcwd())):
+        return flask.send_from_directory(os.getcwd(),
+                                         'teleserver_download.zip')
+    else:
+        return u'No files selected'
 
 
 @app.callback(

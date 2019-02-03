@@ -137,7 +137,7 @@ def create_upload_content():
                 html.Button(
                     id='download-files-button',
                     n_clicks=0,
-                    children='Download',
+                    children='Prepare Download',
                     style={
                         'margin': PADDING,
                         'backgroundColor': BUTTON_COLOR
@@ -157,8 +157,9 @@ def create_upload_content():
                     style={
                         'margin': PADDING,
                         'backgroundColor': BUTTON_COLOR
-                    })
-            ])
+                    }),
+            ]),
+            html.Div([html.A('Download link', href='/download')])
         ],
         style={
             'font-family': 'helvetica',

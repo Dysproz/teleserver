@@ -5,7 +5,7 @@ import tools.system_calls as system
 import flask
 import zipfile
 
-UPLOAD_DIRECTORY = "/usr/local/teleserver/app_uploaded_files"
+UPLOAD_DIRECTORY = str(os.path.join(os.getcwd(), 'app_uploaded_files'))
 
 
 def create_upload_directory():
@@ -39,30 +39,28 @@ def get_files_list():
     return [{'label': filename, 'value': filename} for filename in files]
 
 
-def download_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
-    if len(files) < 2:
-        return flask.send_file('{dir}/{filename}'.format(
-            dir=UPLOAD_DIRECTORY, filename=files[0]))
+def download_files(files):
     zipf = zipfile.ZipFile('teleserver_download.zip', 'w',
                            zipfile.ZIP_DEFLATED)
     for filename in files:
-        zipf.write('{dir}/{filename}'.format(
-            dir=UPLOAD_DIRECTORY, filename=filename))
+        zipf.write(
+            '{dir}/{filename}'.format(dir=UPLOAD_DIRECTORY, filename=filename),
+            arcname=filename)
     zipf.close()
-    return flask.send_file(
+    flask.send_file(
         'teleserver_download.zip',
         mimetype='zip',
         attachment_filename='teleserver_download.zip',
         as_attachment=True)
 
 
-def delete_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
+def delete_files(files):
     for filename in files:
         os.remove('{dir}/{filename}'.format(
             dir=UPLOAD_DIRECTORY, filename=filename))
 
 
-def open_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
+def open_files(files):
     for filename in files:
         system.web_open('file://{dir}/{filename}'.format(
             dir=UPLOAD_DIRECTORY, filename=filename))
