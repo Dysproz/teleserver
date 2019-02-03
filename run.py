@@ -162,8 +162,8 @@ def render_content(tab):
               [State('upload-data', 'filename')])
 def upload_content(uploaded_file_contents,
                    uploaded_filenames):
-    return upload(uploaded_filenames,
-                  uploaded_file_contents)
+    return callback.upload(uploaded_filenames,
+                           uploaded_file_contents)
 
 
 @app.callback(Output('live-screen', 'children'),
