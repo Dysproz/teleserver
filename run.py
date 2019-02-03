@@ -84,7 +84,7 @@ def delete(path):
     return flask.redirect(flask.url_for('/'))
 
 
-@app.callback(Output('mock-output-message', 'children'),
+@app.callback(Output('open-output-message', 'children'),
               [Input('url-button', 'n_clicks')],
               [State('url', 'value')])
 def app_open(n_clicks, value):
@@ -101,7 +101,7 @@ def app_close(n_clicks):
     return u'closed'
 
 
-@app.callback(Output('mock-output-message', 'children'),
+@app.callback(Output('screenshot-output-message', 'children'),
               [Input('screenshot-button', 'n_clicks')])
 def app_screenshot(n_clicks):
     if n_clicks != 0:
@@ -109,7 +109,7 @@ def app_screenshot(n_clicks):
     return u'screenshot taken'
 
 
-@app.callback(Output('mock-output-message', 'children'),
+@app.callback(Output('reboot-output-message', 'children'),
               [Input('reboot-button', 'n_clicks')])
 def app_reboot(n_clicks):
     if n_clicks != 0:
@@ -118,7 +118,7 @@ def app_reboot(n_clicks):
     return u'reboot'
 
 
-@app.callback(Output('mock-output-message', 'children'),
+@app.callback(Output('poweroff-output-message', 'children'),
               [Input('poweroff-button', 'n_clicks')])
 def app_poweroff(n_clicks):
     if n_clicks != 0:
@@ -143,7 +143,7 @@ def app_volume_indicate(value):
             .format(val=value, sys=system.get_volume())
 
 
-@app.callback(Output('mock-output-message', 'children'),
+@app.callback(Output('mute-output-message', 'children'),
               [Input('mute-button', 'n_clicks')])
 def app_mute(n_clicks):
     if n_clicks != 0:
@@ -166,31 +166,31 @@ def upload_content(uploaded_file_contents,
                            uploaded_file_contents)
 
 
-@app.callback(Output('mock-output-message', 'children'),
+@app.callback(Output('download-files-output-message', 'children'),
               [Input('download-files-button', 'n_clicks')],
               [State('files-checklist', 'values')])
 def download_selected_files(n_clicks, files, server):
     if n_clicks != 0:
         callback.download_files(files, server)
-    return u'muted'
+    return u'downloading'
 
 
-@app.callback(Output('mock-output-message', 'children'),
+@app.callback(Output('delete-files-output-message', 'children'),
               [Input('delete-files-button', 'n_clicks')],
               [State('files-checklist', 'values')])
 def delete_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.delete_files(files)
-    return u'muted'
+    return u'deleted'
 
 
-@app.callback(Output('mock-output-message', 'children'),
+@app.callback(Output('open-files-output-message', 'children'),
               [Input('open-files-button', 'n_clicks')],
               [State('files-checklist', 'values')])
 def open_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.open_files(files)
-    return u'muted'
+    return u'opened'
 
 
 @app.callback(Output('live-screen', 'children'),
