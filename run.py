@@ -71,19 +71,6 @@ def mute():
     return "muted\n"
 
 
-@server.route("/download/<path:path>")
-def download(path):
-    return flask.send_from_directory(callback.UPLOAD_DIRECTORY,
-                                     path,
-                                     as_attachment=True)
-
-
-@server.route("/delete/<path:path>")
-def delete(path):
-    os.remove(os.path.join(callback.UPLOAD_DIRECTORY, path))
-    return flask.redirect(flask.url_for('/'))
-
-
 @app.callback(Output('open-output-message', 'children'),
               [Input('url-button', 'n_clicks')],
               [State('url', 'value')])

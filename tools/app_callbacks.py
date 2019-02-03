@@ -4,6 +4,7 @@ from urllib.parse import quote as urlquote
 import dash_html_components as html
 import tools.system_calls as system
 import flask
+import zipfile
 
 
 UPLOAD_DIRECTORY = "/usr/local/teleserver/app_uploaded_files"
@@ -40,11 +41,19 @@ def get_files_list():
     return [{'label': filename, 'value': filename} for filename in files]
 
 
-def download_files(files, server, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
+def download_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
+    if len(files) < 2:
+            return flask.send_file('{dir}/{filename}'.format(dir=UPLOAD_DIRECTORY,
+                                                             filename=files[0]))
+    zipf = zipfile.ZipFile('teleserver_download.zip', 'w', zipfile.ZIP_DEFLATED)
     for filename in files:
-        flask.send_from_directory(UPLOAD_DIRECTORY,
-                                   filename,
-                                   as_attachment=True)
+        zipf.write('{dir}/{filename}'.format(dir=UPLOAD_DIRECTORY,
+                                             filename=filename))
+    zipf.close()
+    return flask.send_file('teleserver_download.zip',
+                            mimetype='zip',
+                            attachment_filename='teleserver_download.zip',
+                            as_attachment=True)
 
 
 def delete_files(files, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
