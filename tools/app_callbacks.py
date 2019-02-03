@@ -3,6 +3,7 @@ import os
 from urllib.parse import quote as urlquote
 import dash_html_components as html
 import tools.system_calls as system
+import flask
 
 
 UPLOAD_DIRECTORY = "/usr/local/teleserver/app_uploaded_files"
@@ -41,7 +42,7 @@ def get_files_list():
 
 def download_files(files, server, UPLOAD_DIRECTORY=UPLOAD_DIRECTORY):
     for filename in files:
-        server.send_from_directory(UPLOAD_DIRECTORY,
+        flask.send_from_directory(UPLOAD_DIRECTORY,
                                    filename,
                                    as_attachment=True)
 

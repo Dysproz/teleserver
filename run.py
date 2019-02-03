@@ -169,7 +169,7 @@ def upload_content(uploaded_file_contents,
 @app.callback(Output('download-files-output-message', 'children'),
               [Input('download-files-button', 'n_clicks')],
               [State('files-checklist', 'values')])
-def download_selected_files(n_clicks, files, server):
+def download_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.download_files(files, server)
     return u'downloading'
