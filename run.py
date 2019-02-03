@@ -157,16 +157,13 @@ def render_content(tab):
     return tab_render(tab)
 
 
-@app.callback(Output('files-tabs-content', 'children'),
-              [Input('files-tabs', 'value'),
-              Input("upload-data", "filename"),
-              Input("upload-data", "contents")])
-def files_render_content(tab,
-                         uploaded_filenames,
-                         uploaded_file_contents):
-    return files_tab_render(tab,
-                            uploaded_filenames,
-                            uploaded_file_contents)
+@app.callback(Output('output-data-upload', 'children'),
+              [Input('upload-data', 'contents')],
+              [State('upload-data', 'filename')])
+def upload_content(uploaded_file_contents,
+                   uploaded_filenames):
+    return upload(uploaded_filenames,
+                  uploaded_file_contents)
 
 
 @app.callback(Output('live-screen', 'children'),

@@ -115,6 +115,7 @@ def create_upload_content():
             options=callback.get_files_list(),
             values=[]
     ),
+    html.Div(id='output-data-upload'),
     html.Div([
         html.Button(id='download-files-button',
                     n_clicks=0,
