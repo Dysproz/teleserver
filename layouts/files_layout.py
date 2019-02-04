@@ -60,6 +60,7 @@ def create_upload_content():
             html.Div([html.A('Download link', href='/download')])
         ],
         style={
+            'margin': style.PADDING,
             'font-family': 'helvetica',
             'color': ' #525252',
             'font-size': '20',

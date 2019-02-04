@@ -17,6 +17,7 @@ def create_system_options():
                     value=system.get_volume())
             ],
                      style={
+                         'margin': style.PADDING,
                          'width': '50%',
                          'display': 'inline-block',
                          'padding': style.PADDING

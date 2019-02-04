@@ -71,6 +71,10 @@ def volume(volume):
     vol.setvolume(volume)
 
 
+def xdotool_key(keys):
+    call(['xdotool', 'key', keys])
+
+
 def get_volume():
     vol = alsaaudio.Mixer()
     value = vol.getvolume()

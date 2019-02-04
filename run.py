@@ -2,13 +2,14 @@ import dash
 import dash_auth
 from dash.dependencies import Input, Output, State
 import flask
+import inspect
 import os
 
+from layouts.key_control_layout import SHORTCUT_NAMES, SHORTCUTS
 from layouts.main_layout import gui_layout, tab_render
 import tools.app_callbacks as callback
 from tools.secret_manager import SecretManager
 import tools.system_calls as system
-
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
@@ -191,6 +192,29 @@ def open_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.open_files(files)
     return u'opened'
+
+
+@app.callback(
+    Output('custom-shortcut-output-message', 'children'),
+    [Input('key-control-button', 'n_clicks')], [State('key-control', 'value')])
+def key_control(clicks, value):
+    if clicks > 0:
+        system.xdotool_key(value)
+    return u'executed'
+
+
+@app.callback(
+    Output('shortcut-output-message', 'children'),
+    [Input(name, 'n_clicks_timestamp') for name in SHORTCUT_NAMES])
+def shortcuts_click(*SHORTCUT_NAMES):
+    frame = inspect.currentframe()
+    _, _, _, values = inspect.getargvalues(frame)
+    vals = [int(val) for val in values['SHORTCUT_NAMES']]
+    last_clicked_value = max(vals)
+    if last_clicked_value > 0:
+        clicked_button = SHORTCUTS[vals.index(max(vals))]
+        system.xdotool_key(clicked_button[1])
+    return u'clicked'
 
 
 @app.callback(
