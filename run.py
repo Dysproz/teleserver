@@ -1,12 +1,14 @@
-import tools.system_calls as system
-import flask
 import dash
-from tools.dash_gui import gui_layout, tab_render
-from dash.dependencies import Input, Output, State
-import tools.app_callbacks as callback
 import dash_auth
-from tools.secret_manager import SecretManager
+from dash.dependencies import Input, Output, State
+import flask
 import os
+
+from layouts.main_layout import gui_layout, tab_render
+import tools.app_callbacks as callback
+from tools.secret_manager import SecretManager
+import tools.system_calls as system
+
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]

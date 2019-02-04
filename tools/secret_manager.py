@@ -1,5 +1,5 @@
-from cryptography.fernet import Fernet
 import configparser
+from cryptography.fernet import Fernet
 import os
 
 

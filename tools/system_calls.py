@@ -1,9 +1,9 @@
+import alsaaudio
+import base64
+from io import BytesIO
+import pyscreenshot as ImageGrab
 from subprocess import call
 import webbrowser
-import alsaaudio
-import pyscreenshot as ImageGrab
-from io import BytesIO
-import base64
 
 
 URL_SCHEMES = ('file://',

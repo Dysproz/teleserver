@@ -1,0 +1,2 @@
+PADDING = '10px'
+BUTTON_COLOR = '#d3d3d3'

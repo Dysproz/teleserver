@@ -1,9 +1,11 @@
 import base64
-import os
 import dash_html_components as html
-import tools.system_calls as system
 import flask
+import os
 import zipfile
+
+import tools.system_calls as system
+
 
 UPLOAD_DIRECTORY = str(os.path.join(os.getcwd(), 'app_uploaded_files'))
 
