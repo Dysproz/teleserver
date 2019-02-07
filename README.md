@@ -99,6 +99,9 @@ There's also GUI that covers features specified in previous paragraph and extend
 
 ![GUI](https://github.com/Dysproz/teleserver/blob/master/images/gui1.png)
 ![GUI](https://github.com/Dysproz/teleserver/blob/master/images/gui2.png)
+![GUI](https://github.com/Dysproz/teleserver/blob/master/images/gui3.png)
+![GUI](https://github.com/Dysproz/teleserver/blob/master/images/gui4.png)
+![GUI](https://github.com/Dysproz/teleserver/blob/master/images/gui5.png)
 
 In the top panel, you'll find simple text field where you can paste url that should appear on teleserver. Close button closes webbrowser.
 
@@ -123,6 +126,25 @@ Files is separate feature from teleserver that turns teleserver into mini file s
 By clicking on draging file into dashed area you upload file into teleserver that's visible in files list below.
 
 By switching tabs you can download or delete files from list.
+
+### Shortcuts
+
+In this section user can execute some basic shortcuts to easily control web browser and windows active on teleserver.
+
+There is also a textbox where user can write it's own command compatible with ```xdotool key``` command.
+Ex.
+```
+super+h
+```
+Will execute clicking Super and h keys together which will result in minimalizing active window.
+
+###
+
+In this section user has on-screen keyboard that can be used to insert data on teleserver.
+I works basically like normal keyboard.
+
+There is also a textbox where user can insert commands compatible with ```xdotool key```
+
 # Uninstall
 
 In order to uninstall teleserver, run ansible script /usr/local/teleserver/uninstall.yml.
