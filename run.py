@@ -5,6 +5,7 @@ import flask
 import inspect
 import os
 
+from layouts.keyboard_layout import FLAT_KEYBOARD_KEYS, KEYBOARD_NAMES
 from layouts.key_control_layout import SHORTCUT_NAMES, SHORTCUTS
 from layouts.main_layout import gui_layout, tab_render
 import tools.app_callbacks as callback
@@ -214,6 +215,20 @@ def shortcuts_click(*SHORTCUT_NAMES):
     if last_clicked_value > 0:
         clicked_button = SHORTCUTS[vals.index(max(vals))]
         system.xdotool_key(clicked_button[1])
+    return u'clicked'
+
+
+@app.callback(
+    Output('keyboard-output-message', 'children'),
+    [Input(name, 'n_clicks_timestamp') for name in KEYBOARD_NAMES])
+def keyboard_click(*KEYBOARD_NAMES):
+    frame = inspect.currentframe()
+    _, _, _, values = inspect.getargvalues(frame)
+    vals = [int(val) for val in values['KEYBOARD_NAMES']]
+    last_clicked_value = max(vals)
+    if last_clicked_value > 0:
+        clicked_button = FLAT_KEYBOARD_KEYS[vals.index(max(vals))]
+        system.xdotool_key(clicked_button)
     return u'clicked'
 
 

@@ -2,6 +2,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 from layouts.files_layout import create_upload_content
+from layouts.keyboard_layout import create_keyboard_layout
 from layouts.key_control_layout import create_key_control_layout
 from layouts.screen_layout import create_screen_content
 import layouts.style.style as style
@@ -55,6 +56,7 @@ def gui_layout():
                                 value='system-options-tab'),
                             dcc.Tab(label='Files', value='upload-tab'),
                             dcc.Tab(label='Shortcuts', value='shortcuts-tab'),
+                            dcc.Tab(label='Keyboard', value='keyboard-tab'),
                             dcc.Tab(label='Screen', value='screen-tab')
                         ]),
                     html.Div(id='tabs-content')
@@ -82,6 +84,8 @@ def gui_layout():
                 html.Div([html.Div(id='custom-shortcut-output-message')],
                          style={'display': 'none'}),
                 html.Div([html.Div(id='shortcut-output-message')],
+                         style={'display': 'none'}),
+                html.Div([html.Div(id='keyboard-output-message')],
                          style={'display': 'none'})
             ],
             style={
@@ -119,5 +123,7 @@ def tab_render(tab):
         return create_system_options()
     elif tab == 'shortcuts-tab':
         return create_key_control_layout()
+    elif tab == 'keyboard-tab':
+        return create_keyboard_layout()
     elif tab == 'screen-tab':
         return create_screen_content()
