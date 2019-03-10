@@ -13,6 +13,11 @@ UPLOAD_DIRECTORY = str(os.path.join(os.getcwd(), 'app_uploaded_files'))
 def create_upload_directory():
     if not os.path.exists(UPLOAD_DIRECTORY):
         os.makedirs(UPLOAD_DIRECTORY)
+    call(['gsettings',
+          'set',
+          'org.gnome.gnome-screenshot',
+          'auto-save-directory',
+          'file://{}'.format(UPLOAD_DIRECTORY)])
 
 
 def save_file(name, content):
