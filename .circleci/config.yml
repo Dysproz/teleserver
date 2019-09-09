@@ -7,10 +7,9 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: pip install tox flake8 --user
-      - run:
-          name: Run tox
-          command: tox
+          command: |
+            pip install tox flake8 --user
+            tox
     working_directory: ~/repo
 workflows:
   version: 2
