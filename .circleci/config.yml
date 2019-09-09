@@ -7,10 +7,11 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: |
-            pip install tox flake8 --user
-            tox
-    working_directory: ~/repo
+          command: sudo pip install tox flake8
+      - run:
+          name: Run tox
+          command: tox
+    working_directory: ~/teleserver
 workflows:
   version: 2
   tox_test:
