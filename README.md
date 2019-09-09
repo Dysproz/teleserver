@@ -6,6 +6,11 @@
 ## Intro
 This is a client to open you ubuntu machine to local network and allow to control it over the web.
 
+[![CircleCI](https://circleci.com/gh/Dysproz/teleserver/tree/master.svg?style=svg)](https://circleci.com/gh/Dysproz/teleserver/tree/master)
+[![GitHub license](https://img.shields.io/github/license/Dysproz/teleserver.svg)](https://github.com/Dysproz/teleserver/blob/master/LICENSE)
+[![Generic badge](https://img.shields.io/badge/ubuntu-18.04|18.10|19.04-e95420.svg)](https://[shields.io/](https://github.com/Dysproz/teleserver))
+[![GitHub release](https://img.shields.io/github/release/Dysproz/teleserver.svg)](https://GitHub.com/Dysproz/Steleserver/releases/)
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 # Install
 In order to install server you'll need ansible.
 
