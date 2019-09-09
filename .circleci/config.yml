@@ -11,6 +11,7 @@ jobs:
       - run:
           name: Run tox
           command: tox
+    working_directory: ~/repo
 workflows:
   version: 2
   tox_test:
