@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: pip install tox flake8
+          command: pip install tox flake8 --user
       - run:
           name: Run tox
           command: tox
