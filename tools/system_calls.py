@@ -5,6 +5,8 @@ import pyscreenshot as ImageGrab
 from subprocess import call
 import webbrowser
 
+from common import TELESERVER_DIR
+
 
 URL_SCHEMES = ('file://',
                'ftp://',
@@ -58,7 +60,10 @@ def reboot():
 
 
 def screenshot():
-    call(['gnome-screenshot'])
+    call(['gnome-screenshot',
+          '-f',
+          '{dir}/data/$(date +"%m_%d_%Y_%H_%M_%S""_screenshot.png")'
+          .format(dir=TELESERVER_DIR)])
 
 
 def mute():
