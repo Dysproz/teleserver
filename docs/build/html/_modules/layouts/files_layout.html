@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>layouts.files_layout &#8212; teleserver  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for layouts.files_layout</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">dash_core_components</span> <span class="k">as</span> <span class="nn">dcc</span>
+<span class="kn">import</span> <span class="nn">dash_html_components</span> <span class="k">as</span> <span class="nn">html</span>
+<span class="kn">import</span> <span class="nn">layouts.style.style</span> <span class="k">as</span> <span class="nn">style</span>
+<span class="kn">from</span> <span class="nn">tools.app_callbacks</span> <span class="k">import</span> <span class="n">get_files_list</span>
+
+
+<div class="viewcode-block" id="create_upload_content"><a class="viewcode-back" href="../../layouts.html#layouts.files_layout.create_upload_content">[docs]</a><span class="k">def</span> <span class="nf">create_upload_content</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Dash html layout of Files tab</span>
+
+<span class="sd">    :return: Files tab layout as dash component</span>
+<span class="sd">    :rtype: dash.development.base_component.ComponentMeta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">H1</span><span class="p">(</span><span class="s2">&quot;File Browser&quot;</span><span class="p">),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">H2</span><span class="p">(</span><span class="s2">&quot;Upload&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Upload</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;upload-data&quot;</span><span class="p">,</span>
+                <span class="n">children</span><span class="o">=</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                    <span class="p">[</span><span class="s2">&quot;Drag and drop or click to select a file to upload.&quot;</span><span class="p">]),</span>
+                <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;100%&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;60px&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;lineHeight&quot;</span><span class="p">:</span> <span class="s2">&quot;60px&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;borderWidth&quot;</span><span class="p">:</span> <span class="s2">&quot;1px&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;borderStyle&quot;</span><span class="p">:</span> <span class="s2">&quot;dashed&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;borderRadius&quot;</span><span class="p">:</span> <span class="s2">&quot;5px&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;textAlign&quot;</span><span class="p">:</span> <span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;margin&quot;</span><span class="p">:</span> <span class="s2">&quot;10px&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="n">multiple</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">H2</span><span class="p">(</span><span class="s2">&quot;File List&quot;</span><span class="p">),</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Checklist</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;files-checklist&#39;</span><span class="p">,</span>
+                <span class="n">options</span><span class="o">=</span><span class="n">get_files_list</span><span class="p">(),</span>
+                <span class="n">values</span><span class="o">=</span><span class="p">[]),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;output-data-upload&#39;</span><span class="p">),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;download-files-button&#39;</span><span class="p">,</span>
+                    <span class="n">n_clicks</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">children</span><span class="o">=</span><span class="s1">&#39;Prepare Download&#39;</span><span class="p">,</span>
+                    <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                        <span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
+                        <span class="s1">&#39;backgroundColor&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">BUTTON_COLOR</span>
+                    <span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;delete-files-button&#39;</span><span class="p">,</span>
+                    <span class="n">n_clicks</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">children</span><span class="o">=</span><span class="s1">&#39;Delete&#39;</span><span class="p">,</span>
+                    <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                        <span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
+                        <span class="s1">&#39;backgroundColor&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">BUTTON_COLOR</span>
+                    <span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;open-files-button&#39;</span><span class="p">,</span>
+                    <span class="n">n_clicks</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">children</span><span class="o">=</span><span class="s1">&#39;Open&#39;</span><span class="p">,</span>
+                    <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                        <span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
+                        <span class="s1">&#39;backgroundColor&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">BUTTON_COLOR</span>
+                    <span class="p">}),</span>
+            <span class="p">]),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">A</span><span class="p">(</span><span class="s1">&#39;Download link&#39;</span><span class="p">,</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;/download&#39;</span><span class="p">)])</span>
+        <span class="p">],</span>
+        <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
+            <span class="s1">&#39;font-family&#39;</span><span class="p">:</span> <span class="s1">&#39;helvetica&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39; #525252&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;font-size&#39;</span><span class="p">:</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;text-align&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;vertical-align&#39;</span><span class="p">:</span> <span class="s1">&#39;text-top&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;max-width&#39;</span><span class="p">:</span> <span class="s1">&#39;50%&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;inline-block&#39;</span>
+        <span class="p">})</span>
+    <span class="k">return</span> <span class="n">output</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">teleserver</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Szymon Piotr Krasuski.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

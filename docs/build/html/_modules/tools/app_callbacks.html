@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>tools.app_callbacks &#8212; teleserver  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for tools.app_callbacks</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">dash_html_components</span> <span class="k">as</span> <span class="nn">html</span>
+<span class="kn">import</span> <span class="nn">flask</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">call</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="kn">import</span> <span class="nn">tools.system_calls</span> <span class="k">as</span> <span class="nn">system</span>
+
+
+<span class="n">UPLOAD_DIRECTORY</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">&#39;app_uploaded_files&#39;</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="create_upload_directory"><a class="viewcode-back" href="../../tools.html#tools.app_callbacks.create_upload_directory">[docs]</a><span class="k">def</span> <span class="nf">create_upload_directory</span><span class="p">():</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">UPLOAD_DIRECTORY</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">UPLOAD_DIRECTORY</span><span class="p">)</span>
+    <span class="n">call</span><span class="p">([</span><span class="s1">&#39;gsettings&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;set&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;org.gnome.gnome-screenshot&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;auto-save-directory&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;file://</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">UPLOAD_DIRECTORY</span><span class="p">)])</span></div>
+
+
+<div class="viewcode-block" id="save_file"><a class="viewcode-back" href="../../tools.html#tools.app_callbacks.save_file">[docs]</a><span class="k">def</span> <span class="nf">save_file</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Save file to the machine</span>
+
+<span class="sd">    :param name: Name of the file</span>
+<span class="sd">    :type name: str</span>
+<span class="sd">    :param content: Content of the file</span>
+<span class="sd">    :type content: base64.bytes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;;base64,&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">UPLOAD_DIRECTORY</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">decodebytes</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="uploaded_files"><a class="viewcode-back" href="../../tools.html#tools.app_callbacks.uploaded_files">[docs]</a><span class="k">def</span> <span class="nf">uploaded_files</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get list of the files in teleserver upload directory</span>
+
+<span class="sd">    :return: List of files</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">UPLOAD_DIRECTORY</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">UPLOAD_DIRECTORY</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">files</span></div>
+
+
+<div class="viewcode-block" id="upload"><a class="viewcode-back" href="../../tools.html#tools.app_callbacks.upload">[docs]</a><span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="n">uploaded_filenames</span><span class="p">,</span> <span class="n">uploaded_file_contents</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Upload multiple files</span>
+
+<span class="sd">    :param uploaded_filenames: Filenames of files</span>
+<span class="sd">    :type uploaded_filenames: list</span>
+<span class="sd">    :param uploaded_file_contents: Content of files</span>
+<span class="sd">    :type uploaded_file_contents: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">uploaded_filenames</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">uploaded_file_contents</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">uploaded_filenames</span><span class="p">,</span> <span class="n">uploaded_file_contents</span><span class="p">):</span>
+            <span class="n">save_file</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_files_list"><a class="viewcode-back" href="../../tools.html#tools.app_callbacks.get_files_list">[docs]</a><span class="k">def</span> <span class="nf">get_files_list</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get list of uploaded files</span>
+
+<span class="sd">    :return: List of files</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">uploaded_files</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[{</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">filename</span><span class="p">}</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="download_files"><a class="viewcode-back" href="../../tools.html#tools.app_callbacks.download_files">[docs]</a><span class="k">def</span> <span class="nf">download_files</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Download selected files</span>
+
+<span class="sd">    :param files: List fo files to download</span>
+<span class="sd">    :type files: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">zipf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="s1">&#39;teleserver_download.zip&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span>
+                           <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">zipf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">{dir}</span><span class="s1">/</span><span class="si">{filename}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">dir</span><span class="o">=</span><span class="n">UPLOAD_DIRECTORY</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">),</span>
+            <span class="n">arcname</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">zipf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">flask</span><span class="o">.</span><span class="n">send_file</span><span class="p">(</span>
+        <span class="s1">&#39;teleserver_download.zip&#39;</span><span class="p">,</span>
+        <span class="n">mimetype</span><span class="o">=</span><span class="s1">&#39;zip&#39;</span><span class="p">,</span>
+        <span class="n">attachment_filename</span><span class="o">=</span><span class="s1">&#39;teleserver_download.zip&#39;</span><span class="p">,</span>
+        <span class="n">as_attachment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_files"><a class="viewcode-back" href="../../tools.html#tools.app_callbacks.delete_files">[docs]</a><span class="k">def</span> <span class="nf">delete_files</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Delete selected files</span>
+
+<span class="sd">    :param files: List fo files to delete</span>
+<span class="sd">    :type files: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{dir}</span><span class="s1">/</span><span class="si">{filename}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="nb">dir</span><span class="o">=</span><span class="n">UPLOAD_DIRECTORY</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="open_files"><a class="viewcode-back" href="../../tools.html#tools.app_callbacks.open_files">[docs]</a><span class="k">def</span> <span class="nf">open_files</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Open selected files</span>
+
+<span class="sd">    :param files: Files to open</span>
+<span class="sd">    :type files: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">system</span><span class="o">.</span><span class="n">web_open</span><span class="p">(</span><span class="s1">&#39;file://</span><span class="si">{dir}</span><span class="s1">/</span><span class="si">{filename}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="nb">dir</span><span class="o">=</span><span class="n">UPLOAD_DIRECTORY</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="get_screen_grab"><a class="viewcode-back" href="../../tools.html#tools.app_callbacks.get_screen_grab">[docs]</a><span class="k">def</span> <span class="nf">get_screen_grab</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get dash html Img object of teleserver current screen</span>
+
+<span class="sd">    :return: Screen snapshot as dash component</span>
+<span class="sd">    :rtype: dash.development.base_component.ComponentMeta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Img</span><span class="p">(</span>
+        <span class="n">src</span><span class="o">=</span><span class="s1">&#39;data:image/jpeg;base64,</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">get_screen</span><span class="p">()),</span>
+        <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;75%&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="s1">&#39;75%&#39;</span>
+        <span class="p">})</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">teleserver</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Szymon Piotr Krasuski.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

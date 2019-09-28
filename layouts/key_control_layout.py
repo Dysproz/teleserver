@@ -24,6 +24,11 @@ SHORTCUTS = web_key_shortcuts + system_key_shortcuts
 
 
 def create_key_control_layout():
+    """Create dash key control tab layout
+
+    :return: Key control tab layout as dash component
+    :rtype: dash.development.base_component.ComponentMeta
+    """
     return html.Div([
         html.Div([
             dcc.Input(id='key-control', type='text', value=''),
@@ -42,6 +47,11 @@ def create_key_control_layout():
 
 
 def create_sample_key_shortcuts():
+    """Create dash layout form key shortcuts layout
+
+    :return: Dash component with key shortcuts
+    :rtype: dash.development.base_component.ComponentMeta
+    """
     web_buttons = []
     [
         web_buttons.append(

@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to teleserver’s documentation! &#8212; teleserver  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-teleserver-s-documentation">
+<h1>Welcome to teleserver’s documentation!<a class="headerlink" href="#welcome-to-teleserver-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="readme-file">
+<h1>Readme File<a class="headerlink" href="#readme-file" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="teleserver">
+<h1>Teleserver<a class="headerlink" href="#teleserver" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="control-your-ubuntu-machine-over-flask-http-server">
+<h2>Control your ubuntu machine over Flask http server<a class="headerlink" href="#control-your-ubuntu-machine-over-flask-http-server" title="Permalink to this headline">¶</a></h2>
+<p><span class="raw-html-m2r"><img src="https://github.com/Dysproz/teleserver/blob/master/images/logo.png" height="200" width="200"></span></p>
+<div class="section" id="intro">
+<h3>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h3>
+<p>This is a client to open you ubuntu machine to local network and allow to control it over the web.</p>
+<a class="reference external image-reference" href="https://circleci.com/gh/Dysproz/teleserver/tree/master"><img alt="CircleCI" src="https://circleci.com/gh/Dysproz/teleserver/tree/master.svg?style=svg" /></a>
+<a class="reference external image-reference" href="https://github.com/Dysproz/teleserver/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/Dysproz/teleserver.svg" /></a>
+<a class="reference external image-reference" href="https://[shields.io/](https://github.com/Dysproz/teleserver"><img alt="Generic badge" src="https://img.shields.io/badge/ubuntu-18.04|18.10|19.04-e95420.svg" /></a>
+<p>)</p>
+<a class="reference external image-reference" href="https://GitHub.com/Dysproz/Steleserver/releases/"><img alt="GitHub release" src="https://img.shields.io/github/release/Dysproz/teleserver.svg" /></a>
+<a class="reference external image-reference" href="https://www.python.org/"><img alt="forthebadge made-with-python" src="http://ForTheBadge.com/images/badges/made-with-python.svg" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="install">
+<h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
+<p>In order to install server you’ll need ansible.</p>
+<p>If you have it already installed on your machine or you know how to install it, just download systemSetup.yml and run it with:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="n">systemSetup</span><span class="p">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+<p>However, if you don’t know what’s going on, download <em>install.sh</em> ans run it as sudo.
+It’ll install ansible, download <em>systemSetup.yml</em> and run it.</p>
+<p>After reboot, all you need to find IP address of your machine (for example with ip a).</p>
+<p>The server is configured to start at the beginning of user sesison.</p>
+<p>By default teleserver can be reached by anyone,
+However, if you want to set password and login for GUI run this script:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">teleserver</span><span class="o">/</span><span class="n">set_login_credentials</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>You’ll be asked for login and password which later should be used for login on GUI.</p>
+<p>[<em>If you didn’t set login credentials and you are prompted for login już apply without entering any credentials.</em>]</p>
+</div>
+<div class="section" id="how-to-use-it">
+<h1>How to use it?<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline">¶</a></h1>
+<p>Firstly, you need IP of your machine.
+When you get it then all the ‘commands’ will begin with</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span>
+</pre></div>
+</div>
+<p>where 8080 is a port that machine’s server operates on.</p>
+<p>Basic usage is to open web browser on desired website remotely.</p>
+<p>Use curl with this url (or just paste url to web browser):</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="k">open</span><span class="o">?</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;&lt;url of your website&gt;&#39;</span>
+</pre></div>
+</div>
+<p>and</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="k">close</span>
+</pre></div>
+</div>
+<p>will close the browser.</p>
+<p>There’s also reboot and poweroff:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">reboot</span>
+</pre></div>
+</div>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">poweroff</span>
+</pre></div>
+</div>
+<p>that works exactly as inserting these commands into terminal.
+So:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">screenshot</span>
+</pre></div>
+</div>
+<p>will take a screenshot.</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">mute</span>
+</pre></div>
+</div>
+<p>will mute computer.</p>
+<p>There’s one more command.
+If you have your favourite website (for example Google Meet),
+you can specify that link in /usr/local/teleserver/run.py by changing OPENMEET_var to your website.</p>
+<p>Afterwards</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">openmeet</span>
+</pre></div>
+</div>
+<p>will open link specified by you.
+By default it’s linked to Google.
+(Please be aware that after changing OPENMEET_var it’s essential to restart server or simply reboot)</p>
+<p>CLI interface may be convinient for automated apps that can’t use GUI, but should operate somehow with teleserver.</p>
+<p>There’s also GUI that covers features specified in previous paragraph and extends it to additional features.</p>
+<a class="reference external image-reference" href="https://github.com/Dysproz/teleserver/blob/master/images/gui1.png"><img alt="GUI" src="https://github.com/Dysproz/teleserver/blob/master/images/gui1.png" /></a>
+<a class="reference external image-reference" href="https://github.com/Dysproz/teleserver/blob/master/images/gui2.png"><img alt="GUI" src="https://github.com/Dysproz/teleserver/blob/master/images/gui2.png" /></a>
+<a class="reference external image-reference" href="https://github.com/Dysproz/teleserver/blob/master/images/gui3.png"><img alt="GUI" src="https://github.com/Dysproz/teleserver/blob/master/images/gui3.png" /></a>
+<a class="reference external image-reference" href="https://github.com/Dysproz/teleserver/blob/master/images/gui4.png"><img alt="GUI" src="https://github.com/Dysproz/teleserver/blob/master/images/gui4.png" /></a>
+<a class="reference external image-reference" href="https://github.com/Dysproz/teleserver/blob/master/images/gui5.png"><img alt="GUI" src="https://github.com/Dysproz/teleserver/blob/master/images/gui5.png" /></a>
+<p>In the top panel, you’ll find simple text field where you can paste url that should appear on teleserver. Close button closes webbrowser.</p>
+<p>In the bottom part of website you’ll find some tabs that cover different types of features.</p>
+<div class="section" id="system-options">
+<h2>System Options<a class="headerlink" href="#system-options" title="Permalink to this headline">¶</a></h2>
+<p>In this tab are some buttons to control basic system options.</p>
+<p>Slider allows to choose desired level of volume on teleserver.
+Under the slider you’ll find selected volume level with slider and current volume level set on teleserver.
+With button <em>Set Volume</em> selected volume level will be applied on teleserver.
+<em>Mute</em> button simply mutes the volume.</p>
+<p><em>Screenshot</em> button simply takes screenshot of teleserver screen and saves it to files (described in other paragraph).</p>
+<p><em>reboot</em> and <em>poweroff</em> buttons does the same as terminal commands with the same names.</p>
+</div>
+<div class="section" id="files">
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<p>Files is separate feature from teleserver that turns teleserver into mini file server.
+By clicking on draging file into dashed area you upload file into teleserver that’s visible in files list below.</p>
+<p>By switching tabs you can download or delete files from list.</p>
+</div>
+<div class="section" id="shortcuts">
+<h2>Shortcuts<a class="headerlink" href="#shortcuts" title="Permalink to this headline">¶</a></h2>
+<p>In this section user can execute some basic shortcuts to easily control web browser and windows active on teleserver.</p>
+<p>There is also a textbox where user can write it’s own command compatible with <code class="docutils literal notranslate"><span class="pre">xdotool</span> <span class="pre">key</span></code> command.
+Ex.</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">super</span><span class="o">+</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>Will execute clicking Super and h keys together which will result in minimalizing active window.</p>
+<div class="section" id="id1">
+<h3>#<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>In this section user has on-screen keyboard that can be used to insert data on teleserver.
+I works basically like normal keyboard.</p>
+<p>There is also a textbox where user can insert commands compatible with <code class="docutils literal notranslate"><span class="pre">xdotool</span> <span class="pre">key</span></code></p>
+</div>
+</div>
+</div>
+<div class="section" id="uninstall">
+<h1>Uninstall<a class="headerlink" href="#uninstall" title="Permalink to this headline">¶</a></h1>
+<p>In order to uninstall teleserver, run ansible script /usr/local/teleserver/uninstall.yml.</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">teleserver</span><span class="o">/</span><span class="n">uninstall</span><span class="p">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="supported-releases">
+<h1>Supported releases<a class="headerlink" href="#supported-releases" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>bionic (18.04)</p></li>
+<li><p>cosmic (18.10)</p></li>
+<li><p>disco (19.04)</p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">teleserver</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Szymon Piotr Krasuski.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

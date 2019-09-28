@@ -1,0 +1,433 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>tools package &#8212; teleserver  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="tools-package">
+<h1>tools package<a class="headerlink" href="#tools-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-tools.app_callbacks">
+<span id="tools-app-callbacks-module"></span><h2>tools.app_callbacks module<a class="headerlink" href="#module-tools.app_callbacks" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tools.app_callbacks.create_upload_directory">
+<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">create_upload_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.create_upload_directory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="tools.app_callbacks.delete_files">
+<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">delete_files</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.delete_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete selected files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>files</strong> (<em>list</em>) – List fo files to delete</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.app_callbacks.download_files">
+<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">download_files</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.download_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download selected files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>files</strong> (<em>list</em>) – List fo files to download</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.app_callbacks.get_files_list">
+<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">get_files_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.get_files_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of uploaded files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of files</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.app_callbacks.get_screen_grab">
+<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">get_screen_grab</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.get_screen_grab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get dash html Img object of teleserver current screen</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Screen snapshot as dash component</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dash.development.base_component.ComponentMeta</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.app_callbacks.open_files">
+<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">open_files</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.open_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open selected files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>files</strong> (<em>list</em>) – Files to open</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.app_callbacks.save_file">
+<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">save_file</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">content</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.save_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save file to the machine</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Name of the file</p></li>
+<li><p><strong>content</strong> (<em>base64.bytes</em>) – Content of the file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.app_callbacks.upload">
+<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">upload</code><span class="sig-paren">(</span><em class="sig-param">uploaded_filenames</em>, <em class="sig-param">uploaded_file_contents</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload multiple files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uploaded_filenames</strong> (<em>list</em>) – Filenames of files</p></li>
+<li><p><strong>uploaded_file_contents</strong> (<em>list</em>) – Content of files</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.app_callbacks.uploaded_files">
+<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">uploaded_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.uploaded_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of the files in teleserver upload directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of files</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tools.secret_manager">
+<span id="tools-secret-manager-module"></span><h2>tools.secret_manager module<a class="headerlink" href="#module-tools.secret_manager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="tools.secret_manager.SecretManager">
+<em class="property">class </em><code class="sig-prename descclassname">tools.secret_manager.</code><code class="sig-name descname">SecretManager</code><span class="sig-paren">(</span><em class="sig-param">secret_file='/usr/local/teleserver/secret.ini'</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for managing passwords to teleserver</p>
+<dl class="method">
+<dt id="tools.secret_manager.SecretManager.decrypt">
+<em class="property">static </em><code class="sig-name descname">decrypt</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">var</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager.decrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrypt variable with a key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – key to decrypt</p></li>
+<li><p><strong>var</strong> (<em>str</em>) – variable to decrypt</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>decrypted variable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tools.secret_manager.SecretManager.encrypt">
+<em class="property">static </em><code class="sig-name descname">encrypt</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">var</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager.encrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encrypt variable with key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Key to use to encrypt</p></li>
+<li><p><strong>var</strong> (<em>str</em>) – Variable to encrypt</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Encrypted variable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tools.secret_manager.SecretManager.encrypt_credentials">
+<code class="sig-name descname">encrypt_credentials</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">password</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager.encrypt_credentials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encrypt credentials</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>str</em>) – Username</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – Password</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Encrypted user and password with key
+- encrypted user
+- encrypted password
+- key to decrypt user and password</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tools.secret_manager.SecretManager.get_credentials">
+<code class="sig-name descname">get_credentials</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager.get_credentials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of credentials</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of credentials
+Where [0] is user and [1] is password</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="tools.secret_manager.SecretManager.set_credentials">
+<code class="sig-name descname">set_credentials</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">password</em>, <em class="sig-param">file_loc='/usr/local/teleserver/secret.ini'</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager.set_credentials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set user, password credentials in file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<em>str</em>) – username</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – password</p></li>
+<li><p><strong>file_loc</strong> (<em>str</em>) – Location of secret file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-tools.system_calls">
+<span id="tools-system-calls-module"></span><h2>tools.system_calls module<a class="headerlink" href="#module-tools.system_calls" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="tools.system_calls.close">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close web browser</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.get_screen">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">get_screen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.get_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current snapshot of machine’s screen</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Screen’s snapshot</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>base64.bytes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.get_volume">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">get_volume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.get_volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get current level of volume</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Volume level</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.mute">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">mute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.mute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mute the machine</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.poweroff">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">poweroff</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.poweroff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Power off the machine</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.reboot">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">reboot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.reboot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reboot the machine</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.screenshot">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.screenshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a screenshot</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.url_parser">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">url_parser</code><span class="sig-paren">(</span><em class="sig-param">url</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.url_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse url.
+If URL does not contain any of url schemas at the beginning
+then add <a class="reference external" href="https://">https://</a> at the beginning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – URL to parse</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parsed URL</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.volume">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">volume</code><span class="sig-paren">(</span><em class="sig-param">volume</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set volume level on the machine</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>volume</strong> (<em>int</em>) – Volume level</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.web_open">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">web_open</code><span class="sig-paren">(</span><em class="sig-param">url</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.web_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open URL in web browser</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – URL to open</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="tools.system_calls.xdotool_key">
+<code class="sig-prename descclassname">tools.system_calls.</code><code class="sig-name descname">xdotool_key</code><span class="sig-paren">(</span><em class="sig-param">keys</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.system_calls.xdotool_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call xdotool with specific keys</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keys</strong> (<em>str</em>) – Keys to call</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-tools">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tools" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">teleserver</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Szymon Piotr Krasuski.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/tools.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
