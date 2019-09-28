@@ -18,7 +18,6 @@ VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
 OPENMEET_var = "http://www.google.com"
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-callback.create_upload_directory()
 server = flask.Flask(__name__)
 app = dash.Dash(
     __name__, server=server, external_stylesheets=external_stylesheets)
