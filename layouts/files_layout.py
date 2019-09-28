@@ -8,7 +8,7 @@ def create_upload_content():
     """Dash html layout of Files tab
 
     :return: Files tab layout as dash component
-    :type: dash.development.base_component.ComponentMeta
+    :rtype: dash.development.base_component.ComponentMeta
     """
     output = html.Div(
         [

@@ -8,7 +8,7 @@ def create_system_options():
     """Create layout for system options tab
 
     :return: System options layout as dash component
-    :type: dash.development.base_component.ComponentMeta
+    :rtype: dash.development.base_component.ComponentMeta
     """
     return html.Div([
         # Volume section

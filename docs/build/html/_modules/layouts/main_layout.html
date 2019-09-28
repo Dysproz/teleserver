@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>layouts.main_layout &#8212; teleserver  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for layouts.main_layout</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">dash_core_components</span> <span class="k">as</span> <span class="nn">dcc</span>
+<span class="kn">import</span> <span class="nn">dash_html_components</span> <span class="k">as</span> <span class="nn">html</span>
+
+<span class="kn">from</span> <span class="nn">layouts.files_layout</span> <span class="k">import</span> <span class="n">create_upload_content</span>
+<span class="kn">from</span> <span class="nn">layouts.keyboard_layout</span> <span class="k">import</span> <span class="n">create_keyboard_layout</span>
+<span class="kn">from</span> <span class="nn">layouts.key_control_layout</span> <span class="k">import</span> <span class="n">create_key_control_layout</span>
+<span class="kn">from</span> <span class="nn">layouts.screen_layout</span> <span class="k">import</span> <span class="n">create_screen_content</span>
+<span class="kn">import</span> <span class="nn">layouts.style.style</span> <span class="k">as</span> <span class="nn">style</span>
+<span class="kn">from</span> <span class="nn">layouts.system_options_layout</span> <span class="k">import</span> <span class="n">create_system_options</span>
+
+
+<div class="viewcode-block" id="gui_layout"><a class="viewcode-back" href="../../layouts.html#layouts.main_layout.gui_layout">[docs]</a><span class="k">def</span> <span class="nf">gui_layout</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Create main layout for teleserver</span>
+
+<span class="sd">    :return: GUI layout as dash component</span>
+<span class="sd">    :rtype: dash.development.base_component.ComponentMeta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">H1</span><span class="p">(</span>
+                    <span class="n">children</span><span class="o">=</span><span class="s1">&#39;teleserver&#39;</span><span class="p">,</span>
+                    <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                        <span class="s1">&#39;font-family&#39;</span><span class="p">:</span> <span class="s1">&#39;helvetica&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;#3B5DBC&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;font-size&#39;</span><span class="p">:</span> <span class="s1">&#39;50&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;text-align&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;vertical-align&#39;</span><span class="p">:</span> <span class="s1">&#39;text-top&#39;</span>
+                    <span class="p">}),</span>
+                <span class="c1"># URL section</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                    <span class="n">dcc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">),</span>
+                <span class="p">]),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                    <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;url-button&#39;</span><span class="p">,</span>
+                        <span class="n">n_clicks</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">children</span><span class="o">=</span><span class="s1">&#39;Cast&#39;</span><span class="p">,</span>
+                        <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                            <span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
+                            <span class="s1">&#39;backgroundColor&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">BUTTON_COLOR</span>
+                        <span class="p">}),</span>
+                    <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;url-close-button&#39;</span><span class="p">,</span>
+                        <span class="n">n_clicks</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">children</span><span class="o">=</span><span class="s1">&#39;Close&#39;</span><span class="p">,</span>
+                        <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                            <span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
+                            <span class="s1">&#39;backgroundColor&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">BUTTON_COLOR</span>
+                        <span class="p">})</span>
+                <span class="p">]),</span>
+
+                <span class="c1"># Tabs</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                    <span class="n">dcc</span><span class="o">.</span><span class="n">Tabs</span><span class="p">(</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;tabs&quot;</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="s1">&#39;system-options-tab&#39;</span><span class="p">,</span>
+                        <span class="n">children</span><span class="o">=</span><span class="p">[</span>
+                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span>
+                                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;System Options&#39;</span><span class="p">,</span>
+                                <span class="n">value</span><span class="o">=</span><span class="s1">&#39;system-options-tab&#39;</span><span class="p">),</span>
+                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Files&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;upload-tab&#39;</span><span class="p">),</span>
+                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Shortcuts&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;shortcuts-tab&#39;</span><span class="p">),</span>
+                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Keyboard&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;keyboard-tab&#39;</span><span class="p">),</span>
+                            <span class="n">dcc</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Screen&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;screen-tab&#39;</span><span class="p">)</span>
+                        <span class="p">]),</span>
+                    <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;tabs-content&#39;</span><span class="p">)</span>
+                <span class="p">]),</span>
+
+                <span class="c1"># Dummy outputs section</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;open-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;close-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;screenshot-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;reboot-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;poweroff-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;mute-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;download-files-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;delete-files-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;open-files-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;custom-shortcut-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;shortcut-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;keyboard-output-message&#39;</span><span class="p">)],</span>
+                         <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;display&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">})</span>
+            <span class="p">],</span>
+            <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;text-align&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;font-family&#39;</span><span class="p">:</span> <span class="s1">&#39;helvetica&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="s1">&#39;absolute&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;top&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;100%&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="s1">&#39;100%&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;backgroundColor&#39;</span><span class="p">:</span> <span class="s1">&#39;#FFFFFF&#39;</span>
+            <span class="p">}),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">A</span><span class="p">([</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Img</span><span class="p">(</span>
+                <span class="n">src</span><span class="o">=</span><span class="s1">&#39;https://raw.githubusercontent.com/Dysproz&#39;</span>
+                <span class="s1">&#39;/teleserver/master/images/info.png&#39;</span><span class="p">,</span>
+                <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="s1">&#39;1.2%&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="s1">&#39;1.2%&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;float&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;position&#39;</span><span class="p">:</span> <span class="s1">&#39;relative&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;padding-top&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;padding-right&#39;</span><span class="p">:</span> <span class="mi">0</span>
+                <span class="p">})</span>
+        <span class="p">],</span>
+               <span class="n">href</span><span class="o">=</span><span class="s1">&#39;https://github.com/Dysproz/teleserver&#39;</span><span class="p">)</span>
+    <span class="p">])</span>
+    <span class="k">return</span> <span class="n">layout</span></div>
+
+
+<div class="viewcode-block" id="tab_render"><a class="viewcode-back" href="../../layouts.html#layouts.main_layout.tab_render">[docs]</a><span class="k">def</span> <span class="nf">tab_render</span><span class="p">(</span><span class="n">tab</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create render for tabs in main GUI</span>
+
+<span class="sd">    :return: Rendered tabs as dash component</span>
+<span class="sd">    :rtype: dash.development.base_component.ComponentMeta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">tab</span> <span class="o">==</span> <span class="s1">&#39;upload-tab&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_upload_content</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">tab</span> <span class="o">==</span> <span class="s1">&#39;system-options-tab&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_system_options</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">tab</span> <span class="o">==</span> <span class="s1">&#39;shortcuts-tab&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_key_control_layout</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">tab</span> <span class="o">==</span> <span class="s1">&#39;keyboard-tab&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_keyboard_layout</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">tab</span> <span class="o">==</span> <span class="s1">&#39;screen-tab&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">create_screen_content</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">teleserver</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Szymon Piotr Krasuski.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

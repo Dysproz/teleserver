@@ -74,7 +74,7 @@ def create_keyboard_layout():
     """Create keyboard layout for dash
 
     :return: Keyboard layout as dash component
-    :type: dash.development.base_component.ComponentMeta
+    :rtype: dash.development.base_component.ComponentMeta
     """
     return html.Div([
         html.Div([
@@ -94,6 +94,12 @@ def create_keyboard_layout():
 
 
 def create_keyboard():
+    """Create keyboard
+    Create Div with keyboard keys
+
+    :return: keyboard keys
+    :rtype: dash.development.base_component.ComponentMeta
+    """
     keyboard_layout = []
     for line in KEYBOARD_KEYS:
         line_layout = []

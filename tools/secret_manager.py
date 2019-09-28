@@ -10,7 +10,7 @@ class SecretManager():
         """Init method for SecretManager class
 
         :param secret_file: Absolut path to file where to store secrets
-        :type: str
+        :type secret_file: str
         """
         self.secret_file = secret_file
 
@@ -19,7 +19,7 @@ class SecretManager():
 
         :return: List of credentials
                  Where [0] is user and [1] is password
-        :type: list
+        :rtype: list
         """
         if os.path.isfile(self.secret_file):
             config = configparser.ConfigParser()
@@ -36,12 +36,12 @@ class SecretManager():
         """Decrypt variable with a key
 
         :param key: key to decrypt
-        :type: str
+        :type key: str
         :param var: variable to decrypt
-        :type: str
+        :type var: str
 
         :return: decrypted variable
-        :type: str
+        :rtype: str
         """
         f = Fernet(key)
         return f.decrypt(bytes(var, 'utf-8')).decode('utf-8')
@@ -50,15 +50,15 @@ class SecretManager():
         """Encrypt credentials
 
         :param user: Username
-        :type: str
+        :type user: str
         :param password: Password
-        :type: str
+        :type password: str
 
         :return: Encrypted user and password with key
                  - encrypted user
                  - encrypted password
                  - key to decrypt user and password
-        :type: str
+        :rtype: str
         """
         key = Fernet.generate_key()
         user_crypt = self.encrypt(key, user)
@@ -70,12 +70,12 @@ class SecretManager():
         """Encrypt variable with key
 
         :param key: Key to use to encrypt
-        :type: str
+        :type key: str
         :param var: Variable to encrypt
-        :type: str
+        :type var: str
 
         :return: Encrypted variable
-        :type: str
+        :rtype: str
         """
         f = Fernet(key)
         return f.encrypt(bytes(var, 'utf-8')).decode('utf-8')
@@ -84,11 +84,11 @@ class SecretManager():
         """Set user, password credentials in file
 
         :param user: username
-        :type: str
+        :type user: str
         :param password: password
-        :type: str
+        :type password: str
         :param file_loc: Location of secret file
-        :type: str
+        :type file_loc: str
         """
         user_crypt, pass_crypt, key = self.encrypt_credentials(user, password)
         config = configparser.ConfigParser()

@@ -27,7 +27,7 @@ def create_key_control_layout():
     """Create dash key control tab layout
 
     :return: Key control tab layout as dash component
-    :type: dash.development.base_component.ComponentMeta
+    :rtype: dash.development.base_component.ComponentMeta
     """
     return html.Div([
         html.Div([
@@ -50,7 +50,7 @@ def create_sample_key_shortcuts():
     """Create dash layout form key shortcuts layout
 
     :return: Dash component with key shortcuts
-    :type: dash.development.base_component.ComponentMeta
+    :rtype: dash.development.base_component.ComponentMeta
     """
     web_buttons = []
     [

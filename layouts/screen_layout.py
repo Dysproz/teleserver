@@ -8,7 +8,7 @@ def create_screen_content():
     """Create screen snapshot layout
 
     :return: Screen snapshot layout as dash component
-    :type: dash.development.base_component.ComponentMeta
+    :rtype: dash.development.base_component.ComponentMeta
     """
     return html.Div([
         html.Div(id='live-screen'),

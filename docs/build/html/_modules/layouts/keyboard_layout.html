@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>layouts.keyboard_layout &#8212; teleserver  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for layouts.keyboard_layout</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">dash_core_components</span> <span class="k">as</span> <span class="nn">dcc</span>
+<span class="kn">import</span> <span class="nn">dash_html_components</span> <span class="k">as</span> <span class="nn">html</span>
+
+<span class="kn">import</span> <span class="nn">layouts.style.style</span> <span class="k">as</span> <span class="nn">style</span>
+
+<span class="n">KEYBOARD_KEYS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;F1&#39;</span><span class="p">,</span> <span class="s1">&#39;F2&#39;</span><span class="p">,</span> <span class="s1">&#39;F3&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;F5&#39;</span><span class="p">,</span> <span class="s1">&#39;F6&#39;</span><span class="p">,</span> <span class="s1">&#39;F7&#39;</span><span class="p">,</span> <span class="s1">&#39;F8&#39;</span><span class="p">,</span> <span class="s1">&#39;F9&#39;</span><span class="p">,</span> <span class="s1">&#39;F10&#39;</span><span class="p">,</span> <span class="s1">&#39;F11&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;F12&#39;</span><span class="p">,</span> <span class="s1">&#39;Home&#39;</span><span class="p">,</span> <span class="s1">&#39;End&#39;</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;asciitilde&#39;</span><span class="p">,</span> <span class="s1">&#39;exclam&#39;</span><span class="p">,</span> <span class="s1">&#39;at&#39;</span><span class="p">,</span> <span class="s1">&#39;numbersign&#39;</span><span class="p">,</span> <span class="s1">&#39;dollar&#39;</span><span class="p">,</span> <span class="s1">&#39;percent&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;asciicircum&#39;</span><span class="p">,</span> <span class="s1">&#39;ampersand&#39;</span><span class="p">,</span> <span class="s1">&#39;asterisk&#39;</span><span class="p">,</span> <span class="s1">&#39;parenleft&#39;</span><span class="p">,</span> <span class="s1">&#39;parenright&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;underscore&#39;</span><span class="p">,</span> <span class="s1">&#39;plus&#39;</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;quoteleft&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;minus&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="s1">&#39;BackSpace&#39;</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;Tab&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;bracketleft&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bracketright&#39;</span><span class="p">,</span> <span class="s1">&#39;backslash&#39;</span><span class="p">,</span> <span class="s1">&#39;braceleft&#39;</span><span class="p">,</span> <span class="s1">&#39;braceright&#39;</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;Caps_Lock&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;semicolon&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;quoteright&#39;</span><span class="p">,</span> <span class="s1">&#39;colon&#39;</span><span class="p">,</span> <span class="s1">&#39;quotedbl&#39;</span><span class="p">,</span> <span class="s1">&#39;Return&#39;</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="s1">&#39;shift&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;comma&#39;</span><span class="p">,</span> <span class="s1">&#39;period&#39;</span><span class="p">,</span> <span class="s1">&#39;slash&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;less&#39;</span><span class="p">,</span> <span class="s1">&#39;greater&#39;</span><span class="p">,</span> <span class="s1">&#39;question&#39;</span>
+    <span class="p">],</span> <span class="p">[</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;Alt&#39;</span><span class="p">,</span> <span class="s1">&#39;space&#39;</span><span class="p">,</span> <span class="s1">&#39;Super&#39;</span><span class="p">,</span> <span class="s1">&#39;Up&#39;</span><span class="p">,</span> <span class="s1">&#39;Down&#39;</span><span class="p">,</span> <span class="s1">&#39;Left&#39;</span><span class="p">,</span> <span class="s1">&#39;Right&#39;</span><span class="p">]</span>
+<span class="p">]</span>
+
+<span class="n">SPECIAL_CHAR</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;asciitilde&#39;</span><span class="p">:</span> <span class="s1">&#39;~&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;exclam&#39;</span><span class="p">:</span> <span class="s1">&#39;!&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;at&#39;</span><span class="p">:</span> <span class="s1">&#39;@&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;numbersign&#39;</span><span class="p">:</span> <span class="s1">&#39;#&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dollar&#39;</span><span class="p">:</span> <span class="s1">&#39;$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;percent&#39;</span><span class="p">:</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;asciicircum&#39;</span><span class="p">:</span> <span class="s1">&#39;^&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ampersand&#39;</span><span class="p">:</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;asterisk&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;parenleft&#39;</span><span class="p">:</span> <span class="s1">&#39;(&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;parenright&#39;</span><span class="p">:</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;underscore&#39;</span><span class="p">:</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;plus&#39;</span><span class="p">:</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;quoteleft&#39;</span><span class="p">:</span> <span class="s1">&#39;`&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;minus&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;equal&#39;</span><span class="p">:</span> <span class="s1">&#39;=&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bracketleft&#39;</span><span class="p">:</span> <span class="s1">&#39;[&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bracketright&#39;</span><span class="p">:</span> <span class="s1">&#39;]&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;backslash&#39;</span><span class="p">:</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="s1">&#39;braceleft&#39;</span><span class="p">:</span> <span class="s1">&#39; {&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;braceright&#39;</span><span class="p">:</span> <span class="s1">&#39;}&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bar&#39;</span><span class="p">:</span> <span class="s1">&#39;|&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;semicolon&#39;</span><span class="p">:</span> <span class="s1">&#39;;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;quoteright&#39;</span><span class="p">:</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;colon&#39;</span><span class="p">:</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;quotedbl&#39;</span><span class="p">:</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;comma&#39;</span><span class="p">:</span> <span class="s1">&#39;,&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;period&#39;</span><span class="p">:</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;slash&#39;</span><span class="p">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;less&#39;</span><span class="p">:</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;greater&#39;</span><span class="p">:</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="s1">&#39;?&#39;</span>
+<span class="p">}</span>
+
+<span class="n">FLAT_KEYBOARD_KEYS</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">KEYBOARD_KEYS</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+<span class="n">KEYBOARD_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-button&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">FLAT_KEYBOARD_KEYS</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="create_keyboard_layout"><a class="viewcode-back" href="../../layouts.html#layouts.keyboard_layout.create_keyboard_layout">[docs]</a><span class="k">def</span> <span class="nf">create_keyboard_layout</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Create keyboard layout for dash</span>
+
+<span class="sd">    :return: Keyboard layout as dash component</span>
+<span class="sd">    :rtype: dash.development.base_component.ComponentMeta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;key-control&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">),</span>
+        <span class="p">],</span>
+                 <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">PADDING</span><span class="p">}),</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;key-control-button&#39;</span><span class="p">,</span>
+            <span class="n">n_clicks</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">children</span><span class="o">=</span><span class="s1">&#39;Execute&#39;</span><span class="p">,</span>
+            <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
+                <span class="s1">&#39;backgroundColor&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">BUTTON_COLOR</span>
+            <span class="p">}),</span>
+        <span class="n">create_keyboard</span><span class="p">()</span>
+    <span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="create_keyboard"><a class="viewcode-back" href="../../layouts.html#layouts.keyboard_layout.create_keyboard">[docs]</a><span class="k">def</span> <span class="nf">create_keyboard</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Create keyboard</span>
+<span class="sd">    Create Div with keyboard keys</span>
+
+<span class="sd">    :return: keyboard keys</span>
+<span class="sd">    :rtype: dash.development.base_component.ComponentMeta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">keyboard_layout</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">KEYBOARD_KEYS</span><span class="p">:</span>
+        <span class="n">line_layout</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">SPECIAL_CHAR</span><span class="p">:</span>
+                <span class="n">display_key</span> <span class="o">=</span> <span class="n">SPECIAL_CHAR</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">display_key</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="n">line_layout</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-button&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span>
+                    <span class="n">n_clicks_timestamp</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">children</span><span class="o">=</span><span class="n">display_key</span><span class="p">,</span>
+                    <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                        <span class="s1">&#39;margin&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">PADDING</span><span class="p">,</span>
+                        <span class="s1">&#39;backgroundColor&#39;</span><span class="p">:</span> <span class="n">style</span><span class="o">.</span><span class="n">BUTTON_COLOR</span>
+                    <span class="p">}))</span>
+        <span class="n">keyboard_layout</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">line_layout</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="n">keyboard_layout</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">teleserver</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Szymon Piotr Krasuski.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

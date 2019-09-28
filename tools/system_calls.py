@@ -40,10 +40,10 @@ def url_parser(url):
     then add https:// at the beginning.
 
     :param url: URL to parse
-    :type: str
+    :type url: str
 
     :return: Parsed URL
-    :type: str
+    :rtype: str
     """
     if url.startswith(URL_SCHEMES):
         return url
@@ -61,7 +61,7 @@ def web_open(url):
     """Open URL in web browser
 
     :param url: URL to open
-    :type: str
+    :type url: str
     """
     webbrowser.open(url_parser(url), new=0)
 
@@ -95,7 +95,7 @@ def volume(volume):
     """Set volume level on the machine
 
     :param volume: Volume level
-    :type: int
+    :type volume: int
     """
     vol = alsaaudio.Mixer()
     vol.setvolume(volume)
@@ -105,7 +105,7 @@ def xdotool_key(keys):
     """Call xdotool with specific keys
 
     :param keys: Keys to call
-    :type: str
+    :type keys: str
     """
     call(['xdotool', 'key', keys])
 
@@ -114,7 +114,7 @@ def get_volume():
     """Get current level of volume
 
     :return: Volume level
-    :type: int
+    :rtype: int
     """
     vol = alsaaudio.Mixer()
     value = vol.getvolume()
@@ -125,7 +125,7 @@ def get_screen():
     """Get current snapshot of machine's screen
 
     :return: Screen's snapshot
-    :type: base64.bytes
+    :rtype: base64.bytes
     """
     screen = ImageGrab.grab()
     buffered_screen = BytesIO()
