@@ -2,7 +2,7 @@ import configparser
 from cryptography.fernet import Fernet
 import os
 
-from common import TELESERVER_DIR
+from tools.common import TELESERVER_DIR
 
 
 class SecretManager():

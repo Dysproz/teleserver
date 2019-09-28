@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 # Kill teleserver process
 pkill -f teleserver

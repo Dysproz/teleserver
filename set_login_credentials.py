@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from tools.secret_manager import SecretManager
 import getpass
 import sys
