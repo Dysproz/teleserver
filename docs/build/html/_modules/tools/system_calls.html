@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>tools.system_calls &#8212; teleserver  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for tools.system_calls</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">alsaaudio</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">BytesIO</span>
+<span class="kn">import</span> <span class="nn">pyscreenshot</span> <span class="k">as</span> <span class="nn">ImageGrab</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">call</span>
+<span class="kn">import</span> <span class="nn">webbrowser</span>
+
+
+<span class="n">URL_SCHEMES</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;file://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;ftp://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;gopher://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;hdl://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;http://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;https://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;imap://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;mailto://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;mms://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;news://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;nntp://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;prospero://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;rsync://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;rtsp://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;rtspu://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sftp://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;shttp://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sip://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;sips://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;snews://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;svn://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;svn+ssh://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;telnet://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;wais://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;ws://&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;wss://&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="url_parser"><a class="viewcode-back" href="../../tools.html#tools.system_calls.url_parser">[docs]</a><span class="k">def</span> <span class="nf">url_parser</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse url.</span>
+<span class="sd">    If URL does not contain any of url schemas at the beginning</span>
+<span class="sd">    then add https:// at the beginning.</span>
+
+<span class="sd">    :param url: URL to parse</span>
+<span class="sd">    :type url: str</span>
+
+<span class="sd">    :return: Parsed URL</span>
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">URL_SCHEMES</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">url</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;https://&#39;</span> <span class="o">+</span> <span class="n">url</span></div>
+
+
+<div class="viewcode-block" id="close"><a class="viewcode-back" href="../../tools.html#tools.system_calls.close">[docs]</a><span class="k">def</span> <span class="nf">close</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Close web browser</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">call</span><span class="p">([</span><span class="s2">&quot;pkill&quot;</span><span class="p">,</span> <span class="s2">&quot;chrome&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="web_open"><a class="viewcode-back" href="../../tools.html#tools.system_calls.web_open">[docs]</a><span class="k">def</span> <span class="nf">web_open</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Open URL in web browser</span>
+
+<span class="sd">    :param url: URL to open</span>
+<span class="sd">    :type url: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">url_parser</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="n">new</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="poweroff"><a class="viewcode-back" href="../../tools.html#tools.system_calls.poweroff">[docs]</a><span class="k">def</span> <span class="nf">poweroff</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Power off the machine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">call</span><span class="p">([</span><span class="s1">&#39;systemctl&#39;</span><span class="p">,</span> <span class="s1">&#39;poweroff&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="reboot"><a class="viewcode-back" href="../../tools.html#tools.system_calls.reboot">[docs]</a><span class="k">def</span> <span class="nf">reboot</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Reboot the machine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">call</span><span class="p">([</span><span class="s1">&#39;systemctl&#39;</span><span class="p">,</span> <span class="s1">&#39;reboot&#39;</span><span class="p">,</span> <span class="s1">&#39;-i&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="screenshot"><a class="viewcode-back" href="../../tools.html#tools.system_calls.screenshot">[docs]</a><span class="k">def</span> <span class="nf">screenshot</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Make a screenshot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">call</span><span class="p">([</span><span class="s1">&#39;gnome-screenshot&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="mute"><a class="viewcode-back" href="../../tools.html#tools.system_calls.mute">[docs]</a><span class="k">def</span> <span class="nf">mute</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Mute the machine</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vol</span> <span class="o">=</span> <span class="n">alsaaudio</span><span class="o">.</span><span class="n">Mixer</span><span class="p">()</span>
+    <span class="n">vol</span><span class="o">.</span><span class="n">setvolume</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="volume"><a class="viewcode-back" href="../../tools.html#tools.system_calls.volume">[docs]</a><span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="n">volume</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set volume level on the machine</span>
+
+<span class="sd">    :param volume: Volume level</span>
+<span class="sd">    :type volume: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vol</span> <span class="o">=</span> <span class="n">alsaaudio</span><span class="o">.</span><span class="n">Mixer</span><span class="p">()</span>
+    <span class="n">vol</span><span class="o">.</span><span class="n">setvolume</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="xdotool_key"><a class="viewcode-back" href="../../tools.html#tools.system_calls.xdotool_key">[docs]</a><span class="k">def</span> <span class="nf">xdotool_key</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Call xdotool with specific keys</span>
+
+<span class="sd">    :param keys: Keys to call</span>
+<span class="sd">    :type keys: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">call</span><span class="p">([</span><span class="s1">&#39;xdotool&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="get_volume"><a class="viewcode-back" href="../../tools.html#tools.system_calls.get_volume">[docs]</a><span class="k">def</span> <span class="nf">get_volume</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get current level of volume</span>
+
+<span class="sd">    :return: Volume level</span>
+<span class="sd">    :rtype: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vol</span> <span class="o">=</span> <span class="n">alsaaudio</span><span class="o">.</span><span class="n">Mixer</span><span class="p">()</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">vol</span><span class="o">.</span><span class="n">getvolume</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_screen"><a class="viewcode-back" href="../../tools.html#tools.system_calls.get_screen">[docs]</a><span class="k">def</span> <span class="nf">get_screen</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get current snapshot of machine&#39;s screen</span>
+
+<span class="sd">    :return: Screen&#39;s snapshot</span>
+<span class="sd">    :rtype: base64.bytes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">screen</span> <span class="o">=</span> <span class="n">ImageGrab</span><span class="o">.</span><span class="n">grab</span><span class="p">()</span>
+    <span class="n">buffered_screen</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">screen</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">buffered_screen</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;JPEG&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">buffered_screen</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">teleserver</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Szymon Piotr Krasuski.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
