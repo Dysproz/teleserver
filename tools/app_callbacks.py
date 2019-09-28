@@ -2,11 +2,11 @@ import base64
 import dash_html_components as html
 import flask
 import os
-from subprocess import call
 import zipfile
 
 import tools.system_calls as system
 from tools.common import UPLOAD_DIRECTORY
+
 
 def save_file(name, content):
     """Save file to the machine

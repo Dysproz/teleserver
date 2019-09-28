@@ -2,11 +2,13 @@ import configparser
 from cryptography.fernet import Fernet
 import os
 
+from common import TELESERVER_DIR
+
 
 class SecretManager():
     """Class for managing passwords to teleserver
     """
-    def __init__(self, secret_file='/usr/local/teleserver/secret.ini'):
+    def __init__(self, secret_file=f'{TELESERVER_DIR}/secret.ini'):
         """Init method for SecretManager class
 
         :param secret_file: Absolut path to file where to store secrets
@@ -80,7 +82,7 @@ class SecretManager():
         f = Fernet(key)
         return f.encrypt(bytes(var, 'utf-8')).decode('utf-8')
 
-    def set_credentials(self, user, password, file_loc='/usr/local/teleserver/secret.ini'):
+    def set_credentials(self, user, password, file_loc=f'{TELESERVER_DIR}/secret.ini'):
         """Set user, password credentials in file
 
         :param user: username
