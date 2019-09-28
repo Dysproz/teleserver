@@ -34,7 +34,7 @@ def create_upload_content():
             dcc.Checklist(
                 id='files-checklist',
                 options=get_files_list(),
-                values=[]),
+                value=[]),
             html.Div(id='output-data-upload'),
             html.Div([
                 html.Button(

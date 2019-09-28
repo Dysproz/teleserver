@@ -1,0 +1,10 @@
+python3
+python3-pip
+libasound-dev
+portaudio19-dev
+libportaudio2
+libportaudiocpp0
+xdotool
+libxss1
+libappindicator1
+libindicator7

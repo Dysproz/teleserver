@@ -1,9 +1,12 @@
 import alsaaudio
 import base64
+from datetime import datetime
 from io import BytesIO
 import pyscreenshot as ImageGrab
 from subprocess import call
 import webbrowser
+
+from tools.common import UPLOAD_DIRECTORY
 
 
 URL_SCHEMES = ('file://',
@@ -81,7 +84,12 @@ def reboot():
 def screenshot():
     """Make a screenshot
     """
-    call(['gnome-screenshot'])
+    date = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
+    call(['gnome-screenshot',
+          '-f',
+          '{dir}/{date}'
+          .format(dir=UPLOAD_DIRECTORY,
+                  date=date)])
 
 
 def mute():

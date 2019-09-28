@@ -12,16 +12,17 @@ This is a client to open you ubuntu machine to local network and allow to contro
 [![GitHub release](https://img.shields.io/github/release/Dysproz/teleserver.svg)](https://GitHub.com/Dysproz/Steleserver/releases/)
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 # Install
-In order to install server you'll need ansible.
+In order to install teleserver clone project repo from github.
+Afterwards, cd into project directory.
 
-If you have it already installed on your machine or you know how to install it, just download systemSetup.yml and run it with:
+In order to install teleserver run script:
 ```
-sudo ansible-playbook systemSetup.yml
+make install
 ```
-However, if you don't know what's going on, download *install.sh* ans run it as sudo.
-It'll install ansible, download *systemSetup.yml* and run it.
 
-After reboot, all you need to find IP address of your machine (for example with ip a).
+This command will run script *install.sh*
+
+After reboot or session restart, all you need to do is find IP address of your machine (for example with `ip a`).
 
 The server is configured to start at the beginning of user sesison.
 
@@ -30,7 +31,7 @@ The server is configured to start at the beginning of user sesison.
 By default teleserver can be reached by anyone,
 However, if you want to set password and login for GUI run this script:
 ```
-python3 /usr/local/teleserver/set_login_credentials.py
+/var/lib/teleserver/set_login_credentials.py
 ```
 
 You'll be asked for login and password which later should be used for login on GUI.
@@ -86,7 +87,7 @@ will mute computer.
 
 There's one more command.
 If you have your favourite website (for example Google Meet),
-you can specify that link in /usr/local/teleserver/run.py by changing OPENMEET_var to your website.
+you can specify that link in /var/lib/teleserver/tools/common.py by changing OPENMEET_var to your website.
 
 Afterwards
 
@@ -152,9 +153,9 @@ There is also a textbox where user can insert commands compatible with ```xdotoo
 
 # Uninstall
 
-In order to uninstall teleserver, run ansible script /usr/local/teleserver/uninstall.yml.
+In order to uninstall teleserver, run uninstall.sh script from teleserver project dir:
 ```
-sudo ansible-playbook /usr/local/teleserver/uninstall.yml
+make uninstall
 ```
 
 # Supported releases

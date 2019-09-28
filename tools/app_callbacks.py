@@ -2,23 +2,10 @@ import base64
 import dash_html_components as html
 import flask
 import os
-from subprocess import call
 import zipfile
 
 import tools.system_calls as system
-
-
-UPLOAD_DIRECTORY = str(os.path.join(os.getcwd(), 'app_uploaded_files'))
-
-
-def create_upload_directory():
-    if not os.path.exists(UPLOAD_DIRECTORY):
-        os.makedirs(UPLOAD_DIRECTORY)
-    call(['gsettings',
-          'set',
-          'org.gnome.gnome-screenshot',
-          'auto-save-directory',
-          'file://{}'.format(UPLOAD_DIRECTORY)])
+from tools.common import UPLOAD_DIRECTORY
 
 
 def save_file(name, content):

@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import dash
 import dash_auth
 from dash.dependencies import Input, Output, State
@@ -9,16 +10,15 @@ from layouts.keyboard_layout import FLAT_KEYBOARD_KEYS, KEYBOARD_NAMES
 from layouts.key_control_layout import SHORTCUT_NAMES, SHORTCUTS
 from layouts.main_layout import gui_layout, tab_render
 import tools.app_callbacks as callback
+from tools.common import OPENMEET_var
 from tools.secret_manager import SecretManager
 import tools.system_calls as system
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
 
-OPENMEET_var = "http://www.google.com"
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-callback.create_upload_directory()
 server = flask.Flask(__name__)
 app = dash.Dash(
     __name__, server=server, external_stylesheets=external_stylesheets)
@@ -158,8 +158,9 @@ def upload_content(uploaded_file_contents, uploaded_filenames):
 
 @app.callback(
     Output('download-files-output-message',
-           'children'), [Input('download-files-button', 'n_clicks')],
-    [State('files-checklist', 'values')])
+           'children'),
+    [Input('download-files-button', 'n_clicks')],
+    [State('files-checklist', 'value')])
 def download_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.download_files(files)
@@ -178,7 +179,7 @@ def download_flask():
 @app.callback(
     Output('delete-files-output-message',
            'children'), [Input('delete-files-button', 'n_clicks')],
-    [State('files-checklist', 'values')])
+    [State('files-checklist', 'value')])
 def delete_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.delete_files(files)
@@ -188,7 +189,7 @@ def delete_selected_files(n_clicks, files):
 @app.callback(
     Output('open-files-output-message',
            'children'), [Input('open-files-button', 'n_clicks')],
-    [State('files-checklist', 'values')])
+    [State('files-checklist', 'value')])
 def open_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.open_files(files)
