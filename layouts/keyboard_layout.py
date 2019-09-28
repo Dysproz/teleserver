@@ -71,6 +71,11 @@ KEYBOARD_NAMES = ['{}-button'.format(name) for name in FLAT_KEYBOARD_KEYS]
 
 
 def create_keyboard_layout():
+    """Create keyboard layout for dash
+
+    :return: Keyboard layout as dash component
+    :type: dash.development.base_component.ComponentMeta
+    """
     return html.Div([
         html.Div([
             dcc.Input(id='key-control', type='text', value=''),

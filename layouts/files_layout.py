@@ -5,6 +5,11 @@ from tools.app_callbacks import get_files_list
 
 
 def create_upload_content():
+    """Dash html layout of Files tab
+
+    :return: Files tab layout as dash component
+    :type: dash.development.base_component.ComponentMeta
+    """
     output = html.Div(
         [
             html.H1("File Browser"),

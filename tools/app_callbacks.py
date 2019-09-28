@@ -22,12 +22,24 @@ def create_upload_directory():
 
 
 def save_file(name, content):
+    """Save file to the machine
+
+    :param name: Name of the file
+    :type: str
+    :param content: Content of the file
+    :type: base64.bytes
+    """
     data = content.encode("utf8").split(b";base64,")[1]
     with open(os.path.join(UPLOAD_DIRECTORY, name), "wb") as fp:
         fp.write(base64.decodebytes(data))
 
 
 def uploaded_files():
+    """Get list of the files in teleserver upload directory
+
+    :return: List of files
+    :type: list
+    """
     files = []
     for filename in os.listdir(UPLOAD_DIRECTORY):
         path = os.path.join(UPLOAD_DIRECTORY, filename)
@@ -37,17 +49,34 @@ def uploaded_files():
 
 
 def upload(uploaded_filenames, uploaded_file_contents):
+    """Upload multiple files
+
+    :param uploaded_filenames: Filenames of files
+    :type: list
+    :param uploaded_file_contents: Content of files
+    :type: list
+    """
     if uploaded_filenames is not None and uploaded_file_contents is not None:
         for name, data in zip(uploaded_filenames, uploaded_file_contents):
             save_file(name, data)
 
 
 def get_files_list():
+    """Get list of uploaded files
+
+    :return: List of files
+    :type: list
+    """
     files = uploaded_files()
     return [{'label': filename, 'value': filename} for filename in files]
 
 
 def download_files(files):
+    """Download selected files
+
+    :param files: List fo files to download
+    :type: list
+    """
     zipf = zipfile.ZipFile('teleserver_download.zip', 'w',
                            zipfile.ZIP_DEFLATED)
     for filename in files:
@@ -63,18 +92,33 @@ def download_files(files):
 
 
 def delete_files(files):
+    """Delete selected files
+
+    :param files: List fo files to delete
+    :type: list
+    """
     for filename in files:
         os.remove('{dir}/{filename}'.format(
             dir=UPLOAD_DIRECTORY, filename=filename))
 
 
 def open_files(files):
+    """Open selected files
+
+    :param files: Files to open
+    :type: list
+    """
     for filename in files:
         system.web_open('file://{dir}/{filename}'.format(
             dir=UPLOAD_DIRECTORY, filename=filename))
 
 
 def get_screen_grab():
+    """Get dash html Img object of teleserver current screen
+
+    :return: Screen snapshot as dash component
+    :type: dash.development.base_component.ComponentMeta
+    """
     return html.Img(
         src='data:image/jpeg;base64,{}'.format(system.get_screen()),
         style={

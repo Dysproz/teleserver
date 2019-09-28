@@ -10,6 +10,11 @@ from layouts.system_options_layout import create_system_options
 
 
 def gui_layout():
+    """Create main layout for teleserver
+
+    :return: GUI layout as dash component
+    :type: dash.development.base_component.ComponentMeta
+    """
     layout = html.Div([
         html.Div(
             [
@@ -117,6 +122,11 @@ def gui_layout():
 
 
 def tab_render(tab):
+    """Create render for tabs in main GUI
+
+    :return: Rendered tabs as dash component
+    :type: dash.development.base_component.ComponentMeta
+    """
     if tab == 'upload-tab':
         return create_upload_content()
     elif tab == 'system-options-tab':
