@@ -8,3 +8,7 @@ install: ## install teleserver
 
 uninstall: ## uninstall teleserver
 	uninstall.sh
+
+test: ## test teleserver
+	tox
+
