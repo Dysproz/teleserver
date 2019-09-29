@@ -6,6 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install base
+          command: sudo apt install -y libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+      - run:
           name: Install dependencies
           command: sudo pip install tox flake8
       - run:
