@@ -158,6 +158,13 @@ In order to uninstall teleserver, run uninstall.sh script from teleserver projec
 make uninstall
 ```
 
+# Test
+
+In order to manually run CI tests execute:
+```
+make test
+```
+
 # Supported releases
 * bionic (18.04)
 * cosmic (18.10)
