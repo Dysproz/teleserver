@@ -65,18 +65,18 @@
 </div>
 <div class="section" id="install">
 <h1>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
-<p>In order to install server you’ll need ansible.</p>
-<p>If you have it already installed on your machine or you know how to install it, just download systemSetup.yml and run it with:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="n">systemSetup</span><span class="p">.</span><span class="n">yml</span>
+<p>In order to install teleserver clone project repo from github.
+Afterwards, cd into project directory.</p>
+<p>In order to install teleserver run script:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">install</span>
 </pre></div>
 </div>
-<p>However, if you don’t know what’s going on, download <em>install.sh</em> ans run it as sudo.
-It’ll install ansible, download <em>systemSetup.yml</em> and run it.</p>
-<p>After reboot, all you need to find IP address of your machine (for example with ip a).</p>
+<p>This command will run script <em>install.sh</em></p>
+<p>After reboot or session restart, all you need to do is find IP address of your machine (for example with <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">a</span></code>).</p>
 <p>The server is configured to start at the beginning of user sesison.</p>
 <p>By default teleserver can be reached by anyone,
 However, if you want to set password and login for GUI run this script:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">teleserver</span><span class="o">/</span><span class="n">set_login_credentials</span><span class="p">.</span><span class="n">py</span>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">teleserver</span><span class="o">/</span><span class="n">set_login_credentials</span><span class="p">.</span><span class="n">py</span>
 </pre></div>
 </div>
 <p>You’ll be asked for login and password which later should be used for login on GUI.</p>
@@ -90,44 +90,6 @@ When you get it then all the ‘commands’ will begin with</p>
 </pre></div>
 </div>
 <p>where 8080 is a port that machine’s server operates on.</p>
-<p>Basic usage is to open web browser on desired website remotely.</p>
-<p>Use curl with this url (or just paste url to web browser):</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="k">open</span><span class="o">?</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;&lt;url of your website&gt;&#39;</span>
-</pre></div>
-</div>
-<p>and</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="k">close</span>
-</pre></div>
-</div>
-<p>will close the browser.</p>
-<p>There’s also reboot and poweroff:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">reboot</span>
-</pre></div>
-</div>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">poweroff</span>
-</pre></div>
-</div>
-<p>that works exactly as inserting these commands into terminal.
-So:</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">screenshot</span>
-</pre></div>
-</div>
-<p>will take a screenshot.</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">mute</span>
-</pre></div>
-</div>
-<p>will mute computer.</p>
-<p>There’s one more command.
-If you have your favourite website (for example Google Meet),
-you can specify that link in /usr/local/teleserver/run.py by changing OPENMEET_var to your website.</p>
-<p>Afterwards</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">openmeet</span>
-</pre></div>
-</div>
-<p>will open link specified by you.
-By default it’s linked to Google.
-(Please be aware that after changing OPENMEET_var it’s essential to restart server or simply reboot)</p>
-<p>CLI interface may be convinient for automated apps that can’t use GUI, but should operate somehow with teleserver.</p>
 <p>There’s also GUI that covers features specified in previous paragraph and extends it to additional features.</p>
 <a class="reference external image-reference" href="https://github.com/Dysproz/teleserver/blob/master/images/gui1.png"><img alt="GUI" src="https://github.com/Dysproz/teleserver/blob/master/images/gui1.png" /></a>
 <a class="reference external image-reference" href="https://github.com/Dysproz/teleserver/blob/master/images/gui2.png"><img alt="GUI" src="https://github.com/Dysproz/teleserver/blob/master/images/gui2.png" /></a>
@@ -167,12 +129,51 @@ Ex.</p>
 I works basically like normal keyboard.</p>
 <p>There is also a textbox where user can insert commands compatible with <code class="docutils literal notranslate"><span class="pre">xdotool</span> <span class="pre">key</span></code></p>
 </div>
+<div class="section" id="teleserver-api">
+<h3>teleserver API<a class="headerlink" href="#teleserver-api" title="Permalink to this headline">¶</a></h3>
+<p>Teleserver API is made of 3 main function groups:</p>
+<ul class="simple">
+<li><p><strong>webbrowser</strong> - group dedicated to web browser</p></li>
+<li><p><strong>system</strong> - group dedicated to system tools</p></li>
+<li><p><strong>keyboard</strong> - group dedicated to keyboard input</p></li>
+</ul>
+<p>These groups may be utilized by calling:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">IP</span> <span class="n">address</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/&lt;</span><span class="k">group</span><span class="o">&gt;/&lt;</span><span class="k">function</span><span class="o">&gt;?&lt;</span><span class="n">additional_vars</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="webbrowser-group-functions">
+<h2><em>webbrowser</em> group functions<a class="headerlink" href="#webbrowser-group-functions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p><em>openmeet</em> - Opens URL to Google Meet defined in <em>tools/common.py</em> file.</p></li>
+<li><p><em>open</em> - Open website provided in additional variable <em>url</em></p></li>
+<li><p><em>close</em> - Closes webbrowser.</p></li>
+</ol>
+</div>
+<div class="section" id="system-group-functions">
+<h2><em>system</em> group functions<a class="headerlink" href="#system-group-functions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p><em>poweroff</em> - Power off the machine</p></li>
+<li><p><em>reboot</em> - Reboot the machine</p></li>
+<li><p><em>screenshot</em> - Take screenshot of current screen</p></li>
+<li><p><em>mute</em> - Mute machine volume</p></li>
+<li><p><em>grab_screen</em> - Grabs screenshot of current screen and returns it in base64 format</p></li>
+<li><p><em>set_volume</em> - Set specific volume level declared in additional variable <em>lvl</em></p></li>
+</ol>
+</div>
+<div class="section" id="keyboard-group-functions">
+<h2>Keyboard group functions<a class="headerlink" href="#keyboard-group-functions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p><em>call_key</em> - Calls specific key or string of keys in xdotool format. Key should be provided in additional variable <em>key</em>.</p></li>
+<li><p><em>call_word</em> - Calls word provided in additional variable <em>word</em>.</p></li>
+</ol>
 </div>
 </div>
 <div class="section" id="uninstall">
 <h1>Uninstall<a class="headerlink" href="#uninstall" title="Permalink to this headline">¶</a></h1>
-<p>In order to uninstall teleserver, run ansible script /usr/local/teleserver/uninstall.yml.</p>
-<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">ansible</span><span class="o">-</span><span class="n">playbook</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">teleserver</span><span class="o">/</span><span class="n">uninstall</span><span class="p">.</span><span class="n">yml</span>
+<p>In order to uninstall teleserver, run uninstall.sh script from teleserver project dir:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">uninstall</span>
 </pre></div>
 </div>
 </div>

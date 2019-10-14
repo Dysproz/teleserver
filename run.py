@@ -29,53 +29,85 @@ if VALID_USERNAME_PASSWORD_PAIRS != ['', '']:
     auth = dash_auth.BasicAuth(app, VALID_USERNAME_PASSWORD_PAIRS)
 
 
-@server.route('/openmeet')
-def openmeet():
+@server.route('/webbrowser/openmeet')
+def API_openmeet():
     system.web_open(OPENMEET_var)
     return 'Meet opened\n'
 
 
-@server.route('/open', methods=['GET'])
-def open():
+@server.route('/webbrowser/open', methods=['GET'])
+def API_open():
     url = flask.request.args.get('url')
     system.web_open(url)
     return "url opened.\n"
 
 
-@server.route('/close')
-def close():
+@server.route('/webbrowser/close')
+def API_close():
     system.close()
     return "closed\n"
 
 
-@server.route('/poweroff')
-def poweroff():
+@server.route('/system/poweroff')
+def API_poweroff():
     system.poweroff()
     return "poweroff...\n"
 
 
-@server.route('/reboot')
-def reboot():
+@server.route('/system/reboot')
+def API_reboot():
     system.reboot()
     return "reboot...\n"
 
 
-@server.route('/screenshot')
-def screenshot():
+@server.route('/system/screenshot')
+def API_screenshot():
     system.screenshot()
     return "screenshot taken\n"
 
 
-@server.route('/mute')
-def mute():
+@server.route('/system/mute')
+def API_mute():
     system.mute()
     return "muted\n"
+
+
+@server.route('/system/grab_screen')
+def API_grab_screen():
+    return system.get_screen()
+
+
+@server.route('/system/set_volume', methods=['GET'])
+def API_set_volume():
+    level = flask.request.args.get('lvl')
+    try:
+        level = int(level)
+    except ValueError:
+        return f'ERROR: {level} is not int!'
+    if not level <= 100 and not level >= 0:
+        return f'ERROR: {level} is not in range 0-100'
+    system.volume(level)
+    return f'Volume set to {level}'
+
+
+@server.route('/keyboard/call_key', methods=['GET'])
+def API_call_key():
+    key = flask.request.args.get('key')
+    system.xdotool_key(key)
+    return f'key called'
+
+
+@server.route('/keyboard/call_word', methods=['GET'])
+def API_call_word():
+    word = flask.request.args.get('word')
+    system.xdotool_key('+'.join(list(word)))
+    return f'word called'
 
 
 @app.callback(
     Output('open-output-message', 'children'),
     [Input('url-button', 'n_clicks')], [State('url', 'value')])
-def app_open(n_clicks, value):
+def GUI_app_open(n_clicks, value):
     if n_clicks != 0:
         system.web_open(value)
     return u'opened'
@@ -84,7 +116,7 @@ def app_open(n_clicks, value):
 @app.callback(
     Output('close-output-message', 'children'),
     [Input('url-close-button', 'n_clicks')])
-def app_close(n_clicks):
+def GUI_app_close(n_clicks):
     if n_clicks != 0:
         system.close()
     return u'closed'
@@ -93,7 +125,7 @@ def app_close(n_clicks):
 @app.callback(
     Output('screenshot-output-message', 'children'),
     [Input('screenshot-button', 'n_clicks')])
-def app_screenshot(n_clicks):
+def GUI_app_screenshot(n_clicks):
     if n_clicks != 0:
         system.screenshot()
     return u'screenshot taken'
@@ -102,7 +134,7 @@ def app_screenshot(n_clicks):
 @app.callback(
     Output('reboot-output-message', 'children'),
     [Input('reboot-button', 'n_clicks')])
-def app_reboot(n_clicks):
+def GUI_app_reboot(n_clicks):
     if n_clicks != 0:
         system.reboot()
         pass
@@ -112,7 +144,7 @@ def app_reboot(n_clicks):
 @app.callback(
     Output('poweroff-output-message', 'children'),
     [Input('poweroff-button', 'n_clicks')])
-def app_poweroff(n_clicks):
+def GUI_app_poweroff(n_clicks):
     if n_clicks != 0:
         system.poweroff()
         pass
@@ -122,7 +154,7 @@ def app_poweroff(n_clicks):
 @app.callback(
     Output('volume-slider', 'value'), [Input('set-volume-button', 'n_clicks')],
     [State('volume-slider', 'value')])
-def app_volume(n_clicks, value):
+def GUI_app_volume(n_clicks, value):
     if n_clicks != 0:
         system.volume(value)
     return value
@@ -130,7 +162,7 @@ def app_volume(n_clicks, value):
 
 @app.callback(
     Output('volume-indicator', 'children'), [Input('volume-slider', 'value')])
-def app_volume_indicate(value):
+def GUI_app_volume_indicate(value):
     return u'Selected Value: {val} | System Volume: {sys}'\
             .format(val=value, sys=system.get_volume())
 
@@ -138,21 +170,21 @@ def app_volume_indicate(value):
 @app.callback(
     Output('mute-output-message', 'children'),
     [Input('mute-button', 'n_clicks')])
-def app_mute(n_clicks):
+def GUI_app_mute(n_clicks):
     if n_clicks != 0:
         system.mute()
     return u'muted'
 
 
 @app.callback(Output('tabs-content', 'children'), [Input('tabs', 'value')])
-def render_content(tab):
+def GUI_render_content(tab):
     return tab_render(tab)
 
 
 @app.callback(
     Output('output-data-upload', 'children'),
     [Input('upload-data', 'contents')], [State('upload-data', 'filename')])
-def upload_content(uploaded_file_contents, uploaded_filenames):
+def GUI_upload_content(uploaded_file_contents, uploaded_filenames):
     return callback.upload(uploaded_filenames, uploaded_file_contents)
 
 
@@ -161,14 +193,14 @@ def upload_content(uploaded_file_contents, uploaded_filenames):
            'children'),
     [Input('download-files-button', 'n_clicks')],
     [State('files-checklist', 'value')])
-def download_selected_files(n_clicks, files):
+def GUI_download_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.download_files(files)
     return u'prepared'
 
 
 @server.route('/download')
-def download_flask():
+def GUI_download_flask():
     if os.path.exists('{}/teleserver_download.zip'.format(os.getcwd())):
         return flask.send_from_directory(os.getcwd(),
                                          'teleserver_download.zip')
@@ -180,7 +212,7 @@ def download_flask():
     Output('delete-files-output-message',
            'children'), [Input('delete-files-button', 'n_clicks')],
     [State('files-checklist', 'value')])
-def delete_selected_files(n_clicks, files):
+def GUI_delete_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.delete_files(files)
     return u'deleted'
@@ -190,7 +222,7 @@ def delete_selected_files(n_clicks, files):
     Output('open-files-output-message',
            'children'), [Input('open-files-button', 'n_clicks')],
     [State('files-checklist', 'value')])
-def open_selected_files(n_clicks, files):
+def GUI_open_selected_files(n_clicks, files):
     if n_clicks != 0:
         callback.open_files(files)
     return u'opened'
@@ -199,7 +231,7 @@ def open_selected_files(n_clicks, files):
 @app.callback(
     Output('custom-shortcut-output-message', 'children'),
     [Input('key-control-button', 'n_clicks')], [State('key-control', 'value')])
-def key_control(clicks, value):
+def GUI_key_control(clicks, value):
     if clicks > 0:
         system.xdotool_key(value)
     return u'executed'
@@ -208,7 +240,7 @@ def key_control(clicks, value):
 @app.callback(
     Output('shortcut-output-message', 'children'),
     [Input(name, 'n_clicks_timestamp') for name in SHORTCUT_NAMES])
-def shortcuts_click(*SHORTCUT_NAMES):
+def GUI_shortcuts_click(*SHORTCUT_NAMES):
     frame = inspect.currentframe()
     _, _, _, values = inspect.getargvalues(frame)
     vals = [int(val) for val in values['SHORTCUT_NAMES']]
@@ -222,7 +254,7 @@ def shortcuts_click(*SHORTCUT_NAMES):
 @app.callback(
     Output('keyboard-output-message', 'children'),
     [Input(name, 'n_clicks_timestamp') for name in KEYBOARD_NAMES])
-def keyboard_click(*KEYBOARD_NAMES):
+def GUI_keyboard_click(*KEYBOARD_NAMES):
     frame = inspect.currentframe()
     _, _, _, values = inspect.getargvalues(frame)
     vals = [int(val) for val in values['KEYBOARD_NAMES']]
@@ -236,7 +268,7 @@ def keyboard_click(*KEYBOARD_NAMES):
 @app.callback(
     Output('live-screen', 'children'),
     [Input('screen-interval-component', 'n_intervals')])
-def grab_screen(n):
+def GUI_grab_screen(n):
     return callback.get_screen_grab()
 
 

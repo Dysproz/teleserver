@@ -32,6 +32,7 @@ sudo mkdir /var/lib/teleserver/data
 sudo rm -rf /var/lib/teleserver/app > /dev/null
 sudo mkdir /var/lib/teleserver/data
 sudo chmod 777 /var/lib/teleserver/data
+sudo chmod -R +x /var/lib/teleserver/app
 sudo cp -rf $PWD /var/lib/teleserver/app/
 sudo chmod -R +x /var/lib/teleserver/app
 

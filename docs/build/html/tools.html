@@ -38,11 +38,6 @@
 <div class="section" id="module-tools.app_callbacks">
 <span id="tools-app-callbacks-module"></span><h2>tools.app_callbacks module<a class="headerlink" href="#module-tools.app_callbacks" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="tools.app_callbacks.create_upload_directory">
-<code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">create_upload_directory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.create_upload_directory" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
 <dt id="tools.app_callbacks.delete_files">
 <code class="sig-prename descclassname">tools.app_callbacks.</code><code class="sig-name descname">delete_files</code><span class="sig-paren">(</span><em class="sig-param">files</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.app_callbacks.delete_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete selected files</p>
@@ -150,7 +145,7 @@
 <span id="tools-secret-manager-module"></span><h2>tools.secret_manager module<a class="headerlink" href="#module-tools.secret_manager" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="tools.secret_manager.SecretManager">
-<em class="property">class </em><code class="sig-prename descclassname">tools.secret_manager.</code><code class="sig-name descname">SecretManager</code><span class="sig-paren">(</span><em class="sig-param">secret_file='/usr/local/teleserver/secret.ini'</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">tools.secret_manager.</code><code class="sig-name descname">SecretManager</code><span class="sig-paren">(</span><em class="sig-param">secret_file='/var/lib/teleserver/secret.ini'</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class for managing passwords to teleserver</p>
 <dl class="method">
@@ -233,7 +228,7 @@ Where [0] is user and [1] is password</p>
 
 <dl class="method">
 <dt id="tools.secret_manager.SecretManager.set_credentials">
-<code class="sig-name descname">set_credentials</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">password</em>, <em class="sig-param">file_loc='/usr/local/teleserver/secret.ini'</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager.set_credentials" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_credentials</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">password</em>, <em class="sig-param">file_loc='/var/lib/teleserver/secret.ini'</em><span class="sig-paren">)</span><a class="headerlink" href="#tools.secret_manager.SecretManager.set_credentials" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set user, password credentials in file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

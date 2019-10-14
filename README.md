@@ -47,59 +47,6 @@ When you get it then all the 'commands' will begin with
 ```
 where 8080 is a port that machine's server operates on.
 
-## CLI interface
-Basic usage is to open web browser on desired website remotely.
-
-Use curl with this url (or just paste url to web browser):
-```
-<IP address>:8080/open?url='<url of your website>'
-```
-
-and
-
-```
-<IP address>:8080/close
-```
-will close the browser.
-
-There's also reboot and poweroff:
-
-```
-<IP address>:8080/reboot
-```
-
-```
-<IP address>:8080/poweroff
-```
-that works exactly as inserting these commands into terminal.
-So:
-
-```
-<IP address>:8080/screenshot
-```
-will take a screenshot.
-
-
-```
-<IP address>:8080/mute
-```
-will mute computer.
-
-There's one more command.
-If you have your favourite website (for example Google Meet),
-you can specify that link in /var/lib/teleserver/tools/common.py by changing OPENMEET_var to your website.
-
-Afterwards
-
-```
-<IP address>:8080/openmeet
-```
-will open link specified by you.
-By default it's linked to Google.
-(Please be aware that after changing OPENMEET_var it's essential to restart server or simply reboot)
-
-CLI interface may be convinient for automated apps that can't use GUI, but should operate somehow with teleserver.
-
 ## GUI
 There's also GUI that covers features specified in previous paragraph and extends it to additional features.
 
@@ -150,6 +97,35 @@ In this section user has on-screen keyboard that can be used to insert data on t
 I works basically like normal keyboard.
 
 There is also a textbox where user can insert commands compatible with ```xdotool key```
+
+## teleserver API
+Teleserver API is made of 3 main function groups:
+* **webbrowser** - group dedicated to web browser
+* **system** - group dedicated to system tools
+* **keyboard** - group dedicated to keyboard input
+
+These groups may be utilized by calling:
+```
+<IP address>:8080/<group>/<function>?<additional_vars>
+```
+
+### *webbrowser* group functions
+1. *openmeet* - Opens URL to Google Meet defined in *tools/common.py* file.
+2. *open* - Open website provided in additional variable *url*
+3. *close* - Closes webbrowser.
+
+### *system* group functions
+1. *poweroff* - Power off the machine
+2. *reboot* - Reboot the machine
+3. *screenshot* - Take screenshot of current screen
+4. *mute* - Mute machine volume
+5. *grab_screen* - Grabs screenshot of current screen and returns it in base64 format
+6. *set_volume* - Set specific volume level declared in additional variable *lvl*
+
+### Keyboard group functions
+1. *call_key* - Calls specific key or string of keys in xdotool format. Key should be provided in additional variable *key*.
+2. *call_word* - Calls word provided in additional variable *word*.
+
 
 # Uninstall
 
