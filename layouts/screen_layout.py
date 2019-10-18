@@ -13,5 +13,17 @@ def create_screen_content():
     return html.Div([
         html.Div(id='live-screen'),
         dcc.Interval(
-            id='screen-interval-component', interval=1000, n_intervals=0)
+            id='screen-interval-component', interval=1000, n_intervals=0),
+        html.Div([
+            dcc.Input(id='native-key-control', type='text', value=''),
+        ],
+                 style={'margin': style.PADDING}),
+        html.Button(
+            id='native-key-control-button',
+            n_clicks=0,
+            children='Execute',
+            style={
+                'margin': style.PADDING,
+                'backgroundColor': style.BUTTON_COLOR
+            })
     ], style={'margin': style.PADDING})

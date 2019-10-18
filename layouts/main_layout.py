@@ -88,6 +88,8 @@ def gui_layout():
                          style={'display': 'none'}),
                 html.Div([html.Div(id='custom-shortcut-output-message')],
                          style={'display': 'none'}),
+                html.Div([html.Div(id='native-shortcut-output-message')],
+                         style={'display': 'none'}),
                 html.Div([html.Div(id='shortcut-output-message')],
                          style={'display': 'none'}),
                 html.Div([html.Div(id='keyboard-output-message')],

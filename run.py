@@ -100,7 +100,7 @@ def API_call_key():
 @server.route('/keyboard/call_word', methods=['GET'])
 def API_call_word():
     word = flask.request.args.get('word')
-    system.xdotool_key('+'.join(list(word)))
+    system.type_keyboard(word)
     return f'word called'
 
 
@@ -234,6 +234,15 @@ def GUI_open_selected_files(n_clicks, files):
 def GUI_key_control(clicks, value):
     if clicks > 0:
         system.xdotool_key(value)
+    return u'executed'
+
+
+@app.callback(
+    Output('native-shortcut-output-message', 'children'),
+    [Input('native-key-control-button', 'n_clicks')], [State('native-key-control', 'value')])
+def GUI_native_key_control(clicks, value):
+    if clicks > 0:
+        system.type_keyboard(value)
     return u'executed'
 
 

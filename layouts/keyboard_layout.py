@@ -2,6 +2,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 import layouts.style.style as style
+from tools.common import SPECIAL_CHAR
 
 KEYBOARD_KEYS = [
     [
@@ -31,41 +32,6 @@ KEYBOARD_KEYS = [
     ], ['ctrl', 'Alt', 'space', 'Super', 'Up', 'Down', 'Left', 'Right']
 ]
 
-SPECIAL_CHAR = {
-    'asciitilde': '~',
-    'exclam': '!',
-    'at': '@',
-    'numbersign': '#',
-    'dollar': '$',
-    'percent': '%',
-    'asciicircum': '^',
-    'ampersand': '&',
-    'asterisk': '*',
-    'parenleft': '(',
-    'parenright': ')',
-    'underscore': '_',
-    'plus': '+',
-    'quoteleft': '`',
-    'minus': '-',
-    'equal': '=',
-    'bracketleft': '[',
-    'bracketright': ']',
-    'backslash': (r"\"" [0]),
-    'braceleft': ' {',
-    'braceright': '}',
-    'bar': '|',
-    'semicolon': ';',
-    'quoteright': "'",
-    'colon': ':',
-    'quotedbl': '"',
-    'comma': ',',
-    'period': '.',
-    'slash': '/',
-    'less': '<',
-    'greater': '>',
-    'question': '?'
-}
-
 FLAT_KEYBOARD_KEYS = [item for sublist in KEYBOARD_KEYS for item in sublist]
 KEYBOARD_NAMES = ['{}-button'.format(name) for name in FLAT_KEYBOARD_KEYS]
 
@@ -78,11 +44,11 @@ def create_keyboard_layout():
     """
     return html.Div([
         html.Div([
-            dcc.Input(id='key-control', type='text', value=''),
+            dcc.Input(id='native-key-control', type='text', value=''),
         ],
                  style={'margin': style.PADDING}),
         html.Button(
-            id='key-control-button',
+            id='native-key-control-button',
             n_clicks=0,
             children='Execute',
             style={

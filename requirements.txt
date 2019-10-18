@@ -6,8 +6,10 @@ dash-html-components==1.0.1
 dash==1.3.1
 flask
 image
+mock==3.0.5
 pyalsaaudio
 pyfakefs
+pynput==1.4.4
 pyscreenshot
 pytest
 wtforms

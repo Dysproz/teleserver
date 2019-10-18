@@ -5,8 +5,16 @@ from io import BytesIO
 import pyscreenshot as ImageGrab
 from subprocess import call
 import webbrowser
+from Xlib.error import DisplayNameError
 
 from tools.common import UPLOAD_DIRECTORY
+
+try:
+    from pynput.keyboard import Controller
+    x_display = True
+except DisplayNameError:
+    print("Couldn't find connected DISPLAY. Keyboard input is disabled.")
+    x_display = False
 
 
 URL_SCHEMES = ('file://',
@@ -116,6 +124,20 @@ def xdotool_key(keys):
     :type keys: str
     """
     call(['xdotool', 'key', keys])
+
+
+def type_keyboard(word):
+    """Type specific word with spoofed keyboard
+
+    :param word: Word to enter
+    :param word: str
+    """
+    if x_display:
+        keyboard = Controller()
+        keyboard.type(word)
+        del keyboard
+    else:
+        pass
 
 
 def get_volume():
