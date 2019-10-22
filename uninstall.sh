@@ -7,4 +7,4 @@ pkill -f teleserver
 sudo rm -rf /var/lib/teleserver
 
 # Remove teleserver from profile
-sed -i '/teleserver &/d' ~/.profile
+sed -i '/teleserver/d' ~/.profile

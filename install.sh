@@ -8,8 +8,11 @@ if [ $? -ne 0 ]; then
 fi
 
 # Chrome installation
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
+FILE=google-chrome-stable_current_amd64.deb
+if ! test -f "$FILE"; then
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+fi
+sudo dpkg -i $FILE
 if [ $? -ne 0 ]; then
 	echo "Could not install Chrome. Check your packaging manager. Exitting..."
 	exit 1
@@ -28,6 +31,7 @@ gsettings set org.gnome.desktop.screensaver lock-enabled false
 
 # Setup of application files with respect to previous versions
 sudo mkdir /var/lib/teleserver
+sudo chmod 777 /var/lib/teleserver
 sudo mkdir /var/lib/teleserver/data
 sudo rm -rf /var/lib/teleserver/app > /dev/null
 sudo mkdir /var/lib/teleserver/data

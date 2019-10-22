@@ -3,7 +3,10 @@ import dash
 import dash_auth
 from dash.dependencies import Input, Output, State
 import flask
+from flask import jsonify
+from functools import wraps
 import inspect
+import jwt
 import os
 
 from layouts.keyboard_layout import FLAT_KEYBOARD_KEYS, KEYBOARD_NAMES
@@ -15,93 +18,130 @@ from tools.secret_manager import SecretManager
 import tools.system_calls as system
 
 sec = SecretManager()
-VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
+VALID_USERNAME_PASSWORD_PAIRS = sec.get_credentials_for_GUI()
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 server = flask.Flask(__name__)
+server.config['SECRET_KEY'] = sec.get_secret_key()
 app = dash.Dash(
     __name__, server=server, external_stylesheets=external_stylesheets)
 app.layout = gui_layout()
 app.title = 'teleserver'
 app.config['suppress_callback_exceptions'] = True
-if VALID_USERNAME_PASSWORD_PAIRS != ['', '']:
+if VALID_USERNAME_PASSWORD_PAIRS != {}:
     auth = dash_auth.BasicAuth(app, VALID_USERNAME_PASSWORD_PAIRS)
 
 
+def token_required(f):
+    """This is a decorator to verify whether API user provided valid token
+    Token is required to operate through API
+
+    :param f: Function to decorate
+    :type f: function
+    """
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        """Wrapper to parser token argument,
+        check whether token is correct
+        and return unchanged function when correct
+        """
+        token = flask.request.args.get('token')
+        if not token:
+            return jsonify({'message': 'Token is missing!'})
+
+        try:
+            jwt.decode(token, server.config['SECRET_KEY'])
+        except jwt.exceptions.JWSDecodeError:
+            return jsonify({'message': 'Token is invalid!'})
+        return f(*args, **kwargs)
+    return decorated
+
+
 @server.route('/webbrowser/openmeet')
+@token_required
 def API_openmeet():
     system.web_open(OPENMEET_var)
-    return 'Meet opened\n'
+    return jsonify({'message': 'Meet opened', 'rc': 0})
 
 
 @server.route('/webbrowser/open', methods=['GET'])
+@token_required
 def API_open():
     url = flask.request.args.get('url')
     system.web_open(url)
-    return "url opened.\n"
+    return jsonify({'message': 'URL opened', 'rc': 0})
 
 
 @server.route('/webbrowser/close')
+@token_required
 def API_close():
     system.close()
-    return "closed\n"
+    return jsonify({'message': 'Webbrowser closed', 'rc': 0})
 
 
 @server.route('/system/poweroff')
+@token_required
 def API_poweroff():
     system.poweroff()
-    return "poweroff...\n"
+    return jsonify({'message': 'Machine is powering off...', 'rc': 0})
 
 
 @server.route('/system/reboot')
+@token_required
 def API_reboot():
     system.reboot()
-    return "reboot...\n"
+    return jsonify({'message': 'Machine is rebooting', 'rc': 0})
 
 
 @server.route('/system/screenshot')
+@token_required
 def API_screenshot():
     system.screenshot()
-    return "screenshot taken\n"
+    return jsonify({'message': 'Screenshot taken', 'rc': 0})
 
 
 @server.route('/system/mute')
+@token_required
 def API_mute():
     system.mute()
-    return "muted\n"
+    return jsonify({'message': 'Volume muted', 'rc': 0})
 
 
 @server.route('/system/grab_screen')
+@token_required
 def API_grab_screen():
     return system.get_screen()
 
 
 @server.route('/system/set_volume', methods=['GET'])
+@token_required
 def API_set_volume():
     level = flask.request.args.get('lvl')
     try:
         level = int(level)
     except ValueError:
-        return f'ERROR: {level} is not int!'
+        return jsonify({'message': f'ERROR: {level} is not int!', 'rc': 1})
     if not level <= 100 and not level >= 0:
-        return f'ERROR: {level} is not in range 0-100'
+        return jsonify({'message': f'ERROR: {level} is not in range 0-100', 'rc': 1})
     system.volume(level)
-    return f'Volume set to {level}'
+    return jsonify({'message': f'Volume set to {level}', 'rc': 0})
 
 
 @server.route('/keyboard/call_key', methods=['GET'])
+@token_required
 def API_call_key():
     key = flask.request.args.get('key')
     system.xdotool_key(key)
-    return f'key called'
+    return jsonify({'message': 'key called', 'rc': 0})
 
 
 @server.route('/keyboard/call_word', methods=['GET'])
+@token_required
 def API_call_word():
     word = flask.request.args.get('word')
     system.type_keyboard(word)
-    return f'word called'
+    return jsonify({'message': 'word called', 'rc': 0})
 
 
 @app.callback(
@@ -279,6 +319,16 @@ def GUI_keyboard_click(*KEYBOARD_NAMES):
     [Input('screen-interval-component', 'n_intervals')])
 def GUI_grab_screen(n):
     return callback.get_screen_grab()
+
+
+@app.callback(
+    Output('service-principal-output-message', 'children'),
+    [Input('service-principal-button', 'n_intervals')])
+def GUI_generate_service_principal(clicks):
+    if clicks > 0:
+        return sec.create_service_principal()
+    else:
+        return ''
 
 
 if __name__ == '__main__':

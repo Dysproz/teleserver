@@ -126,6 +126,8 @@ These groups may be utilized by calling:
 1. *call_key* - Calls specific key or string of keys in xdotool format. Key should be provided in additional variable *key*.
 2. *call_word* - Calls word provided in additional variable *word*.
 
+**NOTE:** In order to call any of API functions it's necessary to first login into GUI page and under system tools generate token. Token should be saved and then append to every call as *token* variable in URL.
+
 
 # Uninstall
 

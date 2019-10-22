@@ -168,12 +168,20 @@ I works basically like normal keyboard.</p>
 <li><p><em>call_key</em> - Calls specific key or string of keys in xdotool format. Key should be provided in additional variable <em>key</em>.</p></li>
 <li><p><em>call_word</em> - Calls word provided in additional variable <em>word</em>.</p></li>
 </ol>
+<p><strong>NOTE:</strong> In order to call any of API functions it’s necessary to first login into GUI page and under system tools generate token. Token should be saved and then append to every call as <em>token</em> variable in URL.</p>
 </div>
 </div>
 <div class="section" id="uninstall">
 <h1>Uninstall<a class="headerlink" href="#uninstall" title="Permalink to this headline">¶</a></h1>
 <p>In order to uninstall teleserver, run uninstall.sh script from teleserver project dir:</p>
 <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">uninstall</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="test">
+<h1>Test<a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h1>
+<p>In order to manually run CI tests execute:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">test</span>
 </pre></div>
 </div>
 </div>
