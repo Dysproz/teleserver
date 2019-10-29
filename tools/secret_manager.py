@@ -16,6 +16,7 @@ class SecretManager():
         :type secret_file: str
         """
         self.secret_file = secret_file
+        self.secrets = self.get_current_secrets(secret_file)
 
     @staticmethod
     def decrypt(key, var):
@@ -67,77 +68,64 @@ class SecretManager():
             config['KEY']['key'] = Fernet.generate_key().decode('utf-8')
         return config
 
-    def set_gui_credentials(self, user, password, file_loc=f'{TELESERVER_DIR}/secret.ini'):
+    def save_secrets(self):
+        with open(self.secret_file, 'w') as secret_file:
+            self.secrets.write(secret_file)
+
+    def set_gui_credentials(self, user, password):
         """Set user, password credentials in file
 
         :param user: username
         :type user: str
         :param password: password
         :type password: str
-        :param file_loc: Location of secret file
-        :type file_loc: str
         """
-        secrets = self.get_current_secrets(file_loc)
-        secrets['PASS'][user] = self.encrypt(secrets['KEY']['key'], password)
-        with open(file_loc, 'w') as secret_file:
-            secrets.write(secret_file)
+        self.secrets['PASS'][user] = self.encrypt(self.secrets['KEY']['key'], password)
+        self.save_secrets()
 
-    def verify_credentials(self, user, password, file_loc=f'{TELESERVER_DIR}/secret.ini'):
+    def verify_credentials(self, user, password):
         """Verify user, password credentials in file
 
         :param user: username
         :type user: str
         :param password: password
         :type password: str
-        :param file_loc: Location of secret file
-        :type file_loc: str
 
         :return: Result whether credentials are correct
         :rtype: bool
         """
-        secrets = self.get_current_secrets(file_loc)
-        if user not in secrets['PASS']:
+        if user not in self.secrets['PASS']:
             return False
         else:
-            return self.decrypt(secrets['KEY']['key'], secrets['PASS'][user]) == password
+            return self.decrypt(self.secrets['KEY']['key'], self.secrets['PASS'][user]) == password
 
-    def delete_credentails_for_user(self, user, file_loc=f'{TELESERVER_DIR}/secret.ini'):
+    def delete_credentails_for_user(self, user):
         """Delete user credentials from database
 
         :param user: username
         :type user: str
-        :param file_loc: Location of secret file
-        :type file_loc: str
         """
-        secrets = self.get_current_secrets(file_loc)
-        if user in secrets['PASS']:
-            del secrets['PASS'][user]
-        with open(file_loc, 'w') as secret_file:
-            secrets.write(secret_file)
+        if user in self.secrets['PASS']:
+            del self.secrets['PASS'][user]
+        self.save_secrets()
 
-    def get_credentials_for_GUI(self, file_loc=f'{TELESERVER_DIR}/secret.ini'):
+    def get_credentials_for_GUI(self):
         """Get list of credentials pair for GUI purposes
-
-        :param file_loc: Location of secret file
-        :type file_loc: str
 
         :return: Dictionary of user-password pair
         :rtype: dict
         """
         credentials = {}
-        secrets = self.get_current_secrets(file_loc)
-        for user in secrets['PASS']:
-            credentials[user] = self.decrypt(secrets['KEY']['key'], secrets['PASS'][user])
+        for user in self.secrets['PASS']:
+            credentials[user] = self.decrypt(self.secrets['KEY']['key'], self.secrets['PASS'][user])
         return credentials
 
-    def create_service_principal(self, name=None, file_loc=f'{TELESERVER_DIR}/secret.ini'):
+    def create_service_principal(self, name=None):
         """Create service principal token for automated login
         This token is designed to last for 1000 days and be used by bots to utilize teleserver API
 
         :param name: Name of service principal
         :type name: str
-        :param file_loc: Location of secret file
-        :type file_loc: str
 
         :return: Generated token
         :rtype: str
@@ -145,22 +133,87 @@ class SecretManager():
         if name is None:
             date = datetime.datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
             name = f'token_{date}'
-        secrets = self.get_current_secrets(file_loc)
         token = jwt.encode({'user': name, 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1000)},
                            key=self.get_secret_key())
-        secrets['SERVICE_PRINCIPAL'][name] = token.decode('utf-8')
-        with open(file_loc, 'w') as secret_file:
-            secrets.write(secret_file)
+        self.secrets['SERVICE_PRINCIPAL'][name] = token.decode('utf-8')
+        self.save_secrets()
         return token.decode('utf-8')
 
-    def get_secret_key(self, file_loc=f'{TELESERVER_DIR}/secret.ini'):
+    def get_secret_key(self):
         """Return secret key to decode credentials
-
-        :param file_loc: Location of secret file
-        :type file_loc: str
 
         :return: Secret key
         :rtype: str
         """
-        secrets = self.get_current_secrets(file_loc)
-        return secrets['KEY']['key']
+
+        return self.secrets['KEY']['key']
+
+    def create_time_token(self, data):
+        """Create user time token
+        This token is designed ot serve for short time to CLI user
+        At first, SecretManager checks whether provided GUI credentials are correct
+        and then generates token with time based on passed lease variables
+        Data must contain:
+        * user - GUI username
+        * password - GUI password
+        * lease_days - Number of days to lease token for
+        * lease_hours - Number of hours to lease token for
+        * lease_minutes - Number of minutes to lease token for
+        * lease_seconds - Number of seconds to lease token for
+
+        :param data: Data with all variables specified
+        :type data: dict
+
+        :return: Dictionary with message and return code of function.
+        When token is created it will be provided as token variable
+        :rtype: dict
+        """
+        if 'user' not in data or 'password' not in data:
+            return {'message': 'user or password was not passed', 'rc': 1}
+        if ('lease_days' not in data or 'lease_hours' not in data or
+           'lease_minutes' not in data or 'lease_seconds' not in data):
+            return {'message': 'Lease time was not passed', 'rc': 1}
+        logins = self.get_credentials_for_GUI()
+        if data['user'] in logins:
+            if data['password'] == logins[data['user']]:
+                token = jwt.encode({'user': data['user'],
+                                    'exp': datetime.datetime.utcnow() +
+                                    datetime.timedelta(days=int(data['lease_days']),
+                                                       hours=int(data['lease_hours']),
+                                                       minutes=int(data['lease_minutes']),
+                                                       seconds=int(data['lease_seconds']))},
+                                   key=self.get_secret_key())
+                token = token.decode('utf-8')
+                date = datetime.datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
+                name = f'token_{date}_{token[-1]}'
+                self.secrets['TOKEN_COOKIES'][name] = token
+                with open(self.secret_file, 'w') as secret_file:
+                    self.secrets.write(secret_file)
+                return {'message': 'Token created',
+                        'token': token,
+                        'name': name,
+                        'rc': 0}
+            else:
+                return {'message': 'Wrong password', 'rc': 1}
+        else:
+            return {'message': 'User not in database', 'rc': 1}
+
+    def delete_time_token(self, data):
+        """Delete time token from secrets
+
+        :param data: Dictionary with key token_name to delete
+        :type data: dict
+
+        :return: Operation status
+        :rtype: dict
+        """
+        if 'token_name' not in data:
+            return {'message': 'token does not exist', 'rc': 1}
+        else:
+            token_name = data['token_name']
+            if token_name not in self.secrets['TOKEN_COOKIES']:
+                return {'message': 'Token removed', 'rc': 0}
+            else:
+                del self.secrets['TOKEN_COOKIES'][token_name]
+                self.save_secrets()
+                return {'message': 'Token removed', 'rc': 0}

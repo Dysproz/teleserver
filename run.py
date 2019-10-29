@@ -46,8 +46,13 @@ def token_required(f):
         check whether token is correct
         and return unchanged function when correct
         """
-        token = flask.request.args.get('token')
-        if not token:
+        url_args = flask.request.args.to_dict()
+        post_args = flask.request.form.to_dict()
+        if 'token' in url_args:
+            token = url_args['token']
+        elif 'token' in post_args:
+            token = post_args['token']
+        else:
             return jsonify({'message': 'Token is missing!'})
 
         try:
@@ -58,14 +63,26 @@ def token_required(f):
     return decorated
 
 
-@server.route('/webbrowser/openmeet')
+@server.route('/login', methods=['GET', 'POST'])
+def login():
+    data = flask.request.form.to_dict()
+    return jsonify(sec.create_time_token(data))
+
+
+@server.route('/logout', methods=['GET', 'POST'])
+def logout():
+    data = flask.request.form.to_dict()
+    return jsonify(sec.delete_time_token(data))
+
+
+@server.route('/webbrowser/openmeet', methods=['GET', 'POST'])
 @token_required
 def API_openmeet():
     system.web_open(OPENMEET_var)
     return jsonify({'message': 'Meet opened', 'rc': 0})
 
 
-@server.route('/webbrowser/open', methods=['GET'])
+@server.route('/webbrowser/open', methods=['GET', 'POST'])
 @token_required
 def API_open():
     url = flask.request.args.get('url')
@@ -73,48 +90,50 @@ def API_open():
     return jsonify({'message': 'URL opened', 'rc': 0})
 
 
-@server.route('/webbrowser/close')
+@server.route('/webbrowser/close', methods=['GET', 'POST'])
 @token_required
 def API_close():
     system.close()
     return jsonify({'message': 'Webbrowser closed', 'rc': 0})
 
 
-@server.route('/system/poweroff')
+@server.route('/system/poweroff', methods=['GET', 'POST'])
 @token_required
 def API_poweroff():
     system.poweroff()
     return jsonify({'message': 'Machine is powering off...', 'rc': 0})
 
 
-@server.route('/system/reboot')
+@server.route('/system/reboot', methods=['GET', 'POST'])
 @token_required
 def API_reboot():
     system.reboot()
     return jsonify({'message': 'Machine is rebooting', 'rc': 0})
 
 
-@server.route('/system/screenshot')
+@server.route('/system/screenshot', methods=['GET', 'POST'])
 @token_required
 def API_screenshot():
     system.screenshot()
     return jsonify({'message': 'Screenshot taken', 'rc': 0})
 
 
-@server.route('/system/mute')
+@server.route('/system/mute', methods=['GET', 'POST'])
 @token_required
 def API_mute():
     system.mute()
     return jsonify({'message': 'Volume muted', 'rc': 0})
 
 
-@server.route('/system/grab_screen')
+@server.route('/system/grab_screen', methods=['GET', 'POST'])
 @token_required
 def API_grab_screen():
-    return system.get_screen()
+    return jsonify({'message': 'screen grabbed',
+                    'rc': 0,
+                    'screen': system.get_screen()})
 
 
-@server.route('/system/set_volume', methods=['GET'])
+@server.route('/system/set_volume', methods=['GET', 'POST'])
 @token_required
 def API_set_volume():
     level = flask.request.args.get('lvl')
@@ -128,7 +147,7 @@ def API_set_volume():
     return jsonify({'message': f'Volume set to {level}', 'rc': 0})
 
 
-@server.route('/keyboard/call_key', methods=['GET'])
+@server.route('/keyboard/call_key', methods=['GET', 'POST'])
 @token_required
 def API_call_key():
     key = flask.request.args.get('key')
@@ -136,7 +155,7 @@ def API_call_key():
     return jsonify({'message': 'key called', 'rc': 0})
 
 
-@server.route('/keyboard/call_word', methods=['GET'])
+@server.route('/keyboard/call_word', methods=['GET', 'POST'])
 @token_required
 def API_call_word():
     word = flask.request.args.get('word')
