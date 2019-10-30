@@ -13,6 +13,9 @@ import tools.app_callbacks as callback
 from tools.common import OPENMEET_var
 from tools.secret_manager import SecretManager
 import tools.system_calls as system
+from tools.calendar_generation import change_next_month 
+from layouts.calendar_layout import create_all_calendar
+from layouts.calendar_layout import change_calendar_content
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
@@ -238,6 +241,20 @@ def keyboard_click(*KEYBOARD_NAMES):
     [Input('screen-interval-component', 'n_intervals')])
 def grab_screen(n):
     return callback.get_screen_grab()
+
+@app.callback(
+    Output('calendar-screen','children'),
+    [Input('next-change_mth', 'n_clicks')])
+def next_month(n_clicks):
+    if n_clicks > 0:
+        change_next_month() 
+
+@app.callback(
+    Output('live-calendar','children'),
+    [Input('calendar-interval-component', 'n_intervals')])
+def grab_calendar(n):
+   change_calendar_content() 
+   create_all_calendar()
 
 
 if __name__ == '__main__':
