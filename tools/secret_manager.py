@@ -2,6 +2,7 @@ import configparser
 from cryptography.fernet import Fernet
 import datetime
 import jwt
+import os
 
 from tools.common import TELESERVER_DIR
 
@@ -69,6 +70,12 @@ class SecretManager():
         return config
 
     def save_secrets(self):
+        """Save current secrets to secret file
+        """
+        try:
+            os.mknod(self.secret_file)
+        except FileExistsError:
+            pass
         with open(self.secret_file, 'w') as secret_file:
             self.secrets.write(secret_file)
 
@@ -145,7 +152,6 @@ class SecretManager():
         :return: Secret key
         :rtype: str
         """
-
         return self.secrets['KEY']['key']
 
     def create_time_token(self, data):

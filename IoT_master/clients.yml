@@ -1,6 +1,7 @@
 clients:
   # FILL THIS FILE WITH REAL DATA
   # - ip: 127.0.0.1
+  #   token: exampletoken
   #   vars:
   #     - example1
   #     - example2

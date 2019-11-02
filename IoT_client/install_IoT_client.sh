@@ -29,5 +29,7 @@ if [ $(grep -o "teleserver" ~/.profile | wc -l) = 0 ]; then
 	echo "nohup python3 /var/lib/teleserver/app/IoT_run.py &" >> ~/.profile
 fi
 
+/var/lib/teleserver_IoT/secret_managers.py
+
 echo "Teleserver IoT client has been installed successfully. Now, restart your session to enjoy IoT client."
 exit 0
