@@ -1,9 +1,9 @@
 import os
 from pyfakefs import fake_filesystem_unittest
 
-from IoT_master.tools.camera_initialize import ThermalCamera
-from IoT_master.tools.common import TELESERVER_DIR
-from IoT_master.tools.secret_manager import SecretManager
+from tools.camera_initialize import ThermalCamera
+from tools.common import TELESERVER_DIR
+from tools.secret_manager import SecretManager
 
 
 class TestCameraInitialize(fake_filesystem_unittest.TestCase):

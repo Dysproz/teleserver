@@ -5,7 +5,7 @@ import datetime
 import jwt
 import os
 
-from common import TELESERVER_DIR
+from tools.common import TELESERVER_DIR
 
 
 class SecretManager():

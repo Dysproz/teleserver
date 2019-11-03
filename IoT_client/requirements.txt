@@ -1,5 +1,6 @@
 cryptography
 configparser
+cryptography
 flask
 jsonify==0.5
 pyjwt
