@@ -79,7 +79,7 @@ class SecretManager():
 
 
 if __name__ == '__main__':
-    sec = SecretManager(secret_file='/tmp/secret.ini')
+    sec = SecretManager()
     token = sec.create_token()
     print(f'\nToken to access IoT client:\n\n{token}\n\n'
           'Save it to clients.yml file together with client IP')

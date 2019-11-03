@@ -1,5 +1,6 @@
 import cv2
-from configparser import ConfigParser
+
+from IoT_master.tools.secret_manager import SecretManager
 
 
 class ThermalCamera:
@@ -13,18 +14,21 @@ class ThermalCamera:
 
     There are only 2 channels, '1': normal vision and '2': thermal vision.
     """
-    def __init__(self, file):
+    def __init__(self, file=None):
         """Initializes class and reads settings from .ini file.
 
         :param file: path and name of the .ini file
         :type file: str
         """
-        config = ConfigParser()
-        config.read(file)
-        self.login = config.get('camera_address', 'login')
-        self.password = config.get('camera_address', 'password')
-        self.ip_address = config.get('camera_address', 'ip_address')
-        self.channel = config.get('camera_address', 'channel')
+        if file:
+            sec = SecretManager(secret_file=file)
+        else:
+            sec = SecretManager()
+        config = sec.thermal_camera_credentials()
+        self.login = config['login']
+        self.password = config['password']
+        self.ip_address = config['ip_address']
+        self.channel = config['channel']
         self.address = (f'rtsp://{self.login}:{self.password}@{self.ip_address}'
                         f'/cam/realmonitor?channel={self.channel}&subtype=0')
         self.cam = cv2.VideoCapture(self.address)
@@ -61,7 +65,7 @@ if __name__ == '__main__':
     Two working keys are ESC to close window and SPACE to change displayed channel.
     """
 
-    camera_class = ThermalCamera('config.ini')
+    camera_class = ThermalCamera()
     cv2.namedWindow('Camera')
     channels = ['1', '2']
     i = 0
