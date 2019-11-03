@@ -15,3 +15,4 @@ pynput==1.4.4
 pyscreenshot
 pytest
 wtforms
+opencv-python
