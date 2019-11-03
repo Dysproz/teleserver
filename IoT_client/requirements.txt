@@ -1,3 +1,4 @@
+cryptography
 configparser
 flask
 jsonify==0.5
