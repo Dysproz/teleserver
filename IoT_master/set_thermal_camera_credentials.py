@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import getpass
 from tools.secret_manager import SecretManager
 
