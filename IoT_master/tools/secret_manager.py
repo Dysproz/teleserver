@@ -4,7 +4,7 @@ from cryptography.fernet import Fernet
 import getpass
 import os
 
-from common import TELESERVER_DIR
+from tools.common import TELESERVER_DIR
 
 
 class SecretManager():
