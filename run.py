@@ -13,9 +13,11 @@ import tools.app_callbacks as callback
 from tools.common import OPENMEET_var
 from tools.secret_manager import SecretManager
 import tools.system_calls as system
-from tools.calendar_generation import change_next_month 
+from tools.calendar_generation import change_next_month
 from layouts.calendar_layout import create_all_calendar
 from layouts.calendar_layout import change_calendar_content
+from layouts.calendar_layout import create_calendar_content
+from tools.calendar_generation import change_previous_month
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
@@ -243,19 +245,20 @@ def grab_screen(n):
     return callback.get_screen_grab()
 
 @app.callback(
-    Output('calendar-screen','children'),
-    [Input('next-change_mth', 'n_clicks')])
-def next_month(n_clicks):
-    if n_clicks > 0:
-        change_next_month() 
+    Output('calendar-output','children'),
+    [Input('Previous-change_mth', 'n_clicks'),Input('Next-change_mth', 'n_clicks')])
+def next_month(previous_clicks,next_clicks):
+    if previous_clicks > 0:
+        return change_previous_month()
+    if next_clicks > 0:
+        return change_next_month()
 
 @app.callback(
     Output('live-calendar','children'),
     [Input('calendar-interval-component', 'n_intervals')])
 def grab_calendar(n):
-   change_calendar_content() 
-   create_all_calendar()
+   return create_all_calendar()
 
 
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port=8080)
+    server.run(debug=False, host='0.0.0.0', port=8080)

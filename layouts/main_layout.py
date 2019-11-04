@@ -7,8 +7,8 @@ from layouts.key_control_layout import create_key_control_layout
 from layouts.screen_layout import create_screen_content
 import layouts.style.style as style
 from layouts.system_options_layout import create_system_options
-
-
+from layouts.calendar_layout import create_all_calendar
+from layouts.calendar_layout import change_calendar_content
 def gui_layout():
     """Create main layout for teleserver
 
@@ -62,7 +62,8 @@ def gui_layout():
                             dcc.Tab(label='Files', value='upload-tab'),
                             dcc.Tab(label='Shortcuts', value='shortcuts-tab'),
                             dcc.Tab(label='Keyboard', value='keyboard-tab'),
-                            dcc.Tab(label='Screen', value='screen-tab')
+                            dcc.Tab(label='Screen', value='screen-tab'),
+			    dcc.Tab(label='Calendar', value='calendar-tab')
                         ]),
                     html.Div(id='tabs-content')
                 ]),
@@ -137,3 +138,6 @@ def tab_render(tab):
         return create_keyboard_layout()
     elif tab == 'screen-tab':
         return create_screen_content()
+    elif tab == 'calendar-tab':
+        #return create_all_calendar()
+        return change_calendar_content()
