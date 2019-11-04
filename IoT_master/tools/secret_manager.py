@@ -3,7 +3,10 @@ import configparser
 from cryptography.fernet import Fernet
 import os
 
-from tools.common import TELESERVER_DIR
+try:
+    from tools.common import TELESERVER_DIR
+except ModuleNotFoundError:
+    from common import TELESERVER_DIR
 
 
 class SecretManager():
