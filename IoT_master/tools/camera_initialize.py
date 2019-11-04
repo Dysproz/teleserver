@@ -1,6 +1,9 @@
 import cv2
 
-from tools.secret_manager import SecretManager
+try:
+    from tools.secret_manager import SecretManager
+except ModuleNotFoundError:
+    from secret_manager import SecretManager
 
 
 class ThermalCamera:
