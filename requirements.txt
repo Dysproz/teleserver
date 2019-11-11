@@ -9,6 +9,6 @@ image
 jsonify==0.5
 pyalsaaudio
 pyjwt
-pynput==1.4.4
+pynput==1.4.5
 pyscreenshot
 wtforms
