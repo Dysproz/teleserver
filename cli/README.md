@@ -29,3 +29,15 @@ In order to log out execute:
 ```
 teleserver log out
 ```
+
+## Additional Features
+
+### Server Lookup
+Sometimes it's hard to find teleserver's IP.
+It's possible to scan specific network, networks attached to specific interface or all networks in the system.
+With `teleserver log lookup_server` command you can find IP address to your teleserver.
+Possible flags:
+* `--network` - Networks that should be searched for teleserver
+* `--interface` - Name of the interface to search for networks to lookup.
+
+This feature works only for IPv4 addreses.

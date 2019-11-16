@@ -63,6 +63,13 @@ def token_required(f):
     return decorated
 
 
+@server.route('/healthcheck')
+def healthcheck():
+    """This route is designed to check whether server is health
+    """
+    return jsonify({'message': 'Server is health', 'rc': 0})
+
+
 @server.route('/login', methods=['GET', 'POST'])
 def login():
     data = flask.request.form.to_dict()

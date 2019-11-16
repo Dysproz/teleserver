@@ -14,7 +14,8 @@ loggers = [__name__,
            teleserver.keyboard_cli.__name__,
            teleserver.login_cli.__name__,
            teleserver.system_cli.__name__,
-           teleserver.webbrowser_cli.__name__
+           teleserver.webbrowser_cli.__name__,
+           teleserver.utils.lookup_utils.__name__
            ]
 
 for logger_name in loggers:
