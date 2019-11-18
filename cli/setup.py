@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
 setuptools.setup(
     name="teleserver",
     py_modules=['teleserver'],
-    version="0.0.3",
+    version="0.0.4",
     author="Szymon Piotr Krasuski",
     description="CLI tool to teleserver project.",
     long_description=long_description,

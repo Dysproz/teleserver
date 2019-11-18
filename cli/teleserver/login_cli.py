@@ -44,7 +44,7 @@ def login_in(username, lease, server):
     and will save token under ~/.teleserver/credentials.json
     """
     logger.info('Started loggin in process.')
-    logger.debug("args: username: {username}, lease: {lease}, server: {server}")
+    logger.debug(f"args: username: {username}, lease: {lease}, server: {server}")
     if username is None:
         logger.error('Username was not provided')
         return
@@ -66,7 +66,7 @@ def login_in(username, lease, server):
             credentials_data = {'token_name': token_name,
                                 'token': token,
                                 'server': server}
-            os.makedirs('~/.teleserver')
+            os.makedirs(os.path.expanduser('~/.teleserver'))
             with open('~/.teleserver/credentials.json', 'w') as credentials_file:
                 json.dump(credentials_data, credentials_file)
             logger.info('Log in successful!')
