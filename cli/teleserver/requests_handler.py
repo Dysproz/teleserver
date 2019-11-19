@@ -30,7 +30,7 @@ def make_request(route=None, url_args=None, post_args={}):
         server = secrets['server']
     if not route:
         return {'message': 'None route specified', 'rc': 1}
-    url = f'http://{server}:8080/{route}'
+    url = f'https://{server}:8080/{route}'
     if url_args:
         url += '?'
         for argname in url_args:

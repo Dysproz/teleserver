@@ -54,7 +54,7 @@ def try_reach_ip(ip):
     """
     logger.debug(f'Trying to healthcheck IP: {ip}')
     try:
-        response = requests.get(f'http://{ip}:8080/healthcheck', timeout=3)
+        response = requests.get(f'https://{ip}:8080/healthcheck', timeout=3)
         print(response.content)
         response = json.loads(response.content)
         print(response)

@@ -5,7 +5,7 @@ from pyfakefs import fake_filesystem_unittest
 
 from teleserver.requests_handler import make_request
 
-target_url = 'http://127.0.0.1:8080/test/route?var1=val1&var2=val2'
+target_url = 'https://127.0.0.1:8080/test/route?var1=val1&var2=val2'
 target_data = {'postvar1': 'postval1',
                'postvar2': 'postval2',
                'postvar3': 'postval3',

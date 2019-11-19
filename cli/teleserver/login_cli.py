@@ -51,11 +51,11 @@ def login_in(username, lease, server):
     else:
         p = getpass.getpass('Please enter password: ', stream=None)
         lease_days, lease_hours, lease_minutes, lease_seconds = convert_time_unit_to_variables(lease)
-        response = requests.post(url=f'http://{server}:8080/login', data={'user': username, 'password': p,
-                                                                          'lease_days': lease_days,
-                                                                          'lease_hours': lease_hours,
-                                                                          'lease_minutes': lease_minutes,
-                                                                          'lease_seconds': lease_seconds})
+        response = requests.post(url=f'https://{server}:8080/login', data={'user': username, 'password': p,
+                                                                           'lease_days': lease_days,
+                                                                           'lease_hours': lease_hours,
+                                                                           'lease_minutes': lease_minutes,
+                                                                           'lease_seconds': lease_seconds})
         if int(response.json()['rc']) != 0:
             error_message = response.json()['message']
             logger.error(f'Error while loggin in: {error_message}')
@@ -84,7 +84,7 @@ def login_out():
         data = json.load(secret_file)
         token_name = data['token_name']
         server = data['server']
-    response = requests.post(url=f'http://{server}:8080/logout', data={'token_name': token_name})
+    response = requests.post(url=f'https://{server}:8080/logout', data={'token_name': token_name})
     if int(response.json()['rc']) != 0:
         error_message = response.json()['message']
         logger.error(f'Error while deleting token: {error_message}')

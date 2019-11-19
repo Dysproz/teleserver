@@ -349,7 +349,7 @@ def GUI_grab_screen(n):
 
 @app.callback(
     Output('service-principal-output-message', 'children'),
-    [Input('service-principal-button', 'n_intervals')])
+    [Input('service-principal-button', 'n_clicks')])
 def GUI_generate_service_principal(clicks):
     if clicks > 0:
         return sec.create_service_principal()
@@ -358,4 +358,4 @@ def GUI_generate_service_principal(clicks):
 
 
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port=8080)
+    server.run(host='0.0.0.0', port=8080, ssl_context='adhoc')
