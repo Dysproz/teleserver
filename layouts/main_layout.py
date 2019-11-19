@@ -93,6 +93,8 @@ def gui_layout():
                 html.Div([html.Div(id='shortcut-output-message')],
                          style={'display': 'none'}),
                 html.Div([html.Div(id='keyboard-output-message')],
+                         style={'display': 'none'}),
+                html.Div([html.Div(id='calendar-output-message')],
                          style={'display': 'none'})
             ],
             style={

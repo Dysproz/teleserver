@@ -1,11 +1,7 @@
-import dash_core_components as dcc
 import dash_html_components as html
 import layouts.style.style as style
-from tools.calendar_generation import generate_month
-from tools.calendar_generation import print_title
-
-CAL_BUT = ['Previous', 'Next']
-
+from tools.calendar_generation import calendar_config
+import dash_core_components as dcc
 
 def change_calendar_content():
     """
@@ -14,63 +10,34 @@ def change_calendar_content():
     :return: Layout with 1 second refresh interval
     :rtype: dash.development.base_component.ComponentMeta
     """
+    calendarID = calendar_config()
     return html.Div([
-        html.Div(id='live-calendar'),
-        html.Div(id='calendar-output'),
-        dcc.Interval(
-            id='calendar-interval-component', interval=1000, n_intervals=0)
-        ], style={'margin': style.PADDING})
-
-
-def create_all_calendar(CalTimeObject):
-    """
-    Create all content for a calendar (one month)
-
-    :param CalTimeObject: Object with month, year, name of the month
-    :return: Output from create_calendar_content function and title of a calendar
-    :rtype: dash.development.base_component.ComponentMeta
-    """
-    return html.Div(
-        [
-            html.H1('Desk reservations'),
-            html.H2(print_title(CalTimeObject)),
-            create_calendar_content(CalTimeObject)
-        ])
-
-
-def create_calendar_content(CalTimeObject):
-    """
-    Create buttons for a calendar - with days and switching months
-
-    :param CalTimeObject: Object with month, year, name of the month
-    :return: Buttons with days of the month and switching months buttons
-    :rtype: dash.development.base_component.ComponentMeta
-    """
-    calendar_buttons = []
-    new_calendar = generate_month(CalTimeObject)
-    change_month_layout = []
-    for key in CAL_BUT:
-        change_month_layout.append(
-                                  html.Button(
-                                             id='{}-change_mth'.format(key),
-                                             n_clicks=0,
-                                             children=key,
-                                             style={
-                                                   'margin': style.PADDING,
-                                                   'backgroundColor': style.BUTTON_COLOR
-                                                   }))
-    calendar_buttons.append(html.Div(change_month_layout))
-
-    for line in new_calendar:
-        line_layout = []
-        for key in line:
-            line_layout.append(
-                              html.Button(
-                                         id='{}-cal_button'.format(key),
-                                         children=key,
-                                         style={
-                                               'margin': style.PADDING,
-                                               'backgroundColor': style.BUTTON_COLOR
-                                               }))
-        calendar_buttons.append(html.Div(line_layout))
-    return html.Div(calendar_buttons)
+        html.Iframe(
+                   src='https://calendar.google.com/calendar/embed?src={}&ctz=Europe%2FWarsaw&hl=en_GB'.format(calendarID),
+                   width='1000',
+                   height='600'
+        ),
+        html.H4('Event title'),
+        dcc.Input(
+                 id='event-title',
+                 type='text',
+                 value='Desk reservation'
+        ),
+        html.H4('Choose a date of a reservation'),
+        dcc.DatePickerRange(
+                           id='date-picker-range'
+        ),
+        html.H4('Starting and ending time of reservation'),
+        dcc.RangeSlider(
+                       id='time_slider',
+                       count=1,
+                       min=0,
+                       max=23*60+59,
+                       step=1,
+                       value=[0, 23*60+59]
+        ),
+        html.Button(
+                   id='time-submit-button',
+                   n_clicks = 0,
+                   children='Add an event'
+        )], style={'margin': style.PADDING})

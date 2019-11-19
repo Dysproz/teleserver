@@ -8,21 +8,14 @@ import os
 import datetime
 
 from layouts.keyboard_layout import FLAT_KEYBOARD_KEYS, KEYBOARD_NAMES
-from layouts.calendar_layout import create_all_calendar
 from layouts.key_control_layout import SHORTCUT_NAMES, SHORTCUTS
 from layouts.main_layout import gui_layout, tab_render
 import tools.app_callbacks as callback
-from tools.calendar_generation import CalendarTime, change_next_month, change_previous_month
 from tools.common import OPENMEET_var
 from tools.secret_manager import SecretManager
+from tools.calendar_generation import sendToGoogleCalendar
 import tools.system_calls as system
 
-
-CalendarTimeObj = CalendarTime(
-    datetime.datetime.now().strftime("%B"),
-    datetime.datetime.now().year,
-    datetime.datetime.now().month
-)
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = [sec.get_credentials()]
@@ -156,10 +149,6 @@ def app_mute(n_clicks):
 
 @app.callback(Output('tabs-content', 'children'), [Input('tabs', 'value')])
 def render_content(tab):
-    if(tab == 'calendar-tab'):
-        CalendarTimeObj.monthname = datetime.datetime.now().strftime("%B")
-        CalendarTimeObj.year = datetime.datetime.now().year
-        CalendarTimeObj.month = datetime.datetime.now().month
     return tab_render(tab)
 
 
@@ -253,22 +242,21 @@ def keyboard_click(*KEYBOARD_NAMES):
 def grab_screen(n):
     return callback.get_screen_grab()
 
-
 @app.callback(
-    Output('calendar-output', 'children'),
-    [Input('Previous-change_mth', 'n_clicks'), Input('Next-change_mth', 'n_clicks')])
-def next_month(previous_clicks, next_clicks):
-    if previous_clicks > 0:
-        return change_previous_month(CalendarTimeObj)
-    if next_clicks > 0:
-        return change_next_month(CalendarTimeObj)
-
-
-@app.callback(
-    Output('live-calendar', 'children'),
-    [Input('calendar-interval-component', 'n_intervals')])
-def grab_calendar(n):
-    return create_all_calendar(CalendarTimeObj)
+    Output('calendar-output-message', 'children'),
+    [Input('time-submit-button', 'n_clicks'),
+     Input('date-picker-range', 'start_date'),
+     Input('date-picker-range', 'end_date')],
+    [State('time-slider', 'start_end_time'),
+     State('event-title','title')])
+def pick_datetime(clicks, start_date, end_date, start_end_time, title):
+    if start_date is not None:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    if end_date is not None:
+        end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    if clicks != 0:
+        sendToGoogleCalendar(start_date, end_date, start_end_time[0], start_end_time[1], title)
+    return u'clicked'
 
 
 if __name__ == '__main__':
