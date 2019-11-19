@@ -26,6 +26,9 @@ After reboot or session restart, all you need to do is find IP address of your m
 
 The server is configured to start at the beginning of user sesison.
 
+**NOTE** Teleserver uses https, so in case of unrecognised address please add `https://` before address.
+**NOTE** Teleserver uses self-signed ssl certificate. In case of warning from web browser just click Advanced option and continue to website.
+
 ## Login feature
 
 By default teleserver can be reached by anyone,
