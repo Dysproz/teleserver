@@ -49,3 +49,13 @@ def sendToGoogleCalendar(start_date, end_date, start_time, end_time, event_title
     }
     calendarID = calendar_config()
     e = CAL.events().insert(calendarId='{}@group.calendar.google.com'.format(calendarID), sendNotifications=False, body=EVENT).execute()
+	
+def calendar_config():
+    if(path.exists("calendar.conf")):
+        file_config = open("calendar.conf","r")
+        content = file_config.readline()
+        content = content.split()
+        if(content[0]=="calendarID"):
+            return content[2]
+    else:
+        print("ERROR: The configuration file calendar.conf does not exist")
