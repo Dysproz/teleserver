@@ -1,1 +1,1 @@
-TELESERVER_DIR = '/var/lib/teleserver'
+TELESERVER_DIR = '/var/lib/teleserver_IoT'

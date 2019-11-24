@@ -17,7 +17,7 @@ fi
 # Setup of application files with respect to previous versions
 sudo mkdir /var/lib/teleserver_IoT
 sudo rm -rf /var/lib/teleserver_IoT/app > /dev/null
-sudo chmod -R +x /var/lib/teleserver_IoT/app
+sudo chmod -R +x /var/lib/teleserver_IoT/
 sudo cp -rf $PWD /var/lib/teleserver_IoT/app/
 sudo chmod -R +x /var/lib/teleserver_IoT/app
 touch /var/lib/teleserver_IoT/data.yml
