@@ -6,8 +6,8 @@ from functools import wraps
 import jwt
 
 
-from data_drainer import get_data_for_variable, set_data_for_variale
-from secret_manager import SecretManager
+from data_drainer import get_data_for_variable, set_data_for_variable
+from tools.secret_manager import SecretManager
 
 
 server = flask.Flask(__name__)
@@ -65,15 +65,15 @@ def get_variable(variable):
     """
     if demo:
         data = flask.request.args
-        set_data_for_variale(data)
+        set_data_for_variable(data)
     else:
         return jsonify({'rc': 1,
                         'message': 'Server not working in demo state'})
 
 
 def parse_arguments():
-        parser = argparse.ArgumentParser(description='Server run options')
-        parser.add_argument('--demo', action='store_true')
+    parser = argparse.ArgumentParser(description='Server run options')
+    parser.add_argument('--demo', action='store_true')
     return parser.parse_args()
 
 
