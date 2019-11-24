@@ -60,7 +60,7 @@ def get_variable(variable):
 
 
 @server.route('/demo/set', methods=['GET', 'POST'])
-def get_variable(variable):
+def set_variable(variable):
     """This route serves IoT devices data from server
     """
     if demo:
@@ -80,4 +80,4 @@ def parse_arguments():
 if __name__ == '__main__':
     args = parse_arguments()
     demo = args.demo
-    server.run(host='0.0.0.0', port=8080)
+    server.run(debug=False, host='0.0.0.0', port=8080, ssl_context='adhoc')
