@@ -11,7 +11,7 @@ def get_clients_data():
     for target in targets['clients']:
         data[target["ip"]] = {}
         for var in target['vars']:
-            url = f'{target["ip"]}:8080/get/{var}'
+            url = f'https://{target["ip"]}:8080/get/{var}'
             try:
                 r = requests.post(url=url, data={'token': target['token']})
             except requests.exceptions.InvalidSchema:

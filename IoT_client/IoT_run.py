@@ -1,12 +1,13 @@
 #!/usr/bin/python3
+import argparse
 import flask
 from flask import jsonify
 from functools import wraps
 import jwt
 
 
-from data_drainer import get_data_for_variable
-from secret_manager import SecretManager
+from data_drainer import get_data_for_variable, set_data_for_variable
+from tools.secret_manager import SecretManager
 
 
 server = flask.Flask(__name__)
@@ -58,5 +59,27 @@ def get_variable(variable):
                     'message': 'Data gathered successfully'})
 
 
+@server.route('/demo/set', methods=['GET', 'POST'])
+def set_variable():
+    """This route serves IoT devices data from server
+    """
+    if demo:
+        data = flask.request.args
+        set_data_for_variable(data)
+        return jsonify({'rc': 0,
+                        'message': 'Success!'})
+    else:
+        return jsonify({'rc': 1,
+                        'message': 'Server not working in demo state'})
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Server run options')
+    parser.add_argument('--demo', action='store_true')
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port=8080)
+    args = parse_arguments()
+    demo = args.demo
+    server.run(debug=False, host='0.0.0.0', port=8080, ssl_context='adhoc')
