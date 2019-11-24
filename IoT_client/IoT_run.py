@@ -60,12 +60,14 @@ def get_variable(variable):
 
 
 @server.route('/demo/set', methods=['GET', 'POST'])
-def set_variable(variable):
+def set_variable():
     """This route serves IoT devices data from server
     """
     if demo:
         data = flask.request.args
         set_data_for_variable(data)
+        return jsonify({'rc': 0,
+                        'message': 'Success!'})
     else:
         return jsonify({'rc': 1,
                         'message': 'Server not working in demo state'})

@@ -27,7 +27,7 @@ sudo ufw allow 8080
 
 # Adding teleserver trigger to user profile
 if [ $(grep -o "teleserver_IoT" ~/.profile | wc -l) = 0 ]; then
-	echo "nohup python3 /var/lib/teleserver_IoT/app/IoT_run.py &" >> ~/.profile
+	echo "nohup python3 /var/lib/teleserver_IoT/app/IoT_run.py &" >> ~/.bashrc
 fi
 
 /var/lib/teleserver_IoT/app/tools/secret_manager.py
