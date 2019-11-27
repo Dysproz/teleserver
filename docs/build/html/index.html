@@ -56,7 +56,7 @@
 <p>This is a client to open you ubuntu machine to local network and allow to control it over the web.</p>
 <a class="reference external image-reference" href="https://circleci.com/gh/Dysproz/teleserver/tree/master"><img alt="CircleCI" src="https://circleci.com/gh/Dysproz/teleserver/tree/master.svg?style=svg" /></a>
 <a class="reference external image-reference" href="https://github.com/Dysproz/teleserver/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/Dysproz/teleserver.svg" /></a>
-<a class="reference external image-reference" href="https://[shields.io/](https://github.com/Dysproz/teleserver"><img alt="Generic badge" src="https://img.shields.io/badge/ubuntu-18.04|18.10|19.04-e95420.svg" /></a>
+<a class="reference external image-reference" href="https://[shields.io/](https://github.com/Dysproz/teleserver"><img alt="Generic badge" src="https://img.shields.io/badge/ubuntu-18.04|18.10|19.04|19.10-e95420.svg" /></a>
 <p>)</p>
 <a class="reference external image-reference" href="https://GitHub.com/Dysproz/Steleserver/releases/"><img alt="GitHub release" src="https://img.shields.io/github/release/Dysproz/teleserver.svg" /></a>
 <a class="reference external image-reference" href="https://www.python.org/"><img alt="forthebadge made-with-python" src="http://ForTheBadge.com/images/badges/made-with-python.svg" /></a>
@@ -74,6 +74,8 @@ Afterwards, cd into project directory.</p>
 <p>This command will run script <em>install.sh</em></p>
 <p>After reboot or session restart, all you need to do is find IP address of your machine (for example with <code class="docutils literal notranslate"><span class="pre">ip</span> <span class="pre">a</span></code>).</p>
 <p>The server is configured to start at the beginning of user sesison.</p>
+<p><strong>NOTE</strong> Teleserver uses https, so in case of unrecognised address please add <code class="docutils literal notranslate"><span class="pre">https://</span></code> before address.</p>
+<p><strong>NOTE</strong> Teleserver uses self-signed ssl certificate. In case of warning from web browser just click Advanced option and continue to website.</p>
 <p>By default teleserver can be reached by anyone,
 However, if you want to set password and login for GUI run this script:</p>
 <div class="highlight-guess notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">teleserver</span><span class="o">/</span><span class="n">set_login_credentials</span><span class="p">.</span><span class="n">py</span>
@@ -191,6 +193,7 @@ I works basically like normal keyboard.</p>
 <li><p>bionic (18.04)</p></li>
 <li><p>cosmic (18.10)</p></li>
 <li><p>disco (19.04)</p></li>
+<li><p>eoan (19.10)</p></li>
 </ul>
 </div>
 
