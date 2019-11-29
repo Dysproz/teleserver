@@ -150,6 +150,19 @@ In this section user has on-screen keyboard that can be used to insert data on t
 I works basically like normal keyboard.
 
 There is also a textbox where user can insert commands compatible with ```xdotool key```
+## Desk reservations in Google Calendar
+
+In order to use a calendar feature you need a Google account and enabled API Calendar.
+Here you can find more information about activating API Calendar:
+![Link](https://developers.google.com/calendar)
+
+Before you start using calendar, a configuration is needed. Configuration file is 
+config.yml in /var/lib/teleserver/app directory.
+There you have to provide iframe to display your calendar, path to a file with 
+a api credentials and a calendarID.
+Remember to put one space after name of the option in a file. 
+Please do not change the order of options and do not put additional enters at the end 
+of a file.
 
 # Uninstall
 

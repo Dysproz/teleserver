@@ -242,21 +242,25 @@ def keyboard_click(*KEYBOARD_NAMES):
 def grab_screen(n):
     return callback.get_screen_grab()
 
-@app.callback(
-    Output('calendar-output-message', 'children'),
-    [Input('time-submit-button', 'n_clicks'),
-     Input('date-picker-range', 'start_date'),
-     Input('date-picker-range', 'end_date')],
-    [State('time-slider', 'start_end_time'),
-     State('event-title','title')])
-def pick_datetime(clicks, start_date, end_date, start_end_time, title):
-    if start_date is not None:
-        start_date = datetime.strptime(start_date, '%Y-%m-%d')
-    if end_date is not None:
-        end_date = datetime.strptime(end_date, '%Y-%m-%d')
-    if clicks != 0:
-        sendToGoogleCalendar(start_date, end_date, start_end_time[0], start_end_time[1], title)
-    return u'clicked'
+@app.callback([
+     Output('confirm-good', 'displayed'),
+     Output('confirm-bad', 'displayed')],
+    [Input('time-submit-button', 'n_clicks')],
+    [State('date-picker-range', 'start_date'),
+     State('date-picker-range', 'end_date'),
+     State('hour-slider', 'value'),
+     State('minute-slider', 'value'),
+     State('event-title','value')])
+def pick_datetime(clicks, start_date, end_date, hours, minutes, title):
+    if start_date is not None and end_date is not None and title is not None:
+        start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
+        end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
+        if clicks != 0:
+            result = sendToGoogleCalendar(start_date, end_date, hours, minutes, title)
+        if result:
+            return True, False
+        else:
+            return False, True
 
 
 if __name__ == '__main__':
