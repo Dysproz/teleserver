@@ -11,7 +11,7 @@ pyfakefs
 pyscreenshot
 pytest
 wtforms
-yaml
+pyyaml
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
