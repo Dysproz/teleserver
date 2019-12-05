@@ -8,6 +8,7 @@ from functools import wraps
 import inspect
 import jwt
 import os
+import datetime
 
 from layouts.keyboard_layout import FLAT_KEYBOARD_KEYS, KEYBOARD_NAMES
 from layouts.key_control_layout import SHORTCUT_NAMES, SHORTCUTS
@@ -15,7 +16,9 @@ from layouts.main_layout import gui_layout, tab_render
 import tools.app_callbacks as callback
 from tools.common import OPENMEET_var
 from tools.secret_manager import SecretManager
+from tools.calendar_generation import sendToGoogleCalendar
 import tools.system_calls as system
+
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = sec.get_credentials_for_GUI()
@@ -357,5 +360,26 @@ def GUI_generate_service_principal(clicks):
         return ''
 
 
+@app.callback(
+    [Output('confirm-good', 'displayed'),
+     Output('confirm-bad', 'displayed')],
+    [Input('time-submit-button', 'n_clicks')],
+    [State('date-picker-range', 'start_date'),
+     State('date-picker-range', 'end_date'),
+     State('hour-slider', 'value'),
+     State('minute-slider', 'value'),
+     State('event-title', 'value')])
+def pick_datetime(clicks, start_date, end_date, hours, minutes, title):
+    if start_date is not None and end_date is not None and title is not None:
+        start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
+        end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
+        if clicks != 0:
+            result = sendToGoogleCalendar(start_date, end_date, hours, minutes, title)
+        if result:
+            return True, False
+        else:
+            return False, True
+
+
 if __name__ == '__main__':
-    server.run(host='0.0.0.0', port=8080, ssl_context='adhoc')
+    server.run(debug=False, host='0.0.0.0', port=8080, ssl_context='adhoc')
