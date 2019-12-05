@@ -1,6 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
 
+from layouts.calendar_layout import change_calendar_content
 from layouts.files_layout import create_upload_content
 from layouts.keyboard_layout import create_keyboard_layout
 from layouts.key_control_layout import create_key_control_layout
@@ -62,7 +63,8 @@ def gui_layout():
                             dcc.Tab(label='Files', value='upload-tab'),
                             dcc.Tab(label='Shortcuts', value='shortcuts-tab'),
                             dcc.Tab(label='Keyboard', value='keyboard-tab'),
-                            dcc.Tab(label='Screen', value='screen-tab')
+                            dcc.Tab(label='Screen', value='screen-tab'),
+                            dcc.Tab(label='Calendar', value='calendar-tab')
                         ]),
                     html.Div(id='tabs-content')
                 ]),
@@ -93,6 +95,8 @@ def gui_layout():
                 html.Div([html.Div(id='shortcut-output-message')],
                          style={'display': 'none'}),
                 html.Div([html.Div(id='keyboard-output-message')],
+                         style={'display': 'none'}),
+                html.Div([html.Div(id='calendar-output-message')],
                          style={'display': 'none'})
             ],
             style={
@@ -139,3 +143,5 @@ def tab_render(tab):
         return create_keyboard_layout()
     elif tab == 'screen-tab':
         return create_screen_content()
+    elif tab == 'calendar-tab':
+        return change_calendar_content()
