@@ -30,8 +30,11 @@ def gui_layout():
                     }),
                 # URL section
                 html.Div([
-                    dcc.Input(id='url', type='text', value=''),
-                ]),
+                    dcc.Input(
+                        id='url',
+                        placeholder="Type your URL here",
+                        list='url_history'),
+                    html.Datalist(id='url_history', children=[])]),
                 html.Div([
                     html.Button(
                         id='url-button',

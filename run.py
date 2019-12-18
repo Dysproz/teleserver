@@ -9,6 +9,7 @@ import inspect
 import jwt
 import os
 import datetime
+import dash_html_components as html
 
 from layouts.keyboard_layout import FLAT_KEYBOARD_KEYS, KEYBOARD_NAMES
 from layouts.key_control_layout import SHORTCUT_NAMES, SHORTCUTS
@@ -178,8 +179,27 @@ def API_call_word():
     [Input('url-button', 'n_clicks')], [State('url', 'value')])
 def GUI_app_open(n_clicks, value):
     if n_clicks != 0:
-        system.web_open(value)
+        if not value:
+            pass
+        else:
+            system.web_open(value)
     return u'opened'
+
+
+@app.callback(
+    Output('url_history', 'children'),
+    [Input('url-button', 'n_clicks')],
+    [State('url', 'value')])
+def app_history(n_clicks, value):
+    if not value:
+        pass
+    else:
+        system.url_history(value)
+    urls = system.get_url_history()
+    if not urls:
+        return
+    urls.reverse()
+    return [html.Option(value='{}'.format(url)) for url in urls]
 
 
 @app.callback(
