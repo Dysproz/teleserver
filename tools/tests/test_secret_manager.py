@@ -126,9 +126,9 @@ class TestSecretManager(fake_filesystem_unittest.TestCase):
                      'lease_minutes': '30', 'lease_seconds': '0'}
         out = self.manager.create_time_token(test_data)
         self.assertEqual(out['rc'], 0)
-        secrets = configparser.ConfigParser()
-        secrets.read(f'{TELESERVER_DIR}/secret.ini')
-        self.assertEqual(len(secrets['TOKEN_COOKIES']), 2)
+        secrets2 = configparser.ConfigParser()
+        secrets2.read(f'{TELESERVER_DIR}/secret.ini')
+        self.assertEqual(len(secrets2['TOKEN_COOKIES']), 2)
 
     def test_delete_time_token(self):
         self.manager.set_gui_credentials(user='testuser', password='testpass')

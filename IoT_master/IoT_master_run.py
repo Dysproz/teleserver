@@ -2,6 +2,8 @@
 import requests
 import yaml
 
+from tools.notifications import check_data_and_execute_notifications
+
 
 def get_clients_data():
     with open('clients.yml') as clients:
@@ -22,5 +24,4 @@ def get_clients_data():
 
 if __name__ == '__main__':
     data = get_clients_data()
-    print(data)
-    # TODO: Add logic to parse data
+    check_data_and_execute_notifications(data)

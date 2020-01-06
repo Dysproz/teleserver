@@ -1,0 +1,66 @@
+- title: 'Open Window'
+  message: 'Temperature inside is too high'
+  conditions:
+    temperature_in:
+      value: 24
+      operator: '>'
+    temperature_out:
+      value: 16
+      opeartor: '<'
+    humidity:
+      value: 60
+      operator: '<'
+    window:
+      value: 0
+      operator: '=='
+- title: 'Turn off AC'
+  message: 'Temperature outside is low enough to cool down the room'
+  conditions:
+    temperature_out:
+      value: 22
+      operator: '<'
+    AC:
+      value: 1
+      operator: '=='
+    window:
+      value: 0
+      operator: '=='
+- title: 'Turn on heating system'
+  message: 'Temperature inside is too low to work properly'
+  conditions:
+    temperature_in:
+      value: 15
+      operator: '<'
+    temperature_out:
+      value: 15
+      operator: '<'
+    AC:
+      value: 0
+      operator: '=='
+    window:
+      value: 0
+      operator: '=='
+- title: 'Open Window and go for a coffee'
+  message: 'CO2 level is too high! Ventilate the room.'
+  conditions:
+    CO2:
+      value: 70
+      operator: '>'
+    temperature_out:
+      value: 10
+      operator: '>'
+    temperature_in:
+      value: 24
+      operator: '>'
+    window:
+      value: 0
+      operator: '=='
+- title: 'Turn off AC or close the window'
+  message: 'It may not be the best idea to keep both AC on and window open'
+  conditions:
+    AC:
+      value: 1
+      operator: '=='
+    window:
+      value: 1
+      operator: '=='
