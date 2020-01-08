@@ -36,10 +36,11 @@ sudo mkdir /var/lib/teleserver/data
 sudo rm -rf /var/lib/teleserver/app > /dev/null
 sudo mkdir /var/lib/teleserver/data
 sudo chmod 777 /var/lib/teleserver/data
-sudo chmod -R +x /var/lib/teleserver/app
+sudo chmod -R +wx /var/lib/teleserver/app
 sudo cp -rf $PWD /var/lib/teleserver/app/
 sudo chmod -R +x /var/lib/teleserver/app
 sudo chmod 777 /var/lib/teleserver/app/config_teleserver.yml
+
 
 # Enable port 8080 in firewall
 sudo ufw allow 8080

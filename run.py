@@ -17,9 +17,9 @@ from layouts.main_layout import gui_layout, tab_render
 import tools.app_callbacks as callback
 from tools.common import OPENMEET_var
 from tools.secret_manager import SecretManager
-from tools.calendar_generation import sendToGoogleCalendar
+from tools.calendar_generation import sendToGoogleCalendar, initializeCalendar, desk_available
 import tools.system_calls as system
-
+from IoT_master.tmp_tab import desk_reservations
 
 sec = SecretManager()
 VALID_USERNAME_PASSWORD_PAIRS = sec.get_credentials_for_GUI()
@@ -382,23 +382,32 @@ def GUI_generate_service_principal(clicks):
 
 @app.callback(
     [Output('confirm-good', 'displayed'),
-     Output('confirm-bad', 'displayed')],
+     Output('confirm-bad', 'displayed'),
+     Output('confirm-reserved', 'displayed')],
     [Input('time-submit-button', 'n_clicks')],
     [State('date-picker-range', 'start_date'),
      State('date-picker-range', 'end_date'),
      State('hour-slider', 'value'),
      State('minute-slider', 'value'),
-     State('event-title', 'value')])
+     State('desk-choose', 'value')])
 def pick_datetime(clicks, start_date, end_date, hours, minutes, title):
-    if start_date is not None and end_date is not None and title is not None:
-        start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
-        end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
-        if clicks != 0:
-            result = sendToGoogleCalendar(start_date, end_date, hours, minutes, title)
-        if result:
-            return True, False
-        else:
-            return False, True
+    if title is not None:
+        title_new = str(title).split()
+        if start_date and end_date:
+            start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
+            end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
+            if clicks != 0:
+                CAL = initializeCalendar()
+                print('After initialization')
+                if not desk_available(CAL, title_new[1], desk_reservations):
+                    return False, False, True
+                    print('After desk_available')
+                result = sendToGoogleCalendar(start_date, end_date, hours, minutes, title, CAL)
+                print('After sending event to Calendar')
+            if result:
+                return True, False, False
+            else:
+                return False, True, False
 
 
 if __name__ == '__main__':

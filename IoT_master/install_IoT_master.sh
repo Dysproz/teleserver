@@ -19,6 +19,7 @@ crontab -l > mycron
 echo "5 * * * * python3 /var/lib/teleserver_IoT/app/IoT_master_run.py" >> mycron
 crontab mycron
 rm mycron
+crontab -l | { cat; echo "*/5 * * * * /var/lib/teleserver/app/IoT_master/desks_reservation.py"; } | crontab -
 
 echo "Teleserver IoT master has been installed successfully."
 exit 0

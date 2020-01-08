@@ -1,6 +1,6 @@
 import dash_html_components as html
 import layouts.style.style as style
-from tools.calendar_generation import calendar_config
+from tools.calendar_generation import calendar_config, desk_combobox
 import dash_core_components as dcc
 
 
@@ -23,16 +23,20 @@ def change_calendar_content():
                              message='There was an error during adding an event. Please check server logs'
                              ' for an error.',
             ),
+            dcc.ConfirmDialog(
+                             id='confirm-reserved',
+                             message='This desk is already taken. Please reserve another or try again later',
+            ),
             html.Iframe(
                        src=result[0],
                        width='1000',
                        height='600'
             ),
             html.H4('Event title'),
-            dcc.Input(
-                     id='event-title',
-                     type='text',
-                     value='Desk reservation'
+            dcc.Dropdown(
+                id='desk-choose',
+                options=desk_combobox(),
+                searchable=False,
             ),
             html.H4('Choose a date of a reservation'),
             html.Div([
