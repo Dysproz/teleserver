@@ -76,16 +76,5 @@ def create_system_options():
                     'margin': style.PADDING,
                     'backgroundColor': style.BUTTON_COLOR
                 })
-        ]),
-        html.Button(
-                id='service-principal-button',
-                n_clicks=0,
-                children='Generate Service Principal',
-                style={
-                    'text-align': 'center',
-                    'margin': style.PADDING,
-                    'backgroundColor': style.BUTTON_COLOR,
-                    'float': 'bottom'
-                }),
-        html.Div(id='service-principal-output-message')
+        ])
     ])

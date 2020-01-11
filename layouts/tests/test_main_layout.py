@@ -1,16 +1,25 @@
 import dash
 import os
+from pathlib import Path
 from pyfakefs import fake_filesystem_unittest
 from unittest.mock import patch
+import yaml
 
 from layouts.main_layout import gui_layout, tab_render
-from tools.common import UPLOAD_DIRECTORY
+from tools.common import UPLOAD_DIRECTORY, TELESERVER_DIR
 
 
 class TestMainLayout(fake_filesystem_unittest.TestCase):
 
     def setUp(self):
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        config_dir = Path(dir_path).parent.parent
+        with open(f'{config_dir}/config.yml', 'r') as config_file:
+            config_data = yaml.safe_load(config_file)
         self.setUpPyfakefs()
+        os.makedirs(f'{TELESERVER_DIR}/app')
+        with open(f'{TELESERVER_DIR}/app/config.yml', 'w') as config_file:
+            yaml.safe_dump(config_data, config_file, default_flow_style=False)
 
     def test_gui_layout(self):
         self.assertIsInstance(type(gui_layout()),

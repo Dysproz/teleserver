@@ -371,16 +371,6 @@ def GUI_grab_screen(n):
 
 
 @app.callback(
-    Output('service-principal-output-message', 'children'),
-    [Input('service-principal-button', 'n_clicks')])
-def GUI_generate_service_principal(clicks):
-    if clicks > 0:
-        return sec.create_service_principal()
-    else:
-        return ''
-
-
-@app.callback(
     [Output('confirm-good', 'displayed'),
      Output('confirm-bad', 'displayed'),
      Output('confirm-reserved', 'displayed')],

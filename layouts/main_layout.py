@@ -1,5 +1,6 @@
 import dash_core_components as dcc
 import dash_html_components as html
+import yaml
 
 from layouts.calendar_layout import change_calendar_content
 from layouts.files_layout import create_upload_content
@@ -8,6 +9,38 @@ from layouts.key_control_layout import create_key_control_layout
 from layouts.screen_layout import create_screen_content
 import layouts.style.style as style
 from layouts.system_options_layout import create_system_options
+from tools.common import TELESERVER_DIR
+
+
+TABS = {
+    'system': dcc.Tab(label='System Options', value='system-options-tab'),
+    'files': dcc.Tab(label='Files', value='upload-tab'),
+    'shortcuts': dcc.Tab(label='Shortcuts', value='shortcuts-tab'),
+    'keyboard': dcc.Tab(label='Keyboard', value='keyboard-tab'),
+    'screen': dcc.Tab(label='Screen', value='screen-tab'),
+    'calendar': dcc.Tab(label='Calendar', value='calendar-tab')
+}
+
+
+def tabs_list():
+    """Check modules declared in config to render
+    and return dash tabs with proper modules
+
+    :return: List of dcc.Tab tabs
+    :rtype: list
+    """
+    with open(f'{TELESERVER_DIR}/app/config.yml', 'r') as config_file:
+        config = yaml.safe_load(config_file)
+    modules = config.get('modules')
+    if not modules:
+        return []
+    else:
+        active_tabs = []
+        for module in modules:
+            if module in TABS:
+                active_tabs.append(TABS[module])
+        else:
+            return active_tabs
 
 
 def gui_layout():
@@ -59,16 +92,7 @@ def gui_layout():
                     dcc.Tabs(
                         id="tabs",
                         value='system-options-tab',
-                        children=[
-                            dcc.Tab(
-                                label='System Options',
-                                value='system-options-tab'),
-                            dcc.Tab(label='Files', value='upload-tab'),
-                            dcc.Tab(label='Shortcuts', value='shortcuts-tab'),
-                            dcc.Tab(label='Keyboard', value='keyboard-tab'),
-                            dcc.Tab(label='Screen', value='screen-tab'),
-                            dcc.Tab(label='Calendar', value='calendar-tab')
-                        ]),
+                        children=tabs_list()),
                     html.Div(id='tabs-content')
                 ]),
 

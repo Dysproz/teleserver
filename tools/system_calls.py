@@ -9,7 +9,7 @@ from Xlib.error import DisplayNameError
 import yaml
 from collections import deque
 
-from tools.common import UPLOAD_DIRECTORY
+from tools.common import UPLOAD_DIRECTORY, TELESERVER_DIR
 
 try:
     from pynput.keyboard import Controller
@@ -172,20 +172,23 @@ def url_history(url):
     :type url: str
     """
 
-    with open('/var/lib/teleserver/app/config_teleserver.yml', 'r') as file:
-        urls = yaml.safe_load(file)
-        historic_urls = urls.get("urls")
-        number_of_urls = urls.get("url_config")
+    with open(f'{TELESERVER_DIR}/app/config.yml', 'r') as file:
+        config_file = yaml.safe_load(file)
+        historic_urls = config_file.get('url_history').get("urls")
+        number_of_urls = config_file.get('url_history').get("max_len")
+        if not number_of_urls:
+            number_of_urls = 10
 
-    if historic_urls is not None:
+    if historic_urls:
         historic_urls_queue = deque(historic_urls, number_of_urls)
         historic_urls_queue.append(url)
         historic_urls = list(historic_urls_queue)
     else:
         historic_urls = [url]
 
-    with open('/var/lib/teleserver/app/config_teleserver.yml', 'w') as file:
-        yaml.dump(dict(urls=historic_urls, url_config=number_of_urls), file)
+    with open(f'{TELESERVER_DIR}/app/config.yml', 'w') as file:
+        config_file['url_history']['urls'] = historic_urls
+        yaml.dump(config_file, file, default_flow_style=False)
 
 
 def get_url_history():
@@ -194,7 +197,7 @@ def get_url_history():
     :return: Array of urls
     :rtype: array
     """
-    with open('/var/lib/teleserver/app/config_teleserver.yml') as file:
+    with open(f'{TELESERVER_DIR}/app/config.yml') as file:
         urls = yaml.safe_load(file)
-        urls_hist = urls.get("urls")
+        urls_hist = urls.get('url_history').get("urls")
     return urls_hist
