@@ -11,4 +11,4 @@ modules:
   - shortcuts
   - keyboard
   - screen
-  - calendar
+  # - calendar
