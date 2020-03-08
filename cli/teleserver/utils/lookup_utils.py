@@ -88,3 +88,9 @@ def find_teleserver(networks):
         responses = pool.map(try_reach_ip, hosts)
         response = [str(ip) for ip in responses if ip]
     return response
+
+
+def saveIPs2file(ips):
+    with open('lookup_result.txt', 'w') as f:
+        for ip in ips:
+            print >>f, ip

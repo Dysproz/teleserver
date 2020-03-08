@@ -4,6 +4,8 @@ This package is CLI tool to teleserver project - a remote way to control your of
 
 Project's page:
 [teleserver](https://github.com/Dysproz/teleserver)
+Read the docs:
+[teleserver docs](https://readthedocs.org/projects/teleserver/)
 
 ## Idea
 

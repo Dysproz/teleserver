@@ -7,11 +7,11 @@
     <title>Welcome to teleserver’s documentation! &#8212; teleserver  documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
@@ -131,6 +131,19 @@ Ex.</p>
 I works basically like normal keyboard.</p>
 <p>There is also a textbox where user can insert commands compatible with <code class="docutils literal notranslate"><span class="pre">xdotool</span> <span class="pre">key</span></code></p>
 </div>
+<div class="section" id="desk-reservations-in-google-calendar">
+<h3>Desk reservations in Google Calendar<a class="headerlink" href="#desk-reservations-in-google-calendar" title="Permalink to this headline">¶</a></h3>
+<p>In order to use a calendar feature you need a Google account and enabled API Calendar.
+Here you can find more information about activating API Calendar:</p>
+<a class="reference external image-reference" href="https://developers.google.com/calendar"><img alt="Link" src="https://developers.google.com/calendar" /></a>
+<p>Before you start using calendar, a configuration is needed. Configuration file is
+config.yml in /var/lib/teleserver/app directory.
+There you have to provide iframe to display your calendar, path to a file with
+a api credentials and a calendarID.
+Remember to put one space after name of the option in a file.
+Please do not change the order of options and do not put additional enters at the end
+of a file.</p>
+</div>
 <div class="section" id="teleserver-api">
 <h3>teleserver API<a class="headerlink" href="#teleserver-api" title="Permalink to this headline">¶</a></h3>
 <p>Teleserver API is made of 3 main function groups:</p>
@@ -231,7 +244,7 @@ I works basically like normal keyboard.</p>
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
 
 
 
@@ -248,7 +261,7 @@ I works basically like normal keyboard.</p>
       &copy;2019, Szymon Piotr Krasuski.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

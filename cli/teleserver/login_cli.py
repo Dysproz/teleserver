@@ -7,7 +7,7 @@ import netifaces
 import requests
 import os
 
-from teleserver.utils.lookup_utils import parse_interface, find_teleserver
+from teleserver.utils.lookup_utils import parse_interface, find_teleserver, saveIPs2file
 
 
 logger = logging.getLogger(__name__)
@@ -96,7 +96,8 @@ def login_out():
 @log.command('lookup_server')
 @click.option('--interface', default=None, help='Interface to check. (default looks up all interfaces)')
 @click.option('--network', default=None, help='Network to check. (default looks up all networks on interfaces)')
-def lookup_server(interface, network):
+@click.option('--save', default=False, is_flag=True, help='Flag to save final result to file')
+def lookup_server(interface, network, save):
     """Lookup IP of teleserver
 
     This command looks up for teleserver in specified network, networks attached to interface
@@ -105,7 +106,7 @@ def lookup_server(interface, network):
     Lookup works only for IPv4.
     """
     logger.info('Looking up for teleserver...')
-    logger.debug(f'args: interface: {interface}, network: {network}')
+    logger.debug(f'args: interface: {interface}, network: {network}, save: {save}')
     if interface and network:
         logger.error('Found both network and interface. Please provide only one of them')
         exit(1)
@@ -114,7 +115,7 @@ def lookup_server(interface, network):
         if interface in netifaces.interfaces():
             iface = interface
         else:
-            log.error(f'Error: Itnerface {interface} not found!')
+            log.error(f'Error: Interface {interface} not found!')
             exit(1)
     else:
         iface = None
@@ -130,3 +131,5 @@ def lookup_server(interface, network):
                 networks.extend(parse_interface(ifce))
     found_ips = find_teleserver(networks)
     logger.info(f'Got response from these IP addresses: {found_ips}')
+    if save:
+        saveIPs2file(found_ips)
