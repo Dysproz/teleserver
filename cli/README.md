@@ -7,6 +7,7 @@ Project's page:
 Read the docs:
 [teleserver docs](https://readthedocs.org/projects/teleserver/)
 
+
 ## Idea
 
 This CLI allows user to send API requests without need of providing service principal token to request.

@@ -10,7 +10,7 @@ This is a client to open you ubuntu machine to local network and allow to contro
 [![GitHub license](https://img.shields.io/github/license/Dysproz/teleserver.svg)](https://github.com/Dysproz/teleserver/blob/master/LICENSE)
 [![Generic badge](https://img.shields.io/badge/ubuntu-18.04|18.10|19.04|19.10-e95420.svg)](https://[shields.io/](https://github.com/Dysproz/teleserver))
 [![GitHub release](https://img.shields.io/github/release/Dysproz/teleserver.svg)](https://GitHub.com/Dysproz/Steleserver/releases/)
-[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
 # Install
 In order to install teleserver clone project repo from github.
 Afterwards, cd into project directory.
@@ -165,4 +165,3 @@ make test
 * cosmic (18.10)
 * disco (19.04)
 * eoan (19.10)
-
