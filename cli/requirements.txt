@@ -1,5 +1,5 @@
 click
-eventlet==0.26.1
+eventlet==0.27.0
 ipaddress==1.0.23
 netifaces==0.10.9
 requests
