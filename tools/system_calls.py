@@ -5,7 +5,6 @@ from io import BytesIO
 import pyscreenshot as ImageGrab
 from subprocess import call
 import webbrowser
-from Xlib.error import DisplayNameError
 import yaml
 from collections import deque
 
@@ -14,7 +13,7 @@ from tools.common import UPLOAD_DIRECTORY, TELESERVER_DIR
 try:
     from pynput.keyboard import Controller
     x_display = True
-except DisplayNameError:
+except ImportError:
     print("Couldn't find connected DISPLAY. Keyboard input is disabled.")
     x_display = False
 
